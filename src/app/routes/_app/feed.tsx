@@ -1,7 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 
-import { FeedPage } from '@pages/feed';
+import { FeedPage, feedSearchSchema } from "@pages/feed";
 
-export const Route = createFileRoute('/_app/feed')({
+import { postQueries } from "@entities/post";
+
+export const Route = createFileRoute("/_app/feed")({
+  validateSearch: feedSearchSchema,
+  loaderDeps: ({ search }) => search,
+  loader: ({ context, deps }) =>
+    context.queryClient.infiniteQuery({
+      ...postQueries.feed(deps),
+      staleTime: "static",
+    }),
   component: FeedPage,
 });
