@@ -1,6 +1,6 @@
-import { Link } from '@tanstack/react-router';
+import { Link } from "@tanstack/react-router";
 
-import { SignInForm } from '@features/auth/sign-in';
+import { SignInForm } from "@features/auth/sign-in";
 
 export const LoginPage = () => (
   <div className="flex flex-col gap-6">
@@ -15,7 +15,7 @@ export const LoginPage = () => (
 
     <p className="text-muted-foreground border-border flex gap-2 border-t pt-5 text-sm">
       <span> New here?</span>
-      <Link to="/register" className="text-primary hover:underline">
+      <Link to="/register" className="text-primary-ink hover:underline">
         Create an account
       </Link>
     </p>

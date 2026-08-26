@@ -1,37 +1,39 @@
-import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
-import { CheckIcon, Loader2Icon } from 'lucide-react';
-import { useForm, useWatch } from 'react-hook-form';
+import { useState } from "react";
 
-import { applyFieldErrors, useSignUp } from '@features/auth/model';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { CheckIcon, Loader2Icon } from "lucide-react";
+import { useForm, useWatch } from "react-hook-form";
 
-import { SPECIALITIES, SPECIALITY_LABELS, userQueries } from '@entities/user';
+import { useSignUp } from "@entities/session";
+import { userQueries } from "@entities/user";
 
-import { toApiError } from '@shared/api/error';
-import { useDebouncedValue } from '@shared/lib/use-debounced-value';
-import { Button } from '@shared/ui/button';
-import { FormField } from '@shared/ui/form-field';
-import { Input } from '@shared/ui/input';
+import { toApiError } from "@shared/api";
+import { SPECIALITIES, SPECIALITY_LABELS } from "@shared/config";
+import { applyFieldErrors } from "@shared/lib/apply-field-errors";
+import { useDebouncedValue } from "@shared/lib/use-debounced-value";
+import { Button } from "@shared/ui/button";
+import { FormField } from "@shared/ui/form-field";
+import { Input } from "@shared/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@shared/ui/select';
+} from "@shared/ui/select";
 
-import { signUpSchema, type SignUpValues } from '../model/sign-up.schema';
+import { signUpSchema, type SignUpValues } from "../model/sign-up.schema";
 
 const FIELDS = [
-  'firstName',
-  'lastName',
-  'nickname',
-  'email',
-  'password',
-  'confirmPassword',
-  'speciality',
+  "firstName",
+  "lastName",
+  "nickname",
+  "email",
+  "password",
+  "confirmPassword",
+  "speciality",
 ] as const;
 
 interface AvailabilityHintProps {
@@ -58,7 +60,7 @@ const AvailabilityHint = ({
 
   if (free) {
     return (
-      <span className="text-system inline-flex items-center gap-1.5">
+      <span className="text-system-ink inline-flex items-center gap-1.5">
         <CheckIcon className="size-3" />
         {freeLabel}
       </span>
@@ -75,26 +77,26 @@ export const SignUpForm = () => {
 
   const form = useForm<SignUpValues>({
     resolver: zodResolver(signUpSchema),
-    mode: 'onBlur',
+    mode: "onBlur",
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      nickname: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      firstName: "",
+      lastName: "",
+      nickname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
-  const nickname = useWatch({ control: form.control, name: 'nickname' });
-  const email = useWatch({ control: form.control, name: 'email' });
-  const speciality = useWatch({ control: form.control, name: 'speciality' });
+  const nickname = useWatch({ control: form.control, name: "nickname" });
+  const email = useWatch({ control: form.control, name: "email" });
+  const speciality = useWatch({ control: form.control, name: "speciality" });
 
   const nicknameToCheck = useDebouncedValue(
-    signUpSchema.shape.nickname.safeParse(nickname).success ? nickname : '',
+    signUpSchema.shape.nickname.safeParse(nickname).success ? nickname : "",
   );
   const emailToCheck = useDebouncedValue(
-    signUpSchema.shape.email.safeParse(email).success ? email : '',
+    signUpSchema.shape.email.safeParse(email).success ? email : "",
   );
 
   const availability = useQuery(
@@ -112,7 +114,7 @@ export const SignUpForm = () => {
 
     try {
       await signUp.mutateAsync(values);
-      await navigate({ to: '/feed' });
+      await navigate({ to: "/feed" });
     } catch (error) {
       setFormError(applyFieldErrors(toApiError(error), form.setError, FIELDS));
     }
@@ -137,7 +139,7 @@ export const SignUpForm = () => {
             autoComplete="given-name"
             autoFocus
             aria-invalid={Boolean(form.formState.errors.firstName)}
-            {...form.register('firstName')}
+            {...form.register("firstName")}
           />
         </FormField>
 
@@ -150,7 +152,7 @@ export const SignUpForm = () => {
             id="lastName"
             autoComplete="family-name"
             aria-invalid={Boolean(form.formState.errors.lastName)}
-            {...form.register('lastName')}
+            {...form.register("lastName")}
           />
         </FormField>
       </div>
@@ -160,7 +162,7 @@ export const SignUpForm = () => {
         label="Nickname"
         error={
           form.formState.errors.nickname?.message ??
-          (nicknameTaken ? 'This nickname is already taken' : undefined)
+          (nicknameTaken ? "This nickname is already taken" : undefined)
         }
         hint={
           <AvailabilityHint
@@ -177,7 +179,7 @@ export const SignUpForm = () => {
           aria-invalid={
             Boolean(form.formState.errors.nickname) || nicknameTaken
           }
-          {...form.register('nickname')}
+          {...form.register("nickname")}
         />
       </FormField>
 
@@ -186,7 +188,7 @@ export const SignUpForm = () => {
         label="Email"
         error={
           form.formState.errors.email?.message ??
-          (emailTaken ? 'This email is already registered' : undefined)
+          (emailTaken ? "This email is already registered" : undefined)
         }
         hint={
           <AvailabilityHint
@@ -202,7 +204,7 @@ export const SignUpForm = () => {
           type="email"
           autoComplete="email"
           aria-invalid={Boolean(form.formState.errors.email) || emailTaken}
-          {...form.register('email')}
+          {...form.register("email")}
         />
       </FormField>
 
@@ -216,7 +218,7 @@ export const SignUpForm = () => {
           value={speciality ?? null}
           onValueChange={(value: string | null) => {
             if (!value) return;
-            form.setValue('speciality', value as SignUpValues['speciality'], {
+            form.setValue("speciality", value as SignUpValues["speciality"], {
               shouldValidate: true,
             });
           }}
@@ -225,8 +227,8 @@ export const SignUpForm = () => {
             <SelectValue>
               {(value: string | null) =>
                 value
-                  ? SPECIALITY_LABELS[value as SignUpValues['speciality']]
-                  : 'Pick your speciality'
+                  ? SPECIALITY_LABELS[value as SignUpValues["speciality"]]
+                  : "Pick your speciality"
               }
             </SelectValue>
           </SelectTrigger>
@@ -252,7 +254,7 @@ export const SignUpForm = () => {
             type="password"
             autoComplete="new-password"
             aria-invalid={Boolean(form.formState.errors.password)}
-            {...form.register('password')}
+            {...form.register("password")}
           />
         </FormField>
 
@@ -266,7 +268,7 @@ export const SignUpForm = () => {
             type="password"
             autoComplete="new-password"
             aria-invalid={Boolean(form.formState.errors.confirmPassword)}
-            {...form.register('confirmPassword')}
+            {...form.register("confirmPassword")}
           />
         </FormField>
       </div>
@@ -287,7 +289,7 @@ export const SignUpForm = () => {
             Creating account
           </>
         ) : (
-          'Create account'
+          "Create account"
         )}
       </Button>
     </form>

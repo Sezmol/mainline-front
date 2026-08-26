@@ -1,6 +1,6 @@
-import type { FieldValues, Path, UseFormSetError } from 'react-hook-form';
+import type { FieldValues, Path, UseFormSetError } from "react-hook-form";
 
-import type { ApiError } from '@shared/api/error';
+import type { ApiError } from "@shared/api";
 
 export const applyFieldErrors = <TValues extends FieldValues>(
   failure: ApiError,
@@ -16,7 +16,7 @@ export const applyFieldErrors = <TValues extends FieldValues>(
     if (!message) continue;
 
     if ((knownFields as readonly string[]).includes(field)) {
-      setError(field as Path<TValues>, { type: 'server', message });
+      setError(field as Path<TValues>, { type: "server", message });
       matched = true;
     }
   }
