@@ -1,12 +1,14 @@
-import { useNavigate } from '@tanstack/react-router';
-import { LogOutIcon } from 'lucide-react';
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { LogOutIcon } from "lucide-react";
 
-import { useSignOut } from '@features/auth/model';
+import { useSignOut } from "@entities/session";
 
-import { Button } from '@shared/ui/button';
+import { Button } from "@shared/ui/button";
 
 export const SignOutButton = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const signOut = useSignOut();
 
   return (
@@ -17,7 +19,11 @@ export const SignOutButton = () => {
       onClick={() => {
         signOut.mutate(undefined, {
           onSettled: () => {
-            void navigate({ to: '/login' });
+            void navigate({ to: "/login" }).then(() => {
+              queryClient.removeQueries({
+                predicate: (query) => query.queryKey[0] !== "session",
+              });
+            });
           },
         });
       }}
