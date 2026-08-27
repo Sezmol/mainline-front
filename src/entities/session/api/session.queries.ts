@@ -1,11 +1,10 @@
-import { queryOptions } from '@tanstack/react-query';
+import { queryOptions } from "@tanstack/react-query";
 
-import { ApiError } from '@shared/api/error';
-import { authControllerSession } from '@shared/api/generated';
+import { ApiError, authControllerSession } from "@shared/api";
 
 export const sessionKeys = {
-  root: ['session'] as const,
-  current: () => [...sessionKeys.root, 'current'] as const,
+  root: ["session"] as const,
+  current: () => [...sessionKeys.root, "current"] as const,
 };
 
 export const sessionQueries = {
@@ -20,7 +19,7 @@ export const sessionQueries = {
           });
           return data;
         } catch (error) {
-          if (error instanceof ApiError && error.code === 'UNAUTHORIZED') {
+          if (error instanceof ApiError && error.code === "UNAUTHORIZED") {
             return null;
           }
           throw error;

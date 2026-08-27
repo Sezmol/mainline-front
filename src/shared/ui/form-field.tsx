@@ -1,8 +1,8 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-import { cn } from '@shared/lib/cn';
+import { cn } from "@shared/lib/cn";
 
-import { Label } from './label';
+import { Label } from "./label";
 
 interface FormFieldProps {
   id: string;
@@ -21,7 +21,7 @@ export const FormField = ({
   children,
   className,
 }: FormFieldProps) => (
-  <div className={cn('flex flex-col gap-2', className)}>
+  <div className={cn("flex flex-col gap-2", className)}>
     <Label htmlFor={id}>{label}</Label>
     {children}
     {error ? (

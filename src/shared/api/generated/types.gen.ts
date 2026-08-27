@@ -5,8 +5,8 @@ export type ClientOptions = {
 };
 
 export type HealthResponse = {
-  status: 'ok' | 'degraded';
-  database: 'disconnected' | 'connected' | 'connecting' | 'disconnecting';
+  status: "ok" | "degraded";
+  database: "connected" | "disconnected";
   /**
    * Uptime in seconds
    */
@@ -19,14 +19,25 @@ export type AvailabilityResponseDtoOutput = {
   email?: boolean;
 };
 
-export type RegisterDto = {
+export type ProfileDtoOutput = {
+  id: string;
   firstName: string;
   lastName: string;
   nickname: string;
-  email: string;
-  password: unknown & unknown;
-  confirmPassword: string;
-  speciality: 'frontend' | 'backend' | 'qa' | 'design' | 'manager' | 'hr';
+  speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+  role: "member" | "hr" | "manager";
+  description?: string;
+  workplace?: string;
+  createdAt: string;
+};
+
+export type UpdateUserDto = {
+  firstName: string;
+  lastName: string;
+  nickname: string;
+  speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+  description?: string;
+  workplace?: string;
 };
 
 export type SessionUserDtoOutput = {
@@ -34,11 +45,21 @@ export type SessionUserDtoOutput = {
   firstName: string;
   lastName: string;
   nickname: string;
-  speciality: 'frontend' | 'backend' | 'qa' | 'design' | 'manager' | 'hr';
-  role: 'member' | 'hr' | 'manager';
+  speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+  role: "member" | "hr" | "manager";
   description?: string;
   workplace?: string;
   email: string;
+};
+
+export type RegisterDto = {
+  firstName: string;
+  lastName: string;
+  nickname: string;
+  email: string;
+  password: unknown & unknown;
+  confirmPassword: string;
+  speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
 };
 
 export type LoginDto = {
@@ -46,18 +67,111 @@ export type LoginDto = {
   password: string;
 };
 
+export type PostPageDtoOutput = {
+  items: Array<{
+    id: string;
+    type: "content" | "vacancy" | "event";
+    direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    title: string;
+    body: string;
+    author: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      nickname: string;
+      speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      role: "member" | "hr" | "manager";
+      description?: string;
+      workplace?: string;
+    };
+    likeCount: number;
+    likedByMe: boolean;
+    createdAt: string;
+    updatedAt: string;
+  }>;
+  nextCursor: string | null;
+};
+
+export type PostDtoOutput = {
+  id: string;
+  type: "content" | "vacancy" | "event";
+  direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+  title: string;
+  body: string;
+  author: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  likeCount: number;
+  likedByMe: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreatePostDto = {
+  direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+  title: string;
+  body: string;
+};
+
+export type UpdatePostDto = {
+  direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+  title: string;
+  body: string;
+};
+
+export type ProjectDtoOutput = {
+  id: string;
+  title: string;
+  description?: string;
+  links: Array<string>;
+  previewUrl?: string;
+  author: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateProjectDto = {
+  title: string;
+  description?: string;
+  links?: Array<string>;
+  previewUrl?: string;
+};
+
+export type UpdateProjectDto = {
+  title: string;
+  description?: string;
+  links?: Array<string>;
+  previewUrl?: string;
+};
+
 export type ErrorResponse = {
   statusCode: number;
   code:
-    | 'VALIDATION_FAILED'
-    | 'UNAUTHORIZED'
-    | 'FORBIDDEN'
-    | 'NOT_FOUND'
-    | 'CONFLICT'
-    | 'RATE_LIMITED'
-    | 'PAYLOAD_TOO_LARGE'
-    | 'UNSUPPORTED_MEDIA_TYPE'
-    | 'INTERNAL';
+    | "VALIDATION_FAILED"
+    | "UNAUTHORIZED"
+    | "FORBIDDEN"
+    | "NOT_FOUND"
+    | "CONFLICT"
+    | "RATE_LIMITED"
+    | "PAYLOAD_TOO_LARGE"
+    | "UNSUPPORTED_MEDIA_TYPE"
+    | "INTERNAL";
   message: string;
   /**
    * Form field errors, keyed by field name.
@@ -74,7 +188,7 @@ export type HealthControllerCheckData = {
   body?: never;
   path?: never;
   query?: never;
-  url: '/api/health';
+  url: "/api/health";
 };
 
 export type HealthControllerCheckErrors = {
@@ -101,7 +215,7 @@ export type UsersControllerCheckAvailabilityData = {
     nickname?: string;
     email?: string;
   };
-  url: '/api/users/availability';
+  url: "/api/users/availability";
 };
 
 export type UsersControllerCheckAvailabilityErrors = {
@@ -121,11 +235,63 @@ export type UsersControllerCheckAvailabilityResponses = {
 export type UsersControllerCheckAvailabilityResponse =
   UsersControllerCheckAvailabilityResponses[keyof UsersControllerCheckAvailabilityResponses];
 
+export type UsersControllerByNicknameData = {
+  body?: never;
+  path: {
+    nickname: string;
+  };
+  query?: never;
+  url: "/api/users/{nickname}";
+};
+
+export type UsersControllerByNicknameErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type UsersControllerByNicknameError =
+  UsersControllerByNicknameErrors[keyof UsersControllerByNicknameErrors];
+
+export type UsersControllerByNicknameResponses = {
+  200: ProfileDtoOutput;
+};
+
+export type UsersControllerByNicknameResponse =
+  UsersControllerByNicknameResponses[keyof UsersControllerByNicknameResponses];
+
+export type UsersControllerUpdateData = {
+  body: UpdateUserDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/users/{id}";
+};
+
+export type UsersControllerUpdateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type UsersControllerUpdateError =
+  UsersControllerUpdateErrors[keyof UsersControllerUpdateErrors];
+
+export type UsersControllerUpdateResponses = {
+  200: SessionUserDtoOutput;
+};
+
+export type UsersControllerUpdateResponse =
+  UsersControllerUpdateResponses[keyof UsersControllerUpdateResponses];
+
 export type AuthControllerRegisterData = {
   body: RegisterDto;
   path?: never;
   query?: never;
-  url: '/api/auth/register';
+  url: "/api/auth/register";
 };
 
 export type AuthControllerRegisterErrors = {
@@ -149,7 +315,7 @@ export type AuthControllerLoginData = {
   body: LoginDto;
   path?: never;
   query?: never;
-  url: '/api/auth/login';
+  url: "/api/auth/login";
 };
 
 export type AuthControllerLoginErrors = {
@@ -173,7 +339,7 @@ export type AuthControllerRefreshData = {
   body?: never;
   path?: never;
   query?: never;
-  url: '/api/auth/refresh';
+  url: "/api/auth/refresh";
 };
 
 export type AuthControllerRefreshErrors = {
@@ -197,7 +363,7 @@ export type AuthControllerLogoutData = {
   body?: never;
   path?: never;
   query?: never;
-  url: '/api/auth/logout';
+  url: "/api/auth/logout";
 };
 
 export type AuthControllerLogoutErrors = {
@@ -221,7 +387,7 @@ export type AuthControllerSessionData = {
   body?: never;
   path?: never;
   query?: never;
-  url: '/api/auth';
+  url: "/api/auth";
 };
 
 export type AuthControllerSessionErrors = {
@@ -240,3 +406,319 @@ export type AuthControllerSessionResponses = {
 
 export type AuthControllerSessionResponse =
   AuthControllerSessionResponses[keyof AuthControllerSessionResponses];
+
+export type PostsControllerListData = {
+  body?: never;
+  path?: never;
+  query?: {
+    type?: "content" | "vacancy" | "event";
+    direction?: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    cursor?: string;
+    limit?: number;
+  };
+  url: "/api/posts";
+};
+
+export type PostsControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerListError =
+  PostsControllerListErrors[keyof PostsControllerListErrors];
+
+export type PostsControllerListResponses = {
+  200: PostPageDtoOutput;
+};
+
+export type PostsControllerListResponse =
+  PostsControllerListResponses[keyof PostsControllerListResponses];
+
+export type PostsControllerCreateData = {
+  body: CreatePostDto;
+  path?: never;
+  query?: never;
+  url: "/api/posts";
+};
+
+export type PostsControllerCreateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerCreateError =
+  PostsControllerCreateErrors[keyof PostsControllerCreateErrors];
+
+export type PostsControllerCreateResponses = {
+  201: PostDtoOutput;
+};
+
+export type PostsControllerCreateResponse =
+  PostsControllerCreateResponses[keyof PostsControllerCreateResponses];
+
+export type PostsControllerRemoveData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}";
+};
+
+export type PostsControllerRemoveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerRemoveError =
+  PostsControllerRemoveErrors[keyof PostsControllerRemoveErrors];
+
+export type PostsControllerRemoveResponses = {
+  204: void;
+};
+
+export type PostsControllerRemoveResponse =
+  PostsControllerRemoveResponses[keyof PostsControllerRemoveResponses];
+
+export type PostsControllerByIdData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}";
+};
+
+export type PostsControllerByIdErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerByIdError =
+  PostsControllerByIdErrors[keyof PostsControllerByIdErrors];
+
+export type PostsControllerByIdResponses = {
+  200: PostDtoOutput;
+};
+
+export type PostsControllerByIdResponse =
+  PostsControllerByIdResponses[keyof PostsControllerByIdResponses];
+
+export type PostsControllerUpdateData = {
+  body: UpdatePostDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}";
+};
+
+export type PostsControllerUpdateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerUpdateError =
+  PostsControllerUpdateErrors[keyof PostsControllerUpdateErrors];
+
+export type PostsControllerUpdateResponses = {
+  200: PostDtoOutput;
+};
+
+export type PostsControllerUpdateResponse =
+  PostsControllerUpdateResponses[keyof PostsControllerUpdateResponses];
+
+export type PostsControllerUnlikeData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/like";
+};
+
+export type PostsControllerUnlikeErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerUnlikeError =
+  PostsControllerUnlikeErrors[keyof PostsControllerUnlikeErrors];
+
+export type PostsControllerUnlikeResponses = {
+  204: void;
+};
+
+export type PostsControllerUnlikeResponse =
+  PostsControllerUnlikeResponses[keyof PostsControllerUnlikeResponses];
+
+export type PostsControllerLikeData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/like";
+};
+
+export type PostsControllerLikeErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerLikeError =
+  PostsControllerLikeErrors[keyof PostsControllerLikeErrors];
+
+export type PostsControllerLikeResponses = {
+  204: void;
+};
+
+export type PostsControllerLikeResponse =
+  PostsControllerLikeResponses[keyof PostsControllerLikeResponses];
+
+export type PortfolioControllerListData = {
+  body?: never;
+  path: {
+    userId: string;
+  };
+  query?: never;
+  url: "/api/users/{userId}/portfolio";
+};
+
+export type PortfolioControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PortfolioControllerListError =
+  PortfolioControllerListErrors[keyof PortfolioControllerListErrors];
+
+export type PortfolioControllerListResponses = {
+  200: Array<ProjectDtoOutput>;
+};
+
+export type PortfolioControllerListResponse =
+  PortfolioControllerListResponses[keyof PortfolioControllerListResponses];
+
+export type PortfolioControllerCreateData = {
+  body: CreateProjectDto;
+  path: {
+    userId: string;
+  };
+  query?: never;
+  url: "/api/users/{userId}/portfolio";
+};
+
+export type PortfolioControllerCreateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PortfolioControllerCreateError =
+  PortfolioControllerCreateErrors[keyof PortfolioControllerCreateErrors];
+
+export type PortfolioControllerCreateResponses = {
+  201: ProjectDtoOutput;
+};
+
+export type PortfolioControllerCreateResponse =
+  PortfolioControllerCreateResponses[keyof PortfolioControllerCreateResponses];
+
+export type PortfolioControllerRemoveData = {
+  body?: never;
+  path: {
+    userId: string;
+    projectId: string;
+  };
+  query?: never;
+  url: "/api/users/{userId}/portfolio/{projectId}";
+};
+
+export type PortfolioControllerRemoveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PortfolioControllerRemoveError =
+  PortfolioControllerRemoveErrors[keyof PortfolioControllerRemoveErrors];
+
+export type PortfolioControllerRemoveResponses = {
+  204: void;
+};
+
+export type PortfolioControllerRemoveResponse =
+  PortfolioControllerRemoveResponses[keyof PortfolioControllerRemoveResponses];
+
+export type PortfolioControllerByIdData = {
+  body?: never;
+  path: {
+    userId: string;
+    projectId: string;
+  };
+  query?: never;
+  url: "/api/users/{userId}/portfolio/{projectId}";
+};
+
+export type PortfolioControllerByIdErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PortfolioControllerByIdError =
+  PortfolioControllerByIdErrors[keyof PortfolioControllerByIdErrors];
+
+export type PortfolioControllerByIdResponses = {
+  200: ProjectDtoOutput;
+};
+
+export type PortfolioControllerByIdResponse =
+  PortfolioControllerByIdResponses[keyof PortfolioControllerByIdResponses];
+
+export type PortfolioControllerUpdateData = {
+  body: UpdateProjectDto;
+  path: {
+    userId: string;
+    projectId: string;
+  };
+  query?: never;
+  url: "/api/users/{userId}/portfolio/{projectId}";
+};
+
+export type PortfolioControllerUpdateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PortfolioControllerUpdateError =
+  PortfolioControllerUpdateErrors[keyof PortfolioControllerUpdateErrors];
+
+export type PortfolioControllerUpdateResponses = {
+  200: ProjectDtoOutput;
+};
+
+export type PortfolioControllerUpdateResponse =
+  PortfolioControllerUpdateResponses[keyof PortfolioControllerUpdateResponses];

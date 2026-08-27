@@ -1,15 +1,24 @@
-import { QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider } from '@tanstack/react-router';
+import { QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "@tanstack/react-router";
+import { ThemeProvider } from "next-themes";
 
-import { Toaster } from '@shared/ui/sonner';
+import { Toaster } from "@shared/ui/sonner";
 
-import '@shared/api/client';
-import { router } from '../router';
-import { queryClient } from './query-client';
+import "@shared/api";
+import { router } from "../router";
+import { queryClient } from "./query-client";
 
 export const AppProviders = () => (
-  <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
-    <Toaster position="bottom-right" />
-  </QueryClientProvider>
+  <ThemeProvider
+    attribute="class"
+    defaultTheme="dark"
+    enableSystem
+    storageKey="mainline-theme"
+    disableTransitionOnChange
+  >
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <Toaster position="bottom-right" />
+    </QueryClientProvider>
+  </ThemeProvider>
 );

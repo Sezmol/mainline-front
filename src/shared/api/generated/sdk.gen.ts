@@ -6,8 +6,8 @@ import type {
   Options as Options2,
   RequestResult,
   TDataShape,
-} from './client';
-import { client } from './client.gen';
+} from "./client";
+import { client } from "./client.gen";
 import type {
   AuthControllerLoginData,
   AuthControllerLoginErrors,
@@ -27,10 +27,52 @@ import type {
   HealthControllerCheckData,
   HealthControllerCheckErrors,
   HealthControllerCheckResponses,
+  PortfolioControllerByIdData,
+  PortfolioControllerByIdErrors,
+  PortfolioControllerByIdResponses,
+  PortfolioControllerCreateData,
+  PortfolioControllerCreateErrors,
+  PortfolioControllerCreateResponses,
+  PortfolioControllerListData,
+  PortfolioControllerListErrors,
+  PortfolioControllerListResponses,
+  PortfolioControllerRemoveData,
+  PortfolioControllerRemoveErrors,
+  PortfolioControllerRemoveResponses,
+  PortfolioControllerUpdateData,
+  PortfolioControllerUpdateErrors,
+  PortfolioControllerUpdateResponses,
+  PostsControllerByIdData,
+  PostsControllerByIdErrors,
+  PostsControllerByIdResponses,
+  PostsControllerCreateData,
+  PostsControllerCreateErrors,
+  PostsControllerCreateResponses,
+  PostsControllerLikeData,
+  PostsControllerLikeErrors,
+  PostsControllerLikeResponses,
+  PostsControllerListData,
+  PostsControllerListErrors,
+  PostsControllerListResponses,
+  PostsControllerRemoveData,
+  PostsControllerRemoveErrors,
+  PostsControllerRemoveResponses,
+  PostsControllerUnlikeData,
+  PostsControllerUnlikeErrors,
+  PostsControllerUnlikeResponses,
+  PostsControllerUpdateData,
+  PostsControllerUpdateErrors,
+  PostsControllerUpdateResponses,
+  UsersControllerByNicknameData,
+  UsersControllerByNicknameErrors,
+  UsersControllerByNicknameResponses,
   UsersControllerCheckAvailabilityData,
   UsersControllerCheckAvailabilityErrors,
   UsersControllerCheckAvailabilityResponses,
-} from './types.gen';
+  UsersControllerUpdateData,
+  UsersControllerUpdateErrors,
+  UsersControllerUpdateResponses,
+} from "./types.gen";
 
 export type Options<
   TData extends TDataShape = TDataShape,
@@ -64,11 +106,12 @@ export const healthControllerCheck = <ThrowOnError extends boolean = false>(
     HealthControllerCheckResponses,
     HealthControllerCheckErrors,
     ThrowOnError
-  >({ url: '/api/health', ...options });
+  >({ url: "/api/health", ...options });
 
 /**
  * Check whether a nickname or email is still free
  *
+ * Used by the registration form while typing. The unique index remains the real guard, this only spares the user a failed submit.
  */
 export const usersControllerCheckAvailability = <
   ThrowOnError extends boolean = false,
@@ -83,7 +126,50 @@ export const usersControllerCheckAvailability = <
     UsersControllerCheckAvailabilityResponses,
     UsersControllerCheckAvailabilityErrors,
     ThrowOnError
-  >({ url: '/api/users/availability', ...options });
+  >({ url: "/api/users/availability", ...options });
+
+/**
+ * A public profile
+ *
+ * Addressed by nickname, so profile links stay readable.
+ */
+export const usersControllerByNickname = <ThrowOnError extends boolean = false>(
+  options: Options<UsersControllerByNicknameData, ThrowOnError>,
+): RequestResult<
+  UsersControllerByNicknameResponses,
+  UsersControllerByNicknameErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    UsersControllerByNicknameResponses,
+    UsersControllerByNicknameErrors,
+    ThrowOnError
+  >({ url: "/api/users/{nickname}", ...options });
+
+/**
+ * Edit a profile, owner only
+ *
+ * Replaces the profile: a field left out is cleared. The response is the session shape, so the signed-in user can be refreshed from it.
+ */
+export const usersControllerUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<UsersControllerUpdateData, ThrowOnError>,
+): RequestResult<
+  UsersControllerUpdateResponses,
+  UsersControllerUpdateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    UsersControllerUpdateResponses,
+    UsersControllerUpdateErrors,
+    ThrowOnError
+  >({
+    url: "/api/users/{id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
 
 /**
  * Create an account and start a session
@@ -100,10 +186,10 @@ export const authControllerRegister = <ThrowOnError extends boolean = false>(
     AuthControllerRegisterErrors,
     ThrowOnError
   >({
-    url: '/api/auth/register',
+    url: "/api/auth/register",
     ...options,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...options.headers,
     },
   });
@@ -123,10 +209,10 @@ export const authControllerLogin = <ThrowOnError extends boolean = false>(
     AuthControllerLoginErrors,
     ThrowOnError
   >({
-    url: '/api/auth/login',
+    url: "/api/auth/login",
     ...options,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...options.headers,
     },
   });
@@ -145,7 +231,7 @@ export const authControllerRefresh = <ThrowOnError extends boolean = false>(
     AuthControllerRefreshResponses,
     AuthControllerRefreshErrors,
     ThrowOnError
-  >({ url: '/api/auth/refresh', ...options });
+  >({ url: "/api/auth/refresh", ...options });
 
 /**
  * End the session and clear both cookies
@@ -161,7 +247,7 @@ export const authControllerLogout = <ThrowOnError extends boolean = false>(
     AuthControllerLogoutResponses,
     AuthControllerLogoutErrors,
     ThrowOnError
-  >({ url: '/api/auth/logout', ...options });
+  >({ url: "/api/auth/logout", ...options });
 
 /**
  * The signed-in user
@@ -177,4 +263,226 @@ export const authControllerSession = <ThrowOnError extends boolean = false>(
     AuthControllerSessionResponses,
     AuthControllerSessionErrors,
     ThrowOnError
-  >({ url: '/api/auth', ...options });
+  >({ url: "/api/auth", ...options });
+
+/**
+ * A page of the feed, newest first
+ *
+ * Pass the nextCursor from the previous page to get the next one. Filters and cursor combine freely.
+ */
+export const postsControllerList = <ThrowOnError extends boolean = false>(
+  options?: Options<PostsControllerListData, ThrowOnError>,
+): RequestResult<
+  PostsControllerListResponses,
+  PostsControllerListErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).get<
+    PostsControllerListResponses,
+    PostsControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/posts", ...options });
+
+/**
+ * Publish a post
+ */
+export const postsControllerCreate = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerCreateData, ThrowOnError>,
+): RequestResult<
+  PostsControllerCreateResponses,
+  PostsControllerCreateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    PostsControllerCreateResponses,
+    PostsControllerCreateErrors,
+    ThrowOnError
+  >({
+    url: "/api/posts",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Delete a post, author only
+ */
+export const postsControllerRemove = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerRemoveData, ThrowOnError>,
+): RequestResult<
+  PostsControllerRemoveResponses,
+  PostsControllerRemoveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    PostsControllerRemoveResponses,
+    PostsControllerRemoveErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}", ...options });
+
+/**
+ * A single post
+ */
+export const postsControllerById = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerByIdData, ThrowOnError>,
+): RequestResult<
+  PostsControllerByIdResponses,
+  PostsControllerByIdErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    PostsControllerByIdResponses,
+    PostsControllerByIdErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}", ...options });
+
+/**
+ * Edit a post, author only
+ */
+export const postsControllerUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerUpdateData, ThrowOnError>,
+): RequestResult<
+  PostsControllerUpdateResponses,
+  PostsControllerUpdateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    PostsControllerUpdateResponses,
+    PostsControllerUpdateErrors,
+    ThrowOnError
+  >({
+    url: "/api/posts/{id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Take a like back
+ */
+export const postsControllerUnlike = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerUnlikeData, ThrowOnError>,
+): RequestResult<
+  PostsControllerUnlikeResponses,
+  PostsControllerUnlikeErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    PostsControllerUnlikeResponses,
+    PostsControllerUnlikeErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}/like", ...options });
+
+/**
+ * Like a post
+ *
+ * Liking twice is not an error, the second one changes nothing.
+ */
+export const postsControllerLike = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerLikeData, ThrowOnError>,
+): RequestResult<
+  PostsControllerLikeResponses,
+  PostsControllerLikeErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    PostsControllerLikeResponses,
+    PostsControllerLikeErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}/like", ...options });
+
+/**
+ * Everything in a portfolio, newest first
+ *
+ * Short by nature, so it comes back in one go without paging.
+ */
+export const portfolioControllerList = <ThrowOnError extends boolean = false>(
+  options: Options<PortfolioControllerListData, ThrowOnError>,
+): RequestResult<
+  PortfolioControllerListResponses,
+  PortfolioControllerListErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    PortfolioControllerListResponses,
+    PortfolioControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/users/{userId}/portfolio", ...options });
+
+/**
+ */
+export const portfolioControllerCreate = <ThrowOnError extends boolean = false>(
+  options: Options<PortfolioControllerCreateData, ThrowOnError>,
+): RequestResult<
+  PortfolioControllerCreateResponses,
+  PortfolioControllerCreateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    PortfolioControllerCreateResponses,
+    PortfolioControllerCreateErrors,
+    ThrowOnError
+  >({
+    url: "/api/users/{userId}/portfolio",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ */
+export const portfolioControllerRemove = <ThrowOnError extends boolean = false>(
+  options: Options<PortfolioControllerRemoveData, ThrowOnError>,
+): RequestResult<
+  PortfolioControllerRemoveResponses,
+  PortfolioControllerRemoveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    PortfolioControllerRemoveResponses,
+    PortfolioControllerRemoveErrors,
+    ThrowOnError
+  >({ url: "/api/users/{userId}/portfolio/{projectId}", ...options });
+
+/**
+ */
+export const portfolioControllerById = <ThrowOnError extends boolean = false>(
+  options: Options<PortfolioControllerByIdData, ThrowOnError>,
+): RequestResult<
+  PortfolioControllerByIdResponses,
+  PortfolioControllerByIdErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    PortfolioControllerByIdResponses,
+    PortfolioControllerByIdErrors,
+    ThrowOnError
+  >({ url: "/api/users/{userId}/portfolio/{projectId}", ...options });
+
+/**
+ */
+export const portfolioControllerUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<PortfolioControllerUpdateData, ThrowOnError>,
+): RequestResult<
+  PortfolioControllerUpdateResponses,
+  PortfolioControllerUpdateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    PortfolioControllerUpdateResponses,
+    PortfolioControllerUpdateErrors,
+    ThrowOnError
+  >({
+    url: "/api/users/{userId}/portfolio/{projectId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
