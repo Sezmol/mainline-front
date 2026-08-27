@@ -1,9 +1,9 @@
-import { queryOptions } from '@tanstack/react-query';
+import { queryOptions } from "@tanstack/react-query";
 
-import { healthControllerCheck } from './generated';
+import { healthControllerCheck } from "./generated";
 
 export const healthKeys = {
-  root: ['health'] as const,
+  root: ["health"] as const,
 };
 
 export const healthQueries = {

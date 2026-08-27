@@ -1,8 +1,8 @@
 const SKIP_REFRESH = [
-  '/api/auth/login',
-  '/api/auth/register',
-  '/api/auth/refresh',
-  '/api/auth/logout',
+  "/api/auth/login",
+  "/api/auth/register",
+  "/api/auth/refresh",
+  "/api/auth/logout",
 ];
 
 let refreshing: Promise<boolean> | null = null;
@@ -10,9 +10,9 @@ let refreshing: Promise<boolean> | null = null;
 const refreshSession = () => {
   const pending =
     refreshing ??
-    fetch('/api/auth/refresh', {
-      method: 'POST',
-      credentials: 'include',
+    fetch("/api/auth/refresh", {
+      method: "POST",
+      credentials: "include",
     })
       .then((response) => response.ok)
       .catch(() => false)

@@ -1,10 +1,62 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  color-scheme: light;
+
+  --background: #efece6;
+  --foreground: #1b1917;
+
+  --card: #fbfaf7;
+  --card-foreground: #1b1917;
+
+  --popover: #ffffff;
+  --popover-foreground: #1b1917;
+
+  --primary: #e2a03f;
+  --primary-foreground: #241b0b;
+
+  --secondary: #e9e5dd;
+  --secondary-foreground: #1b1917;
+
+  --muted: #e9e5dd;
+  --muted-foreground: #676158;
+
+  --accent: #e2ddd3;
+  --accent-foreground: #1b1917;
+
+  --destructive: #b4342a;
+  --destructive-foreground: #fff8f6;
+
+  --border: #ddd7cc;
+  --input: #ddd7cc;
+  --ring: #8a5a0b;
+
+  --radius: 0.375rem;
+
+  --elevated: #e9e5dd;
+  --body: #45403a;
+  --rule-soft: #e7e2d9;
+
+  --system: #46b8a4;
+  --system-ink: #0f6e5e;
+  --system-foreground: #06231e;
+  --system-muted: #e6f2ee;
+  --system-border: #b9dcd3;
+
+  --destructive-muted: #fbebe8;
+  --primary-ink: #8a5a0b;
+  --primary-muted: #faf1de;
+  --primary-border: #e7ce9a;
+
+  --scrollbar-thumb: #cfc8bb;
+  --scrollbar-thumb-hover: #b3ab9b;
+}
+
+.dark {
   color-scheme: dark;
 
   --background: #0d1013;
@@ -23,7 +75,7 @@
   --secondary-foreground: #dce2ea;
 
   --muted: #1a2028;
-  --muted-foreground: #6f7987;
+  --muted-foreground: #828c9a;
 
   --accent: #1f2730;
   --accent-foreground: #dce2ea;
@@ -35,19 +87,23 @@
   --input: #232a32;
   --ring: #e2a03f;
 
-  --radius: 0.375rem;
   --elevated: #1a2028;
   --body: #a6aeba;
   --rule-soft: #1b2128;
 
   --system: #46b8a4;
+  --system-ink: #46b8a4;
   --system-foreground: #14181d;
   --system-muted: #12241f;
   --system-border: #1d4038;
 
   --destructive-muted: #2a1614;
+  --primary-ink: #e2a03f;
   --primary-muted: #2a2113;
   --primary-border: #4a3a1d;
+
+  --scrollbar-thumb: #2a323c;
+  --scrollbar-thumb-hover: #3b4653;
 }
 
 @theme inline {
@@ -62,6 +118,7 @@
 
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-ink: var(--primary-ink);
   --color-primary-muted: var(--primary-muted);
   --color-primary-border: var(--primary-border);
 
@@ -87,12 +144,13 @@
   --color-rule-soft: var(--rule-soft);
 
   --color-system: var(--system);
+  --color-system-ink: var(--system-ink);
   --color-system-foreground: var(--system-foreground);
   --color-system-muted: var(--system-muted);
   --color-system-border: var(--system-border);
 
-  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', monospace;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
 
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
@@ -110,7 +168,7 @@
   }
 
   button:not(:disabled),
-  [role='button']:not(:disabled) {
+  [role="button"]:not(:disabled) {
     cursor: pointer;
   }
 
@@ -125,6 +183,34 @@
     border-radius: var(--radius-sm);
   }
 
+     other way round. Both draw the same thumb. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    background-clip: content-box;
+    border: 3px solid transparent;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+    background-clip: content-box;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -132,5 +218,93 @@
       animation-duration: 0.01ms !important;
       transition-duration: 0.01ms !important;
     }
+  }
+}
+
+@layer components {
+  .markdown {
+    @apply text-body text-[0.9375rem] leading-[1.7];
+  }
+
+  .markdown > * + * {
+    @apply mt-4;
+  }
+
+  .markdown h1,
+  .markdown h2,
+  .markdown h3 {
+    @apply text-foreground mt-6 font-semibold tracking-tight;
+  }
+
+  .markdown h1 {
+    @apply text-lg;
+  }
+
+  .markdown h2 {
+    @apply text-base;
+  }
+
+  .markdown h3 {
+    @apply text-sm tracking-wide uppercase;
+  }
+
+  .markdown a {
+    @apply text-foreground decoration-primary underline decoration-2 underline-offset-4;
+  }
+
+  .markdown a:hover {
+    @apply text-primary-ink;
+  }
+
+  .markdown strong {
+    @apply text-foreground font-semibold;
+  }
+
+  .markdown ul,
+  .markdown ol {
+    @apply flex flex-col gap-1 pl-5;
+  }
+
+  .markdown ul {
+    @apply list-disc;
+  }
+
+  .markdown ol {
+    @apply list-decimal;
+  }
+
+  .markdown blockquote {
+    @apply border-primary-border text-muted-foreground border-l-2 pl-4 italic;
+  }
+
+  .markdown :not(pre) > code {
+    @apply bg-elevated text-foreground rounded-sm px-1.5 py-0.5 font-mono text-[0.85em];
+  }
+
+  .markdown pre.shiki {
+    @apply border-border bg-elevated! overflow-x-auto rounded-md border p-4 font-mono text-[0.8125rem] leading-relaxed;
+  }
+
+  .markdown .shiki,
+  .markdown .shiki span {
+    color: var(--shiki-light);
+  }
+
+  .dark .markdown .shiki,
+  .dark .markdown .shiki span {
+    color: var(--shiki-dark);
+  }
+
+  .markdown table {
+    @apply w-full text-left text-sm;
+  }
+
+  .markdown th,
+  .markdown td {
+    @apply border-border border-b px-3 py-2;
+  }
+
+  .markdown hr {
+    @apply border-border my-6;
   }
 }
