@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from "@tanstack/react-router";
 
-import { RegisterPage } from '@pages/auth';
+import { RegisterPage } from "@pages/auth";
 
-export const Route = createFileRoute('/_guest/register')({
+export const Route = createFileRoute("/_guest/register")({
   component: RegisterPage,
 });

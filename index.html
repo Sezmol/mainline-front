@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
     <meta
       name="description"
       content="mainline — a professional network for engineers"
@@ -16,6 +16,22 @@
       rel="stylesheet"
     />
     <title>Mainline</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('mainline-theme') || 'dark';
+          var dark =
+            stored === 'dark' ||
+            (stored === 'system' &&
+              matchMedia('(prefers-color-scheme: dark)').matches);
+          var root = document.documentElement;
+          root.classList.add(dark ? 'dark' : 'light');
+          root.style.colorScheme = dark ? 'dark' : 'light';
+        } catch (error) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
