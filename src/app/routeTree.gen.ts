@@ -15,6 +15,8 @@ import { Route as GuestRouteImport } from './routes/_guest'
 import { Route as AppFeedRouteImport } from './routes/_app/feed'
 import { Route as GuestLoginRouteImport } from './routes/_guest/login'
 import { Route as GuestRegisterRouteImport } from './routes/_guest/register'
+import { Route as AppUNicknameRouteImport } from './routes/_app/u/$nickname'
+import { Route as AppUNicknameProjectsProjectIdRouteImport } from './routes/_app/u/$nickname_/projects/$projectId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -44,18 +46,33 @@ const GuestRegisterRoute = GuestRegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => GuestRoute,
 } as any)
+const AppUNicknameRoute = AppUNicknameRouteImport.update({
+  id: '/u/$nickname',
+  path: '/u/$nickname',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppUNicknameProjectsProjectIdRoute =
+  AppUNicknameProjectsProjectIdRouteImport.update({
+    id: '/u/$nickname_/projects/$projectId',
+    path: '/u/$nickname/projects/$projectId',
+    getParentRoute: () => AppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/feed': typeof AppFeedRoute
   '/login': typeof GuestLoginRoute
   '/register': typeof GuestRegisterRoute
+  '/u/$nickname': typeof AppUNicknameRoute
+  '/u/$nickname/projects/$projectId': typeof AppUNicknameProjectsProjectIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/feed': typeof AppFeedRoute
   '/login': typeof GuestLoginRoute
   '/register': typeof GuestRegisterRoute
+  '/u/$nickname': typeof AppUNicknameRoute
+  '/u/$nickname/projects/$projectId': typeof AppUNicknameProjectsProjectIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -65,12 +82,26 @@ export interface FileRoutesById {
   '/_app/feed': typeof AppFeedRoute
   '/_guest/login': typeof GuestLoginRoute
   '/_guest/register': typeof GuestRegisterRoute
+  '/_app/u/$nickname': typeof AppUNicknameRoute
+  '/_app/u/$nickname_/projects/$projectId': typeof AppUNicknameProjectsProjectIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/feed' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/feed'
+    | '/login'
+    | '/register'
+    | '/u/$nickname'
+    | '/u/$nickname/projects/$projectId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/feed' | '/login' | '/register'
+  to:
+    | '/'
+    | '/feed'
+    | '/login'
+    | '/register'
+    | '/u/$nickname'
+    | '/u/$nickname/projects/$projectId'
   id:
     | '__root__'
     | '/'
@@ -79,6 +110,8 @@ export interface FileRouteTypes {
     | '/_app/feed'
     | '/_guest/login'
     | '/_guest/register'
+    | '/_app/u/$nickname'
+    | '/_app/u/$nickname_/projects/$projectId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -131,15 +164,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuestRegisterRouteImport
       parentRoute: typeof GuestRoute
     }
+    '/_app/u/$nickname': {
+      id: '/_app/u/$nickname'
+      path: '/u/$nickname'
+      fullPath: '/u/$nickname'
+      preLoaderRoute: typeof AppUNicknameRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/u/$nickname_/projects/$projectId': {
+      id: '/_app/u/$nickname_/projects/$projectId'
+      path: '/u/$nickname/projects/$projectId'
+      fullPath: '/u/$nickname/projects/$projectId'
+      preLoaderRoute: typeof AppUNicknameProjectsProjectIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppFeedRoute: typeof AppFeedRoute
+  AppUNicknameRoute: typeof AppUNicknameRoute
+  AppUNicknameProjectsProjectIdRoute: typeof AppUNicknameProjectsProjectIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppFeedRoute: AppFeedRoute,
+  AppUNicknameRoute: AppUNicknameRoute,
+  AppUNicknameProjectsProjectIdRoute: AppUNicknameProjectsProjectIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
