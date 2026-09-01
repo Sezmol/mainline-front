@@ -5,18 +5,21 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-import { type Post, postKeys, type PostPage } from "@entities/post";
+import {
+  optimisticPostId,
+  type Post,
+  postKeys,
+  type PostPage,
+} from "@entities/post";
 import { sessionQueries } from "@entities/session";
 
 import { postsControllerCreate, postsControllerUpdate } from "@shared/api";
 
-import type { PostFormValues } from "./post-form.schema";
+import type { toPayload } from "./post-form.schema";
+
+type PostPayload = ReturnType<typeof toPayload>;
+
 type FeedData = InfiniteData<PostPage> | undefined;
-
-const OPTIMISTIC_PREFIX = "optimistic-";
-
-export const isOptimistic = (post: Post) =>
-  post.id.startsWith(OPTIMISTIC_PREFIX);
 
 const mapPages = (data: FeedData, map: (items: Post[]) => Post[]): FeedData =>
   data && {
@@ -43,44 +46,51 @@ export const useCreatePost = () => {
     );
 
   return useMutation({
-    mutationFn: async (values: PostFormValues) => {
+    mutationFn: async (payload: PostPayload) => {
       const { data } = await postsControllerCreate({
-        body: values,
+        body: payload,
         throwOnError: true,
       });
       return data;
     },
 
-    onMutate: (values) => {
+    onMutate: (payload) => {
       if (!user) return { id: null };
 
-      const id = `${OPTIMISTIC_PREFIX}${crypto.randomUUID()}`;
+      const id = optimisticPostId();
       const now = new Date().toISOString();
+
+      const meta = {
+        id,
+        author: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          nickname: user.nickname,
+          speciality: user.speciality,
+          role: user.role,
+          ...(user.description ? { description: user.description } : {}),
+          ...(user.workplace ? { workplace: user.workplace } : {}),
+        },
+        company: null,
+        likeCount: 0,
+        likedByMe: false,
+        savedByMe: false,
+        commentCount: 0,
+        acceptedCount: 0,
+        myInteraction: null,
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      const optimistic: Post =
+        payload.type === "task"
+          ? { ...payload, ...meta, project: null, assignees: [] }
+          : { ...payload, ...meta };
 
       queryClient.setQueriesData<InfiniteData<PostPage>>(
         { queryKey: postKeys.all() },
-        (data) =>
-          prepend(data, {
-            id,
-            type: "content",
-            direction: values.direction,
-            title: values.title,
-            body: values.body,
-            author: {
-              id: user.id,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              nickname: user.nickname,
-              speciality: user.speciality,
-              role: user.role,
-              ...(user.description ? { description: user.description } : {}),
-              ...(user.workplace ? { workplace: user.workplace } : {}),
-            },
-            likeCount: 0,
-            likedByMe: false,
-            createdAt: now,
-            updatedAt: now,
-          }),
+        (data) => prepend(data, optimistic),
       );
 
       return { id };
@@ -104,10 +114,10 @@ export const useUpdatePost = (id: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (values: PostFormValues) => {
+    mutationFn: async (payload: PostPayload) => {
       const { data } = await postsControllerUpdate({
         path: { id },
-        body: values,
+        body: payload,
         throwOnError: true,
       });
       return data;

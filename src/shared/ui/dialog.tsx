@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
-import { XIcon } from "lucide-react";
+import { XIcon } from "@phosphor-icons/react";
 
 import { cn } from "@shared/lib/cn";
 import { Button } from "@shared/ui/button";
@@ -100,7 +100,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "bg-muted/50 -mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t p-4 sm:flex-row sm:justify-end",
+        "bg-popover from-muted/50 to-muted/50 sticky -bottom-4 z-10 -mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-linear-to-b p-4 sm:flex-row sm:justify-end",
         className,
       )}
       {...props}
