@@ -24,9 +24,126 @@ import type {
   AuthControllerSessionData,
   AuthControllerSessionErrors,
   AuthControllerSessionResponses,
+  ChatsControllerArchiveData,
+  ChatsControllerArchiveErrors,
+  ChatsControllerArchiveResponses,
+  ChatsControllerCreateData,
+  ChatsControllerCreateErrors,
+  ChatsControllerCreateResponses,
+  ChatsControllerFindOneData,
+  ChatsControllerFindOneErrors,
+  ChatsControllerFindOneResponses,
+  ChatsControllerListData,
+  ChatsControllerListErrors,
+  ChatsControllerListResponses,
+  ChatsControllerMessagesData,
+  ChatsControllerMessagesErrors,
+  ChatsControllerMessagesResponses,
+  ChatsControllerParticipantsData,
+  ChatsControllerParticipantsErrors,
+  ChatsControllerParticipantsResponses,
+  ChatsControllerReadData,
+  ChatsControllerReadErrors,
+  ChatsControllerReadResponses,
+  ChatsControllerRemoveData,
+  ChatsControllerRemoveErrors,
+  ChatsControllerRemoveMessageData,
+  ChatsControllerRemoveMessageErrors,
+  ChatsControllerRemoveMessageResponses,
+  ChatsControllerRemoveResponses,
+  ChatsControllerSendData,
+  ChatsControllerSendErrors,
+  ChatsControllerSendResponses,
+  ChatsControllerSetParticipantWriteData,
+  ChatsControllerSetParticipantWriteErrors,
+  ChatsControllerSetParticipantWriteResponses,
+  ChatsControllerSettingsData,
+  ChatsControllerSettingsErrors,
+  ChatsControllerSettingsResponses,
+  CompaniesControllerAvailabilityData,
+  CompaniesControllerAvailabilityErrors,
+  CompaniesControllerAvailabilityResponses,
+  CompaniesControllerBySlugData,
+  CompaniesControllerBySlugErrors,
+  CompaniesControllerBySlugResponses,
+  CompaniesControllerCreateData,
+  CompaniesControllerCreateErrors,
+  CompaniesControllerCreateResponses,
+  CompaniesControllerListData,
+  CompaniesControllerListErrors,
+  CompaniesControllerListResponses,
+  CompaniesControllerMineData,
+  CompaniesControllerMineErrors,
+  CompaniesControllerMineResponses,
+  CompaniesControllerUpdateData,
+  CompaniesControllerUpdateErrors,
+  CompaniesControllerUpdateResponses,
+  DepartmentsControllerCreateData,
+  DepartmentsControllerCreateErrors,
+  DepartmentsControllerCreateResponses,
+  DepartmentsControllerListData,
+  DepartmentsControllerListErrors,
+  DepartmentsControllerListResponses,
+  DepartmentsControllerMembersData,
+  DepartmentsControllerMembersErrors,
+  DepartmentsControllerMembersResponses,
+  DepartmentsControllerRemoveData,
+  DepartmentsControllerRemoveErrors,
+  DepartmentsControllerRemoveMemberData,
+  DepartmentsControllerRemoveMemberErrors,
+  DepartmentsControllerRemoveMemberResponses,
+  DepartmentsControllerRemoveResponses,
+  DepartmentsControllerUpdateData,
+  DepartmentsControllerUpdateErrors,
+  DepartmentsControllerUpdateResponses,
   HealthControllerCheckData,
   HealthControllerCheckErrors,
   HealthControllerCheckResponses,
+  InteractionsControllerInteractData,
+  InteractionsControllerInteractErrors,
+  InteractionsControllerInteractResponses,
+  InteractionsControllerListData,
+  InteractionsControllerListErrors,
+  InteractionsControllerListResponses,
+  InvitesControllerDecideData,
+  InvitesControllerDecideErrors,
+  InvitesControllerDecideResponses,
+  InvitesControllerMineData,
+  InvitesControllerMineErrors,
+  InvitesControllerMineResponses,
+  InvitesControllerSentData,
+  InvitesControllerSentErrors,
+  InvitesControllerSentResponses,
+  InvitesControllerWithdrawData,
+  InvitesControllerWithdrawErrors,
+  InvitesControllerWithdrawResponses,
+  InviteTargetsControllerToCompanyData,
+  InviteTargetsControllerToCompanyErrors,
+  InviteTargetsControllerToCompanyResponses,
+  InviteTargetsControllerToDepartmentData,
+  InviteTargetsControllerToDepartmentErrors,
+  InviteTargetsControllerToDepartmentResponses,
+  InviteTargetsControllerToTeamData,
+  InviteTargetsControllerToTeamErrors,
+  InviteTargetsControllerToTeamResponses,
+  MembersControllerListData,
+  MembersControllerListErrors,
+  MembersControllerListResponses,
+  MembersControllerRemoveData,
+  MembersControllerRemoveErrors,
+  MembersControllerRemoveResponses,
+  MembersControllerSetRoleData,
+  MembersControllerSetRoleErrors,
+  MembersControllerSetRoleResponses,
+  MembersControllerTransferData,
+  MembersControllerTransferErrors,
+  MembersControllerTransferResponses,
+  NotificationsControllerListData,
+  NotificationsControllerListErrors,
+  NotificationsControllerListResponses,
+  NotificationsControllerMarkAllReadData,
+  NotificationsControllerMarkAllReadErrors,
+  NotificationsControllerMarkAllReadResponses,
   PortfolioControllerByIdData,
   PortfolioControllerByIdErrors,
   PortfolioControllerByIdResponses,
@@ -42,27 +159,102 @@ import type {
   PortfolioControllerUpdateData,
   PortfolioControllerUpdateErrors,
   PortfolioControllerUpdateResponses,
+  PostsControllerAssignData,
+  PostsControllerAssignErrors,
+  PostsControllerAssignResponses,
   PostsControllerByIdData,
   PostsControllerByIdErrors,
   PostsControllerByIdResponses,
+  PostsControllerChatData,
+  PostsControllerChatErrors,
+  PostsControllerChatResponses,
+  PostsControllerCommentData,
+  PostsControllerCommentErrors,
+  PostsControllerCommentResponses,
   PostsControllerCreateData,
   PostsControllerCreateErrors,
   PostsControllerCreateResponses,
   PostsControllerLikeData,
   PostsControllerLikeErrors,
   PostsControllerLikeResponses,
+  PostsControllerLikesData,
+  PostsControllerLikesErrors,
+  PostsControllerLikesResponses,
   PostsControllerListData,
   PostsControllerListErrors,
   PostsControllerListResponses,
   PostsControllerRemoveData,
   PostsControllerRemoveErrors,
   PostsControllerRemoveResponses,
+  PostsControllerSaveData,
+  PostsControllerSaveErrors,
+  PostsControllerSaveResponses,
+  PostsControllerSetStatusData,
+  PostsControllerSetStatusErrors,
+  PostsControllerSetStatusResponses,
+  PostsControllerUnassignData,
+  PostsControllerUnassignErrors,
+  PostsControllerUnassignResponses,
   PostsControllerUnlikeData,
   PostsControllerUnlikeErrors,
   PostsControllerUnlikeResponses,
+  PostsControllerUnsaveData,
+  PostsControllerUnsaveErrors,
+  PostsControllerUnsaveResponses,
   PostsControllerUpdateData,
   PostsControllerUpdateErrors,
   PostsControllerUpdateResponses,
+  ProjectsControllerAddColumnData,
+  ProjectsControllerAddColumnErrors,
+  ProjectsControllerAddColumnResponses,
+  ProjectsControllerByIdData,
+  ProjectsControllerByIdErrors,
+  ProjectsControllerByIdResponses,
+  ProjectsControllerColumnsData,
+  ProjectsControllerColumnsErrors,
+  ProjectsControllerColumnsResponses,
+  ProjectsControllerCreateData,
+  ProjectsControllerCreateErrors,
+  ProjectsControllerCreateResponses,
+  ProjectsControllerListData,
+  ProjectsControllerListErrors,
+  ProjectsControllerListResponses,
+  ProjectsControllerRemoveColumnData,
+  ProjectsControllerRemoveColumnErrors,
+  ProjectsControllerRemoveColumnResponses,
+  ProjectsControllerRemoveData,
+  ProjectsControllerRemoveErrors,
+  ProjectsControllerRemoveResponses,
+  ProjectsControllerReorderColumnsData,
+  ProjectsControllerReorderColumnsErrors,
+  ProjectsControllerReorderColumnsResponses,
+  ProjectsControllerUpdateColumnData,
+  ProjectsControllerUpdateColumnErrors,
+  ProjectsControllerUpdateColumnResponses,
+  ProjectsControllerUpdateData,
+  ProjectsControllerUpdateErrors,
+  ProjectsControllerUpdateResponses,
+  TeamsControllerByIdData,
+  TeamsControllerByIdErrors,
+  TeamsControllerByIdResponses,
+  TeamsControllerCreateData,
+  TeamsControllerCreateErrors,
+  TeamsControllerCreateResponses,
+  TeamsControllerListData,
+  TeamsControllerListErrors,
+  TeamsControllerListResponses,
+  TeamsControllerMembersData,
+  TeamsControllerMembersErrors,
+  TeamsControllerMembersResponses,
+  TeamsControllerRemoveData,
+  TeamsControllerRemoveErrors,
+  TeamsControllerRemoveMemberData,
+  TeamsControllerRemoveMemberErrors,
+  TeamsControllerRemoveMemberResponses,
+  TeamsControllerRemoveResponses,
+  TeamsControllerUpdateData,
+  TeamsControllerUpdateErrors,
+  TeamsControllerUpdateResponses,
   UsersControllerByNicknameData,
   UsersControllerByNicknameErrors,
   UsersControllerByNicknameResponses,
@@ -266,6 +458,268 @@ export const authControllerSession = <ThrowOnError extends boolean = false>(
   >({ url: "/api/auth", ...options });
 
 /**
+ * Chats of the current user
+ *
+ * Last written to first, with the last message and the unread count of each. archived=true returns the archive instead.
+ */
+export const chatsControllerList = <ThrowOnError extends boolean = false>(
+  options?: Options<ChatsControllerListData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerListResponses,
+  ChatsControllerListErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).get<
+    ChatsControllerListResponses,
+    ChatsControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/chats", ...options });
+
+/**
+ * Open a chat with a person
+ *
+ * Returns the chat that is already there if the two have one, so the client can call it every time it needs the id.
+ */
+export const chatsControllerCreate = <ThrowOnError extends boolean = false>(
+  options: Options<ChatsControllerCreateData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerCreateResponses,
+  ChatsControllerCreateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    ChatsControllerCreateResponses,
+    ChatsControllerCreateErrors,
+    ThrowOnError
+  >({
+    url: "/api/chats",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * One chat, members only
+ */
+export const chatsControllerFindOne = <ThrowOnError extends boolean = false>(
+  options: Options<ChatsControllerFindOneData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerFindOneResponses,
+  ChatsControllerFindOneErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    ChatsControllerFindOneResponses,
+    ChatsControllerFindOneErrors,
+    ThrowOnError
+  >({ url: "/api/chats/{id}", ...options });
+
+/**
+ * Who is in the chat
+ *
+ * A content chat keeps its list to itself and answers 403.
+ */
+export const chatsControllerParticipants = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<ChatsControllerParticipantsData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerParticipantsResponses,
+  ChatsControllerParticipantsErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    ChatsControllerParticipantsResponses,
+    ChatsControllerParticipantsErrors,
+    ThrowOnError
+  >({ url: "/api/chats/{id}/participants", ...options });
+
+/**
+ * History of a chat
+ *
+ * Newest first, like the feed. Members only, except a content chat: those are the comments of a post and anybody signed in may read them.
+ */
+export const chatsControllerMessages = <ThrowOnError extends boolean = false>(
+  options: Options<ChatsControllerMessagesData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerMessagesResponses,
+  ChatsControllerMessagesErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    ChatsControllerMessagesResponses,
+    ChatsControllerMessagesErrors,
+    ThrowOnError
+  >({ url: "/api/chats/{id}/messages", ...options });
+
+/**
+ * Write into a chat
+ *
+ * An empty body with a postId is how a post is saved to Favourites.
+ */
+export const chatsControllerSend = <ThrowOnError extends boolean = false>(
+  options: Options<ChatsControllerSendData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerSendResponses,
+  ChatsControllerSendErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    ChatsControllerSendResponses,
+    ChatsControllerSendErrors,
+    ThrowOnError
+  >({
+    url: "/api/chats/{id}/messages",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Delete a message, its author only
+ *
+ * How a saved post leaves Favourites, and how a note written there is taken back.
+ */
+export const chatsControllerRemoveMessage = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<ChatsControllerRemoveMessageData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerRemoveMessageResponses,
+  ChatsControllerRemoveMessageErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    ChatsControllerRemoveMessageResponses,
+    ChatsControllerRemoveMessageErrors,
+    ThrowOnError
+  >({ url: "/api/chats/{id}/messages/{messageId}", ...options });
+
+/**
+ * Move the read cursor to a message
+ *
+ * Answers with what is left unread, so the badge needs no call.
+ */
+export const chatsControllerRead = <ThrowOnError extends boolean = false>(
+  options: Options<ChatsControllerReadData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerReadResponses,
+  ChatsControllerReadErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    ChatsControllerReadResponses,
+    ChatsControllerReadErrors,
+    ThrowOnError
+  >({
+    url: "/api/chats/{id}/read",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Archive a chat, or take it back out
+ *
+ * Touches only your own row: a conversation belongs to two people and one of them does not get to delete it for the other.
+ */
+export const chatsControllerArchive = <ThrowOnError extends boolean = false>(
+  options: Options<ChatsControllerArchiveData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerArchiveResponses,
+  ChatsControllerArchiveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    ChatsControllerArchiveResponses,
+    ChatsControllerArchiveErrors,
+    ThrowOnError
+  >({
+    url: "/api/chats/{id}/archive",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Close an event chat for writing
+ *
+ * The author of the event only, and only an event chat.
+ */
+export const chatsControllerSettings = <ThrowOnError extends boolean = false>(
+  options: Options<ChatsControllerSettingsData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerSettingsResponses,
+  ChatsControllerSettingsErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    ChatsControllerSettingsResponses,
+    ChatsControllerSettingsErrors,
+    ThrowOnError
+  >({
+    url: "/api/chats/{id}/settings",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Remove a participant from an event chat
+ *
+ * The chat leaves their list. The row stays, so a fresh response does not walk them back in.
+ */
+export const chatsControllerRemove = <ThrowOnError extends boolean = false>(
+  options: Options<ChatsControllerRemoveData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerRemoveResponses,
+  ChatsControllerRemoveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    ChatsControllerRemoveResponses,
+    ChatsControllerRemoveErrors,
+    ThrowOnError
+  >({ url: "/api/chats/{id}/participants/{userId}", ...options });
+
+/**
+ * Mute one participant, or give the voice back
+ *
+ * The author of the event only, and never themselves.
+ */
+export const chatsControllerSetParticipantWrite = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<ChatsControllerSetParticipantWriteData, ThrowOnError>,
+): RequestResult<
+  ChatsControllerSetParticipantWriteResponses,
+  ChatsControllerSetParticipantWriteErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    ChatsControllerSetParticipantWriteResponses,
+    ChatsControllerSetParticipantWriteErrors,
+    ThrowOnError
+  >({
+    url: "/api/chats/{id}/participants/{userId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
  * A page of the feed, newest first
  *
  * Pass the nextCursor from the previous page to get the next one. Filters and cursor combine freely.
@@ -396,6 +850,944 @@ export const postsControllerLike = <ThrowOnError extends boolean = false>(
   >({ url: "/api/posts/{id}/like", ...options });
 
 /**
+ * Take a post out of Favourites
+ *
+ * Deletes the message that holds it.
+ */
+export const postsControllerUnsave = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerUnsaveData, ThrowOnError>,
+): RequestResult<
+  PostsControllerUnsaveResponses,
+  PostsControllerUnsaveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    PostsControllerUnsaveResponses,
+    PostsControllerUnsaveErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}/save", ...options });
+
+/**
+ * Save a post to Favourites
+ *
+ * Favourites is a chat, so saving writes a message holding the post. Saving twice changes nothing and answers with the message already there.
+ */
+export const postsControllerSave = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerSaveData, ThrowOnError>,
+): RequestResult<
+  PostsControllerSaveResponses,
+  PostsControllerSaveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    PostsControllerSaveResponses,
+    PostsControllerSaveErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}/save", ...options });
+
+/**
+ * Who liked a post, newest first
+ *
+ * Paged: a popular post is not a list you send in one piece.
+ */
+export const postsControllerLikes = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerLikesData, ThrowOnError>,
+): RequestResult<
+  PostsControllerLikesResponses,
+  PostsControllerLikesErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    PostsControllerLikesResponses,
+    PostsControllerLikesErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}/likes", ...options });
+
+/**
+ * The chat of an event or a content post
+ *
+ * 404 while a content post has no comments yet. A vacancy is not here: it has one chat per response.
+ */
+export const postsControllerChat = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerChatData, ThrowOnError>,
+): RequestResult<
+  PostsControllerChatResponses,
+  PostsControllerChatErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    PostsControllerChatResponses,
+    PostsControllerChatErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}/chat", ...options });
+
+/**
+ * Move a task to another column
+ *
+ * What dragging a card across the board sends. Assignees and the author may move their own task whatever the project allows the rest.
+ */
+export const postsControllerSetStatus = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerSetStatusData, ThrowOnError>,
+): RequestResult<
+  PostsControllerSetStatusResponses,
+  PostsControllerSetStatusErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    PostsControllerSetStatusResponses,
+    PostsControllerSetStatusErrors,
+    ThrowOnError
+  >({
+    url: "/api/posts/{id}/status",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Put somebody on a task
+ *
+ * Only inside a project, and only for people already on its team. A task with an assignee becomes private.
+ */
+export const postsControllerAssign = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerAssignData, ThrowOnError>,
+): RequestResult<
+  PostsControllerAssignResponses,
+  PostsControllerAssignErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    PostsControllerAssignResponses,
+    PostsControllerAssignErrors,
+    ThrowOnError
+  >({
+    url: "/api/posts/{id}/assignees",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Take somebody off a task, or step off yourself
+ */
+export const postsControllerUnassign = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerUnassignData, ThrowOnError>,
+): RequestResult<
+  PostsControllerUnassignResponses,
+  PostsControllerUnassignErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    PostsControllerUnassignResponses,
+    PostsControllerUnassignErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}/assignees/{userId}", ...options });
+
+/**
+ * Comment on a content post
+ *
+ * The way into the content chat from the feed, where the client has the post but not the chat. The first comment is what creates the chat.
+ */
+export const postsControllerComment = <ThrowOnError extends boolean = false>(
+  options: Options<PostsControllerCommentData, ThrowOnError>,
+): RequestResult<
+  PostsControllerCommentResponses,
+  PostsControllerCommentErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    PostsControllerCommentResponses,
+    PostsControllerCommentErrors,
+    ThrowOnError
+  >({
+    url: "/api/posts/{id}/comments",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Projects of every team the signed-in user is in
+ */
+export const projectsControllerList = <ThrowOnError extends boolean = false>(
+  options?: Options<ProjectsControllerListData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerListResponses,
+  ProjectsControllerListErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).get<
+    ProjectsControllerListResponses,
+    ProjectsControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/projects", ...options });
+
+/**
+ * Start a project in a team
+ *
+ * The creator becomes its manager, the board gets three columns and the team gets a project chat.
+ */
+export const projectsControllerCreate = <ThrowOnError extends boolean = false>(
+  options: Options<ProjectsControllerCreateData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerCreateResponses,
+  ProjectsControllerCreateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    ProjectsControllerCreateResponses,
+    ProjectsControllerCreateErrors,
+    ThrowOnError
+  >({
+    url: "/api/projects",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Delete a project with its board, tasks and chat
+ */
+export const projectsControllerRemove = <ThrowOnError extends boolean = false>(
+  options: Options<ProjectsControllerRemoveData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerRemoveResponses,
+  ProjectsControllerRemoveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    ProjectsControllerRemoveResponses,
+    ProjectsControllerRemoveErrors,
+    ThrowOnError
+  >({ url: "/api/projects/{projectId}", ...options });
+
+/**
+ * One project with its task summary
+ */
+export const projectsControllerById = <ThrowOnError extends boolean = false>(
+  options: Options<ProjectsControllerByIdData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerByIdResponses,
+  ProjectsControllerByIdErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    ProjectsControllerByIdResponses,
+    ProjectsControllerByIdErrors,
+    ThrowOnError
+  >({ url: "/api/projects/{projectId}", ...options });
+
+/**
+ * Edit a project
+ */
+export const projectsControllerUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<ProjectsControllerUpdateData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerUpdateResponses,
+  ProjectsControllerUpdateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    ProjectsControllerUpdateResponses,
+    ProjectsControllerUpdateErrors,
+    ThrowOnError
+  >({
+    url: "/api/projects/{projectId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Columns of the board, in order
+ */
+export const projectsControllerColumns = <ThrowOnError extends boolean = false>(
+  options: Options<ProjectsControllerColumnsData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerColumnsResponses,
+  ProjectsControllerColumnsErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    ProjectsControllerColumnsResponses,
+    ProjectsControllerColumnsErrors,
+    ThrowOnError
+  >({ url: "/api/projects/{projectId}/columns", ...options });
+
+/**
+ * Add a column to the board
+ */
+export const projectsControllerAddColumn = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<ProjectsControllerAddColumnData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerAddColumnResponses,
+  ProjectsControllerAddColumnErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    ProjectsControllerAddColumnResponses,
+    ProjectsControllerAddColumnErrors,
+    ThrowOnError
+  >({
+    url: "/api/projects/{projectId}/columns",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Reorder the whole board at once
+ */
+export const projectsControllerReorderColumns = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<ProjectsControllerReorderColumnsData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerReorderColumnsResponses,
+  ProjectsControllerReorderColumnsErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    ProjectsControllerReorderColumnsResponses,
+    ProjectsControllerReorderColumnsErrors,
+    ThrowOnError
+  >({
+    url: "/api/projects/{projectId}/columns/order",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Delete a column
+ *
+ * Its tasks move to the first column that is left.
+ */
+export const projectsControllerRemoveColumn = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<ProjectsControllerRemoveColumnData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerRemoveColumnResponses,
+  ProjectsControllerRemoveColumnErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    ProjectsControllerRemoveColumnResponses,
+    ProjectsControllerRemoveColumnErrors,
+    ThrowOnError
+  >({ url: "/api/projects/{projectId}/columns/{columnId}", ...options });
+
+/**
+ * Rename a column
+ *
+ * The tasks standing in it move with it, in one transaction.
+ */
+export const projectsControllerUpdateColumn = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<ProjectsControllerUpdateColumnData, ThrowOnError>,
+): RequestResult<
+  ProjectsControllerUpdateColumnResponses,
+  ProjectsControllerUpdateColumnErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    ProjectsControllerUpdateColumnResponses,
+    ProjectsControllerUpdateColumnErrors,
+    ThrowOnError
+  >({
+    url: "/api/projects/{projectId}/columns/{columnId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Directory of companies, newest first
+ */
+export const companiesControllerList = <ThrowOnError extends boolean = false>(
+  options?: Options<CompaniesControllerListData, ThrowOnError>,
+): RequestResult<
+  CompaniesControllerListResponses,
+  CompaniesControllerListErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).get<
+    CompaniesControllerListResponses,
+    CompaniesControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/companies", ...options });
+
+/**
+ * Create a company; the creator becomes its owner
+ */
+export const companiesControllerCreate = <ThrowOnError extends boolean = false>(
+  options: Options<CompaniesControllerCreateData, ThrowOnError>,
+): RequestResult<
+  CompaniesControllerCreateResponses,
+  CompaniesControllerCreateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    CompaniesControllerCreateResponses,
+    CompaniesControllerCreateErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Check whether a company address is still free
+ */
+export const companiesControllerAvailability = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<CompaniesControllerAvailabilityData, ThrowOnError>,
+): RequestResult<
+  CompaniesControllerAvailabilityResponses,
+  CompaniesControllerAvailabilityErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    CompaniesControllerAvailabilityResponses,
+    CompaniesControllerAvailabilityErrors,
+    ThrowOnError
+  >({ url: "/api/companies/availability", ...options });
+
+/**
+ * Companies the signed-in user works for
+ */
+export const companiesControllerMine = <ThrowOnError extends boolean = false>(
+  options?: Options<CompaniesControllerMineData, ThrowOnError>,
+): RequestResult<
+  CompaniesControllerMineResponses,
+  CompaniesControllerMineErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).get<
+    CompaniesControllerMineResponses,
+    CompaniesControllerMineErrors,
+    ThrowOnError
+  >({ url: "/api/companies/mine", ...options });
+
+/**
+ * Company page; the private half is filled in for employees
+ */
+export const companiesControllerBySlug = <ThrowOnError extends boolean = false>(
+  options: Options<CompaniesControllerBySlugData, ThrowOnError>,
+): RequestResult<
+  CompaniesControllerBySlugResponses,
+  CompaniesControllerBySlugErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    CompaniesControllerBySlugResponses,
+    CompaniesControllerBySlugErrors,
+    ThrowOnError
+  >({ url: "/api/companies/{slug}", ...options });
+
+/**
+ * Edit a company, owner only
+ *
+ * Replaces the record: a field left out of the body is cleared.
+ */
+export const companiesControllerUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<CompaniesControllerUpdateData, ThrowOnError>,
+): RequestResult<
+  CompaniesControllerUpdateResponses,
+  CompaniesControllerUpdateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    CompaniesControllerUpdateResponses,
+    CompaniesControllerUpdateErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Staff of the company; employees only
+ */
+export const membersControllerList = <ThrowOnError extends boolean = false>(
+  options: Options<MembersControllerListData, ThrowOnError>,
+): RequestResult<
+  MembersControllerListResponses,
+  MembersControllerListErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    MembersControllerListResponses,
+    MembersControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/companies/{companyId}/members", ...options });
+
+/**
+ * Invite a person to the company; owner or HR
+ */
+export const inviteTargetsControllerToCompany = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<InviteTargetsControllerToCompanyData, ThrowOnError>,
+): RequestResult<
+  InviteTargetsControllerToCompanyResponses,
+  InviteTargetsControllerToCompanyErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    InviteTargetsControllerToCompanyResponses,
+    InviteTargetsControllerToCompanyErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}/members",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Hand the company over to another employee
+ */
+export const membersControllerTransfer = <ThrowOnError extends boolean = false>(
+  options: Options<MembersControllerTransferData, ThrowOnError>,
+): RequestResult<
+  MembersControllerTransferResponses,
+  MembersControllerTransferErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    MembersControllerTransferResponses,
+    MembersControllerTransferErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}/members/transfer",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Remove a person, or leave the company yourself
+ */
+export const membersControllerRemove = <ThrowOnError extends boolean = false>(
+  options: Options<MembersControllerRemoveData, ThrowOnError>,
+): RequestResult<
+  MembersControllerRemoveResponses,
+  MembersControllerRemoveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    MembersControllerRemoveResponses,
+    MembersControllerRemoveErrors,
+    ThrowOnError
+  >({ url: "/api/companies/{companyId}/members/{userId}", ...options });
+
+/**
+ * Assign a role, owner only
+ */
+export const membersControllerSetRole = <ThrowOnError extends boolean = false>(
+  options: Options<MembersControllerSetRoleData, ThrowOnError>,
+): RequestResult<
+  MembersControllerSetRoleResponses,
+  MembersControllerSetRoleErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    MembersControllerSetRoleResponses,
+    MembersControllerSetRoleErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}/members/{userId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Departments of the company; employees only
+ */
+export const departmentsControllerList = <ThrowOnError extends boolean = false>(
+  options: Options<DepartmentsControllerListData, ThrowOnError>,
+): RequestResult<
+  DepartmentsControllerListResponses,
+  DepartmentsControllerListErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    DepartmentsControllerListResponses,
+    DepartmentsControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/companies/{companyId}/departments", ...options });
+
+/**
+ * Create a department; owner or HR
+ */
+export const departmentsControllerCreate = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DepartmentsControllerCreateData, ThrowOnError>,
+): RequestResult<
+  DepartmentsControllerCreateResponses,
+  DepartmentsControllerCreateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    DepartmentsControllerCreateResponses,
+    DepartmentsControllerCreateErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}/departments",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Delete a department together with its chat
+ */
+export const departmentsControllerRemove = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DepartmentsControllerRemoveData, ThrowOnError>,
+): RequestResult<
+  DepartmentsControllerRemoveResponses,
+  DepartmentsControllerRemoveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    DepartmentsControllerRemoveResponses,
+    DepartmentsControllerRemoveErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}/departments/{departmentId}",
+    ...options,
+  });
+
+/**
+ * Rename a department or change its head
+ */
+export const departmentsControllerUpdate = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DepartmentsControllerUpdateData, ThrowOnError>,
+): RequestResult<
+  DepartmentsControllerUpdateResponses,
+  DepartmentsControllerUpdateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    DepartmentsControllerUpdateResponses,
+    DepartmentsControllerUpdateErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}/departments/{departmentId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * People in the department, with their roles
+ */
+export const departmentsControllerMembers = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DepartmentsControllerMembersData, ThrowOnError>,
+): RequestResult<
+  DepartmentsControllerMembersResponses,
+  DepartmentsControllerMembersErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    DepartmentsControllerMembersResponses,
+    DepartmentsControllerMembersErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}/departments/{departmentId}/members",
+    ...options,
+  });
+
+/**
+ * Invite an employee into a department; staff or its head
+ */
+export const inviteTargetsControllerToDepartment = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<InviteTargetsControllerToDepartmentData, ThrowOnError>,
+): RequestResult<
+  InviteTargetsControllerToDepartmentResponses,
+  InviteTargetsControllerToDepartmentErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    InviteTargetsControllerToDepartmentResponses,
+    InviteTargetsControllerToDepartmentErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}/departments/{departmentId}/members",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Remove somebody, or leave the department
+ */
+export const departmentsControllerRemoveMember = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DepartmentsControllerRemoveMemberData, ThrowOnError>,
+): RequestResult<
+  DepartmentsControllerRemoveMemberResponses,
+  DepartmentsControllerRemoveMemberErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    DepartmentsControllerRemoveMemberResponses,
+    DepartmentsControllerRemoveMemberErrors,
+    ThrowOnError
+  >({
+    url: "/api/companies/{companyId}/departments/{departmentId}/members/{userId}",
+    ...options,
+  });
+
+/**
+ * Teams the signed-in user is in
+ */
+export const teamsControllerList = <ThrowOnError extends boolean = false>(
+  options?: Options<TeamsControllerListData, ThrowOnError>,
+): RequestResult<
+  TeamsControllerListResponses,
+  TeamsControllerListErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).get<
+    TeamsControllerListResponses,
+    TeamsControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/teams", ...options });
+
+/**
+ * Create a team
+ *
+ * Without companyId the team is independent and anybody may create it.
+ */
+export const teamsControllerCreate = <ThrowOnError extends boolean = false>(
+  options: Options<TeamsControllerCreateData, ThrowOnError>,
+): RequestResult<
+  TeamsControllerCreateResponses,
+  TeamsControllerCreateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    TeamsControllerCreateResponses,
+    TeamsControllerCreateErrors,
+    ThrowOnError
+  >({
+    url: "/api/teams",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Disband a team together with its chat
+ */
+export const teamsControllerRemove = <ThrowOnError extends boolean = false>(
+  options: Options<TeamsControllerRemoveData, ThrowOnError>,
+): RequestResult<
+  TeamsControllerRemoveResponses,
+  TeamsControllerRemoveErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    TeamsControllerRemoveResponses,
+    TeamsControllerRemoveErrors,
+    ThrowOnError
+  >({ url: "/api/teams/{teamId}", ...options });
+
+/**
+ * One team; members and the company owner only
+ */
+export const teamsControllerById = <ThrowOnError extends boolean = false>(
+  options: Options<TeamsControllerByIdData, ThrowOnError>,
+): RequestResult<
+  TeamsControllerByIdResponses,
+  TeamsControllerByIdErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    TeamsControllerByIdResponses,
+    TeamsControllerByIdErrors,
+    ThrowOnError
+  >({ url: "/api/teams/{teamId}", ...options });
+
+/**
+ * Rename a team or change its description
+ */
+export const teamsControllerUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<TeamsControllerUpdateData, ThrowOnError>,
+): RequestResult<
+  TeamsControllerUpdateResponses,
+  TeamsControllerUpdateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    TeamsControllerUpdateResponses,
+    TeamsControllerUpdateErrors,
+    ThrowOnError
+  >({
+    url: "/api/teams/{teamId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * People in the team, with role and departments
+ */
+export const teamsControllerMembers = <ThrowOnError extends boolean = false>(
+  options: Options<TeamsControllerMembersData, ThrowOnError>,
+): RequestResult<
+  TeamsControllerMembersResponses,
+  TeamsControllerMembersErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    TeamsControllerMembersResponses,
+    TeamsControllerMembersErrors,
+    ThrowOnError
+  >({ url: "/api/teams/{teamId}/members", ...options });
+
+/**
+ * Invite a person into a team; the team lead
+ */
+export const inviteTargetsControllerToTeam = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<InviteTargetsControllerToTeamData, ThrowOnError>,
+): RequestResult<
+  InviteTargetsControllerToTeamResponses,
+  InviteTargetsControllerToTeamErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    InviteTargetsControllerToTeamResponses,
+    InviteTargetsControllerToTeamErrors,
+    ThrowOnError
+  >({
+    url: "/api/teams/{teamId}/members",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Remove somebody, or leave the team
+ */
+export const teamsControllerRemoveMember = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<TeamsControllerRemoveMemberData, ThrowOnError>,
+): RequestResult<
+  TeamsControllerRemoveMemberResponses,
+  TeamsControllerRemoveMemberErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    TeamsControllerRemoveMemberResponses,
+    TeamsControllerRemoveMemberErrors,
+    ThrowOnError
+  >({ url: "/api/teams/{teamId}/members/{userId}", ...options });
+
+/**
+ * Your notifications, newest first
+ *
+ * Never mixed into the feed: a notification is not a post. Paged on the same cursor as everything else.
+ */
+export const notificationsControllerList = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<NotificationsControllerListData, ThrowOnError>,
+): RequestResult<
+  NotificationsControllerListResponses,
+  NotificationsControllerListErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).get<
+    NotificationsControllerListResponses,
+    NotificationsControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/notifications", ...options });
+
+/**
+ * Mark everything read
+ *
+ * What opening the bell does. Reading one at a time is not a thing the interface offers.
+ */
+export const notificationsControllerMarkAllRead = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<NotificationsControllerMarkAllReadData, ThrowOnError>,
+): RequestResult<
+  NotificationsControllerMarkAllReadResponses,
+  NotificationsControllerMarkAllReadErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).put<
+    NotificationsControllerMarkAllReadResponses,
+    NotificationsControllerMarkAllReadErrors,
+    ThrowOnError
+  >({ url: "/api/notifications/read", ...options });
+
+/**
  * Everything in a portfolio, newest first
  *
  * Short by nature, so it comes back in one go without paging.
@@ -414,6 +1806,7 @@ export const portfolioControllerList = <ThrowOnError extends boolean = false>(
   >({ url: "/api/users/{userId}/portfolio", ...options });
 
 /**
+ * Add a item, owner only
  */
 export const portfolioControllerCreate = <ThrowOnError extends boolean = false>(
   options: Options<PortfolioControllerCreateData, ThrowOnError>,
@@ -436,6 +1829,7 @@ export const portfolioControllerCreate = <ThrowOnError extends boolean = false>(
   });
 
 /**
+ * Delete a item, owner only
  */
 export const portfolioControllerRemove = <ThrowOnError extends boolean = false>(
   options: Options<PortfolioControllerRemoveData, ThrowOnError>,
@@ -448,9 +1842,10 @@ export const portfolioControllerRemove = <ThrowOnError extends boolean = false>(
     PortfolioControllerRemoveResponses,
     PortfolioControllerRemoveErrors,
     ThrowOnError
-  >({ url: "/api/users/{userId}/portfolio/{projectId}", ...options });
+  >({ url: "/api/users/{userId}/portfolio/{itemId}", ...options });
 
 /**
+ * A single item
  */
 export const portfolioControllerById = <ThrowOnError extends boolean = false>(
   options: Options<PortfolioControllerByIdData, ThrowOnError>,
@@ -463,9 +1858,10 @@ export const portfolioControllerById = <ThrowOnError extends boolean = false>(
     PortfolioControllerByIdResponses,
     PortfolioControllerByIdErrors,
     ThrowOnError
-  >({ url: "/api/users/{userId}/portfolio/{projectId}", ...options });
+  >({ url: "/api/users/{userId}/portfolio/{itemId}", ...options });
 
 /**
+ * Edit a item, owner only
  */
 export const portfolioControllerUpdate = <ThrowOnError extends boolean = false>(
   options: Options<PortfolioControllerUpdateData, ThrowOnError>,
@@ -479,7 +1875,125 @@ export const portfolioControllerUpdate = <ThrowOnError extends boolean = false>(
     PortfolioControllerUpdateErrors,
     ThrowOnError
   >({
-    url: "/api/users/{userId}/portfolio/{projectId}",
+    url: "/api/users/{userId}/portfolio/{itemId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Who responded to a post or was invited, author only
+ *
+ * Newest first. Short by nature, so it comes back in one go.
+ */
+export const interactionsControllerList = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<InteractionsControllerListData, ThrowOnError>,
+): RequestResult<
+  InteractionsControllerListResponses,
+  InteractionsControllerListErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    InteractionsControllerListResponses,
+    InteractionsControllerListErrors,
+    ThrowOnError
+  >({ url: "/api/posts/{id}/interactions", ...options });
+
+/**
+ * Respond, invite, accept or decline
+ *
+ * Responding to a vacancy waits for the author, responding to a public event takes a seat at once. An invitation is answered by the person who got it, a response by the author of the post.
+ */
+export const interactionsControllerInteract = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<InteractionsControllerInteractData, ThrowOnError>,
+): RequestResult<
+  InteractionsControllerInteractResponses,
+  InteractionsControllerInteractErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    InteractionsControllerInteractResponses,
+    InteractionsControllerInteractErrors,
+    ThrowOnError
+  >({
+    url: "/api/posts/{id}/interact",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+/**
+ * Invitations addressed to the signed-in user
+ */
+export const invitesControllerMine = <ThrowOnError extends boolean = false>(
+  options?: Options<InvitesControllerMineData, ThrowOnError>,
+): RequestResult<
+  InvitesControllerMineResponses,
+  InvitesControllerMineErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).get<
+    InvitesControllerMineResponses,
+    InvitesControllerMineErrors,
+    ThrowOnError
+  >({ url: "/api/invites", ...options });
+
+/**
+ * Invitations the user has sent
+ */
+export const invitesControllerSent = <ThrowOnError extends boolean = false>(
+  options?: Options<InvitesControllerSentData, ThrowOnError>,
+): RequestResult<
+  InvitesControllerSentResponses,
+  InvitesControllerSentErrors,
+  ThrowOnError
+> =>
+  (options?.client ?? client).get<
+    InvitesControllerSentResponses,
+    InvitesControllerSentErrors,
+    ThrowOnError
+  >({ url: "/api/invites/sent", ...options });
+
+/**
+ * Withdraw an invitation you sent
+ */
+export const invitesControllerWithdraw = <ThrowOnError extends boolean = false>(
+  options: Options<InvitesControllerWithdrawData, ThrowOnError>,
+): RequestResult<
+  InvitesControllerWithdrawResponses,
+  InvitesControllerWithdrawErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).delete<
+    InvitesControllerWithdrawResponses,
+    InvitesControllerWithdrawErrors,
+    ThrowOnError
+  >({ url: "/api/invites/{inviteId}", ...options });
+
+/**
+ * Accept or decline an invitation
+ */
+export const invitesControllerDecide = <ThrowOnError extends boolean = false>(
+  options: Options<InvitesControllerDecideData, ThrowOnError>,
+): RequestResult<
+  InvitesControllerDecideResponses,
+  InvitesControllerDecideErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).put<
+    InvitesControllerDecideResponses,
+    InvitesControllerDecideErrors,
+    ThrowOnError
+  >({
+    url: "/api/invites/{inviteId}",
     ...options,
     headers: {
       "Content-Type": "application/json",

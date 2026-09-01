@@ -14,20 +14,84 @@ import {
   authControllerRefresh,
   authControllerRegister,
   authControllerSession,
+  chatsControllerArchive,
+  chatsControllerCreate,
+  chatsControllerFindOne,
+  chatsControllerList,
+  chatsControllerMessages,
+  chatsControllerParticipants,
+  chatsControllerRead,
+  chatsControllerRemove,
+  chatsControllerRemoveMessage,
+  chatsControllerSend,
+  chatsControllerSetParticipantWrite,
+  chatsControllerSettings,
+  companiesControllerAvailability,
+  companiesControllerBySlug,
+  companiesControllerCreate,
+  companiesControllerList,
+  companiesControllerMine,
+  companiesControllerUpdate,
+  departmentsControllerCreate,
+  departmentsControllerList,
+  departmentsControllerMembers,
+  departmentsControllerRemove,
+  departmentsControllerRemoveMember,
+  departmentsControllerUpdate,
   healthControllerCheck,
+  interactionsControllerInteract,
+  interactionsControllerList,
+  invitesControllerDecide,
+  invitesControllerMine,
+  invitesControllerSent,
+  invitesControllerWithdraw,
+  inviteTargetsControllerToCompany,
+  inviteTargetsControllerToDepartment,
+  inviteTargetsControllerToTeam,
+  membersControllerList,
+  membersControllerRemove,
+  membersControllerSetRole,
+  membersControllerTransfer,
+  notificationsControllerList,
+  notificationsControllerMarkAllRead,
   type Options,
   portfolioControllerById,
   portfolioControllerCreate,
   portfolioControllerList,
   portfolioControllerRemove,
   portfolioControllerUpdate,
+  postsControllerAssign,
   postsControllerById,
+  postsControllerChat,
+  postsControllerComment,
   postsControllerCreate,
   postsControllerLike,
+  postsControllerLikes,
   postsControllerList,
   postsControllerRemove,
+  postsControllerSave,
+  postsControllerSetStatus,
+  postsControllerUnassign,
   postsControllerUnlike,
+  postsControllerUnsave,
   postsControllerUpdate,
+  projectsControllerAddColumn,
+  projectsControllerById,
+  projectsControllerColumns,
+  projectsControllerCreate,
+  projectsControllerList,
+  projectsControllerRemove,
+  projectsControllerRemoveColumn,
+  projectsControllerReorderColumns,
+  projectsControllerUpdate,
+  projectsControllerUpdateColumn,
+  teamsControllerById,
+  teamsControllerCreate,
+  teamsControllerList,
+  teamsControllerMembers,
+  teamsControllerRemove,
+  teamsControllerRemoveMember,
+  teamsControllerUpdate,
   usersControllerByNickname,
   usersControllerCheckAvailability,
   usersControllerUpdate,
@@ -48,9 +112,126 @@ import type {
   AuthControllerSessionData,
   AuthControllerSessionError,
   AuthControllerSessionResponse,
+  ChatsControllerArchiveData,
+  ChatsControllerArchiveError,
+  ChatsControllerArchiveResponse,
+  ChatsControllerCreateData,
+  ChatsControllerCreateError,
+  ChatsControllerCreateResponse,
+  ChatsControllerFindOneData,
+  ChatsControllerFindOneError,
+  ChatsControllerFindOneResponse,
+  ChatsControllerListData,
+  ChatsControllerListError,
+  ChatsControllerListResponse,
+  ChatsControllerMessagesData,
+  ChatsControllerMessagesError,
+  ChatsControllerMessagesResponse,
+  ChatsControllerParticipantsData,
+  ChatsControllerParticipantsError,
+  ChatsControllerParticipantsResponse,
+  ChatsControllerReadData,
+  ChatsControllerReadError,
+  ChatsControllerReadResponse,
+  ChatsControllerRemoveData,
+  ChatsControllerRemoveError,
+  ChatsControllerRemoveMessageData,
+  ChatsControllerRemoveMessageError,
+  ChatsControllerRemoveMessageResponse,
+  ChatsControllerRemoveResponse,
+  ChatsControllerSendData,
+  ChatsControllerSendError,
+  ChatsControllerSendResponse,
+  ChatsControllerSetParticipantWriteData,
+  ChatsControllerSetParticipantWriteError,
+  ChatsControllerSetParticipantWriteResponse,
+  ChatsControllerSettingsData,
+  ChatsControllerSettingsError,
+  ChatsControllerSettingsResponse,
+  CompaniesControllerAvailabilityData,
+  CompaniesControllerAvailabilityError,
+  CompaniesControllerAvailabilityResponse,
+  CompaniesControllerBySlugData,
+  CompaniesControllerBySlugError,
+  CompaniesControllerBySlugResponse,
+  CompaniesControllerCreateData,
+  CompaniesControllerCreateError,
+  CompaniesControllerCreateResponse,
+  CompaniesControllerListData,
+  CompaniesControllerListError,
+  CompaniesControllerListResponse,
+  CompaniesControllerMineData,
+  CompaniesControllerMineError,
+  CompaniesControllerMineResponse,
+  CompaniesControllerUpdateData,
+  CompaniesControllerUpdateError,
+  CompaniesControllerUpdateResponse,
+  DepartmentsControllerCreateData,
+  DepartmentsControllerCreateError,
+  DepartmentsControllerCreateResponse,
+  DepartmentsControllerListData,
+  DepartmentsControllerListError,
+  DepartmentsControllerListResponse,
+  DepartmentsControllerMembersData,
+  DepartmentsControllerMembersError,
+  DepartmentsControllerMembersResponse,
+  DepartmentsControllerRemoveData,
+  DepartmentsControllerRemoveError,
+  DepartmentsControllerRemoveMemberData,
+  DepartmentsControllerRemoveMemberError,
+  DepartmentsControllerRemoveMemberResponse,
+  DepartmentsControllerRemoveResponse,
+  DepartmentsControllerUpdateData,
+  DepartmentsControllerUpdateError,
+  DepartmentsControllerUpdateResponse,
   HealthControllerCheckData,
   HealthControllerCheckError,
   HealthControllerCheckResponse,
+  InteractionsControllerInteractData,
+  InteractionsControllerInteractError,
+  InteractionsControllerInteractResponse,
+  InteractionsControllerListData,
+  InteractionsControllerListError,
+  InteractionsControllerListResponse,
+  InvitesControllerDecideData,
+  InvitesControllerDecideError,
+  InvitesControllerDecideResponse,
+  InvitesControllerMineData,
+  InvitesControllerMineError,
+  InvitesControllerMineResponse,
+  InvitesControllerSentData,
+  InvitesControllerSentError,
+  InvitesControllerSentResponse,
+  InvitesControllerWithdrawData,
+  InvitesControllerWithdrawError,
+  InvitesControllerWithdrawResponse,
+  InviteTargetsControllerToCompanyData,
+  InviteTargetsControllerToCompanyError,
+  InviteTargetsControllerToCompanyResponse,
+  InviteTargetsControllerToDepartmentData,
+  InviteTargetsControllerToDepartmentError,
+  InviteTargetsControllerToDepartmentResponse,
+  InviteTargetsControllerToTeamData,
+  InviteTargetsControllerToTeamError,
+  InviteTargetsControllerToTeamResponse,
+  MembersControllerListData,
+  MembersControllerListError,
+  MembersControllerListResponse,
+  MembersControllerRemoveData,
+  MembersControllerRemoveError,
+  MembersControllerRemoveResponse,
+  MembersControllerSetRoleData,
+  MembersControllerSetRoleError,
+  MembersControllerSetRoleResponse,
+  MembersControllerTransferData,
+  MembersControllerTransferError,
+  MembersControllerTransferResponse,
+  NotificationsControllerListData,
+  NotificationsControllerListError,
+  NotificationsControllerListResponse,
+  NotificationsControllerMarkAllReadData,
+  NotificationsControllerMarkAllReadError,
+  NotificationsControllerMarkAllReadResponse,
   PortfolioControllerByIdData,
   PortfolioControllerByIdError,
   PortfolioControllerByIdResponse,
@@ -66,27 +247,102 @@ import type {
   PortfolioControllerUpdateData,
   PortfolioControllerUpdateError,
   PortfolioControllerUpdateResponse,
+  PostsControllerAssignData,
+  PostsControllerAssignError,
+  PostsControllerAssignResponse,
   PostsControllerByIdData,
   PostsControllerByIdError,
   PostsControllerByIdResponse,
+  PostsControllerChatData,
+  PostsControllerChatError,
+  PostsControllerChatResponse,
+  PostsControllerCommentData,
+  PostsControllerCommentError,
+  PostsControllerCommentResponse,
   PostsControllerCreateData,
   PostsControllerCreateError,
   PostsControllerCreateResponse,
   PostsControllerLikeData,
   PostsControllerLikeError,
   PostsControllerLikeResponse,
+  PostsControllerLikesData,
+  PostsControllerLikesError,
+  PostsControllerLikesResponse,
   PostsControllerListData,
   PostsControllerListError,
   PostsControllerListResponse,
   PostsControllerRemoveData,
   PostsControllerRemoveError,
   PostsControllerRemoveResponse,
+  PostsControllerSaveData,
+  PostsControllerSaveError,
+  PostsControllerSaveResponse,
+  PostsControllerSetStatusData,
+  PostsControllerSetStatusError,
+  PostsControllerSetStatusResponse,
+  PostsControllerUnassignData,
+  PostsControllerUnassignError,
+  PostsControllerUnassignResponse,
   PostsControllerUnlikeData,
   PostsControllerUnlikeError,
   PostsControllerUnlikeResponse,
+  PostsControllerUnsaveData,
+  PostsControllerUnsaveError,
+  PostsControllerUnsaveResponse,
   PostsControllerUpdateData,
   PostsControllerUpdateError,
   PostsControllerUpdateResponse,
+  ProjectsControllerAddColumnData,
+  ProjectsControllerAddColumnError,
+  ProjectsControllerAddColumnResponse,
+  ProjectsControllerByIdData,
+  ProjectsControllerByIdError,
+  ProjectsControllerByIdResponse,
+  ProjectsControllerColumnsData,
+  ProjectsControllerColumnsError,
+  ProjectsControllerColumnsResponse,
+  ProjectsControllerCreateData,
+  ProjectsControllerCreateError,
+  ProjectsControllerCreateResponse,
+  ProjectsControllerListData,
+  ProjectsControllerListError,
+  ProjectsControllerListResponse,
+  ProjectsControllerRemoveColumnData,
+  ProjectsControllerRemoveColumnError,
+  ProjectsControllerRemoveColumnResponse,
+  ProjectsControllerRemoveData,
+  ProjectsControllerRemoveError,
+  ProjectsControllerRemoveResponse,
+  ProjectsControllerReorderColumnsData,
+  ProjectsControllerReorderColumnsError,
+  ProjectsControllerReorderColumnsResponse,
+  ProjectsControllerUpdateColumnData,
+  ProjectsControllerUpdateColumnError,
+  ProjectsControllerUpdateColumnResponse,
+  ProjectsControllerUpdateData,
+  ProjectsControllerUpdateError,
+  ProjectsControllerUpdateResponse,
+  TeamsControllerByIdData,
+  TeamsControllerByIdError,
+  TeamsControllerByIdResponse,
+  TeamsControllerCreateData,
+  TeamsControllerCreateError,
+  TeamsControllerCreateResponse,
+  TeamsControllerListData,
+  TeamsControllerListError,
+  TeamsControllerListResponse,
+  TeamsControllerMembersData,
+  TeamsControllerMembersError,
+  TeamsControllerMembersResponse,
+  TeamsControllerRemoveData,
+  TeamsControllerRemoveError,
+  TeamsControllerRemoveMemberData,
+  TeamsControllerRemoveMemberError,
+  TeamsControllerRemoveMemberResponse,
+  TeamsControllerRemoveResponse,
+  TeamsControllerUpdateData,
+  TeamsControllerUpdateError,
+  TeamsControllerUpdateResponse,
   UsersControllerByNicknameData,
   UsersControllerByNicknameError,
   UsersControllerByNicknameResponse,
@@ -391,24 +647,26 @@ export const authControllerSessionOptions = (
     queryKey: authControllerSessionQueryKey(options),
   });
 
-export const postsControllerListQueryKey = (
-  options?: Options<PostsControllerListData>,
-) => createQueryKey("postsControllerList", options);
+export const chatsControllerListQueryKey = (
+  options?: Options<ChatsControllerListData>,
+) => createQueryKey("chatsControllerList", options);
 
 /**
+ * Chats of the current user
  *
+ * Last written to first, with the last message and the unread count of each. archived=true returns the archive instead.
  */
-export const postsControllerListOptions = (
-  options?: Options<PostsControllerListData>,
+export const chatsControllerListOptions = (
+  options?: Options<ChatsControllerListData>,
 ) =>
   queryOptions<
-    PostsControllerListResponse,
-    PostsControllerListError,
-    PostsControllerListResponse,
-    ReturnType<typeof postsControllerListQueryKey>
+    ChatsControllerListResponse,
+    ChatsControllerListError,
+    ChatsControllerListResponse,
+    ReturnType<typeof chatsControllerListQueryKey>
   >({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await postsControllerList({
+      const { data } = await chatsControllerList({
         ...options,
         ...queryKey[0],
         signal,
@@ -416,7 +674,7 @@ export const postsControllerListOptions = (
       });
       return data;
     },
-    queryKey: postsControllerListQueryKey(options),
+    queryKey: chatsControllerListQueryKey(options),
   });
 
 const createInfiniteParams = <
@@ -452,6 +710,464 @@ const createInfiniteParams = <
   }
   return params as unknown as typeof page;
 };
+
+export const chatsControllerListInfiniteQueryKey = (
+  options?: Options<ChatsControllerListData>,
+): QueryKey<Options<ChatsControllerListData>> =>
+  createQueryKey("chatsControllerList", options, true);
+
+/**
+ * Chats of the current user
+ *
+ * Last written to first, with the last message and the unread count of each. archived=true returns the archive instead.
+ */
+export const chatsControllerListInfiniteOptions = (
+  options?: Options<ChatsControllerListData>,
+) => {
+  const opts = infiniteQueryOptions<
+    ChatsControllerListResponse,
+    ChatsControllerListError,
+    InfiniteData<ChatsControllerListResponse>,
+    QueryKey<Options<ChatsControllerListData>>,
+    | string
+    | Pick<
+        QueryKey<Options<ChatsControllerListData>>[0],
+        "body" | "headers" | "path" | "query"
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<ChatsControllerListData>>[0],
+          "body" | "headers" | "path" | "query"
+        > =
+          typeof pageParam === "object"
+            ? pageParam
+            : {
+                query: {
+                  cursor: pageParam,
+                },
+              };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await chatsControllerList({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true,
+        });
+        return data;
+      },
+      queryKey: chatsControllerListInfiniteQueryKey(options),
+    },
+  );
+  return opts as Omit<typeof opts, "initialData">;
+};
+
+/**
+ * Open a chat with a person
+ *
+ * Returns the chat that is already there if the two have one, so the client can call it every time it needs the id.
+ */
+export const chatsControllerCreateMutation = (
+  options?: Partial<Options<ChatsControllerCreateData>>,
+): UseMutationOptions<
+  ChatsControllerCreateResponse,
+  ChatsControllerCreateError,
+  Options<ChatsControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ChatsControllerCreateResponse,
+    ChatsControllerCreateError,
+    Options<ChatsControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await chatsControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const chatsControllerFindOneQueryKey = (
+  options: Options<ChatsControllerFindOneData>,
+) => createQueryKey("chatsControllerFindOne", options);
+
+/**
+ * One chat, members only
+ */
+export const chatsControllerFindOneOptions = (
+  options: Options<ChatsControllerFindOneData>,
+) =>
+  queryOptions<
+    ChatsControllerFindOneResponse,
+    ChatsControllerFindOneError,
+    ChatsControllerFindOneResponse,
+    ReturnType<typeof chatsControllerFindOneQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await chatsControllerFindOne({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: chatsControllerFindOneQueryKey(options),
+  });
+
+export const chatsControllerParticipantsQueryKey = (
+  options: Options<ChatsControllerParticipantsData>,
+) => createQueryKey("chatsControllerParticipants", options);
+
+/**
+ * Who is in the chat
+ *
+ * A content chat keeps its list to itself and answers 403.
+ */
+export const chatsControllerParticipantsOptions = (
+  options: Options<ChatsControllerParticipantsData>,
+) =>
+  queryOptions<
+    ChatsControllerParticipantsResponse,
+    ChatsControllerParticipantsError,
+    ChatsControllerParticipantsResponse,
+    ReturnType<typeof chatsControllerParticipantsQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await chatsControllerParticipants({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: chatsControllerParticipantsQueryKey(options),
+  });
+
+export const chatsControllerMessagesQueryKey = (
+  options: Options<ChatsControllerMessagesData>,
+) => createQueryKey("chatsControllerMessages", options);
+
+/**
+ * History of a chat
+ *
+ * Newest first, like the feed. Members only, except a content chat: those are the comments of a post and anybody signed in may read them.
+ */
+export const chatsControllerMessagesOptions = (
+  options: Options<ChatsControllerMessagesData>,
+) =>
+  queryOptions<
+    ChatsControllerMessagesResponse,
+    ChatsControllerMessagesError,
+    ChatsControllerMessagesResponse,
+    ReturnType<typeof chatsControllerMessagesQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await chatsControllerMessages({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: chatsControllerMessagesQueryKey(options),
+  });
+
+export const chatsControllerMessagesInfiniteQueryKey = (
+  options: Options<ChatsControllerMessagesData>,
+): QueryKey<Options<ChatsControllerMessagesData>> =>
+  createQueryKey("chatsControllerMessages", options, true);
+
+/**
+ * History of a chat
+ *
+ * Newest first, like the feed. Members only, except a content chat: those are the comments of a post and anybody signed in may read them.
+ */
+export const chatsControllerMessagesInfiniteOptions = (
+  options: Options<ChatsControllerMessagesData>,
+) => {
+  const opts = infiniteQueryOptions<
+    ChatsControllerMessagesResponse,
+    ChatsControllerMessagesError,
+    InfiniteData<ChatsControllerMessagesResponse>,
+    QueryKey<Options<ChatsControllerMessagesData>>,
+    | string
+    | Pick<
+        QueryKey<Options<ChatsControllerMessagesData>>[0],
+        "body" | "headers" | "path" | "query"
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<ChatsControllerMessagesData>>[0],
+          "body" | "headers" | "path" | "query"
+        > =
+          typeof pageParam === "object"
+            ? pageParam
+            : {
+                query: {
+                  cursor: pageParam,
+                },
+              };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await chatsControllerMessages({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true,
+        });
+        return data;
+      },
+      queryKey: chatsControllerMessagesInfiniteQueryKey(options),
+    },
+  );
+  return opts as Omit<typeof opts, "initialData">;
+};
+
+/**
+ * Write into a chat
+ *
+ * An empty body with a postId is how a post is saved to Favourites.
+ */
+export const chatsControllerSendMutation = (
+  options?: Partial<Options<ChatsControllerSendData>>,
+): UseMutationOptions<
+  ChatsControllerSendResponse,
+  ChatsControllerSendError,
+  Options<ChatsControllerSendData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ChatsControllerSendResponse,
+    ChatsControllerSendError,
+    Options<ChatsControllerSendData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await chatsControllerSend({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Delete a message, its author only
+ *
+ * How a saved post leaves Favourites, and how a note written there is taken back.
+ */
+export const chatsControllerRemoveMessageMutation = (
+  options?: Partial<Options<ChatsControllerRemoveMessageData>>,
+): UseMutationOptions<
+  ChatsControllerRemoveMessageResponse,
+  ChatsControllerRemoveMessageError,
+  Options<ChatsControllerRemoveMessageData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ChatsControllerRemoveMessageResponse,
+    ChatsControllerRemoveMessageError,
+    Options<ChatsControllerRemoveMessageData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await chatsControllerRemoveMessage({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Move the read cursor to a message
+ *
+ * Answers with what is left unread, so the badge needs no call.
+ */
+export const chatsControllerReadMutation = (
+  options?: Partial<Options<ChatsControllerReadData>>,
+): UseMutationOptions<
+  ChatsControllerReadResponse,
+  ChatsControllerReadError,
+  Options<ChatsControllerReadData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ChatsControllerReadResponse,
+    ChatsControllerReadError,
+    Options<ChatsControllerReadData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await chatsControllerRead({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Archive a chat, or take it back out
+ *
+ * Touches only your own row: a conversation belongs to two people and one of them does not get to delete it for the other.
+ */
+export const chatsControllerArchiveMutation = (
+  options?: Partial<Options<ChatsControllerArchiveData>>,
+): UseMutationOptions<
+  ChatsControllerArchiveResponse,
+  ChatsControllerArchiveError,
+  Options<ChatsControllerArchiveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ChatsControllerArchiveResponse,
+    ChatsControllerArchiveError,
+    Options<ChatsControllerArchiveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await chatsControllerArchive({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Close an event chat for writing
+ *
+ * The author of the event only, and only an event chat.
+ */
+export const chatsControllerSettingsMutation = (
+  options?: Partial<Options<ChatsControllerSettingsData>>,
+): UseMutationOptions<
+  ChatsControllerSettingsResponse,
+  ChatsControllerSettingsError,
+  Options<ChatsControllerSettingsData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ChatsControllerSettingsResponse,
+    ChatsControllerSettingsError,
+    Options<ChatsControllerSettingsData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await chatsControllerSettings({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Remove a participant from an event chat
+ *
+ * The chat leaves their list. The row stays, so a fresh response does not walk them back in.
+ */
+export const chatsControllerRemoveMutation = (
+  options?: Partial<Options<ChatsControllerRemoveData>>,
+): UseMutationOptions<
+  ChatsControllerRemoveResponse,
+  ChatsControllerRemoveError,
+  Options<ChatsControllerRemoveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ChatsControllerRemoveResponse,
+    ChatsControllerRemoveError,
+    Options<ChatsControllerRemoveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await chatsControllerRemove({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Mute one participant, or give the voice back
+ *
+ * The author of the event only, and never themselves.
+ */
+export const chatsControllerSetParticipantWriteMutation = (
+  options?: Partial<Options<ChatsControllerSetParticipantWriteData>>,
+): UseMutationOptions<
+  ChatsControllerSetParticipantWriteResponse,
+  ChatsControllerSetParticipantWriteError,
+  Options<ChatsControllerSetParticipantWriteData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ChatsControllerSetParticipantWriteResponse,
+    ChatsControllerSetParticipantWriteError,
+    Options<ChatsControllerSetParticipantWriteData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await chatsControllerSetParticipantWrite({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const postsControllerListQueryKey = (
+  options?: Options<PostsControllerListData>,
+) => createQueryKey("postsControllerList", options);
+
+/**
+ * A page of the feed, newest first
+ *
+ * Pass the nextCursor from the previous page to get the next one. Filters and cursor combine freely.
+ */
+export const postsControllerListOptions = (
+  options?: Options<PostsControllerListData>,
+) =>
+  queryOptions<
+    PostsControllerListResponse,
+    PostsControllerListError,
+    PostsControllerListResponse,
+    ReturnType<typeof postsControllerListQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await postsControllerList({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: postsControllerListQueryKey(options),
+  });
 
 export const postsControllerListInfiniteQueryKey = (
   options?: Options<PostsControllerListData>,
@@ -672,6 +1388,1504 @@ export const postsControllerLikeMutation = (
   return mutationOptions;
 };
 
+/**
+ * Take a post out of Favourites
+ *
+ * Deletes the message that holds it.
+ */
+export const postsControllerUnsaveMutation = (
+  options?: Partial<Options<PostsControllerUnsaveData>>,
+): UseMutationOptions<
+  PostsControllerUnsaveResponse,
+  PostsControllerUnsaveError,
+  Options<PostsControllerUnsaveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostsControllerUnsaveResponse,
+    PostsControllerUnsaveError,
+    Options<PostsControllerUnsaveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postsControllerUnsave({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Save a post to Favourites
+ *
+ * Favourites is a chat, so saving writes a message holding the post. Saving twice changes nothing and answers with the message already there.
+ */
+export const postsControllerSaveMutation = (
+  options?: Partial<Options<PostsControllerSaveData>>,
+): UseMutationOptions<
+  PostsControllerSaveResponse,
+  PostsControllerSaveError,
+  Options<PostsControllerSaveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostsControllerSaveResponse,
+    PostsControllerSaveError,
+    Options<PostsControllerSaveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postsControllerSave({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const postsControllerLikesQueryKey = (
+  options: Options<PostsControllerLikesData>,
+) => createQueryKey("postsControllerLikes", options);
+
+/**
+ * Who liked a post, newest first
+ *
+ * Paged: a popular post is not a list you send in one piece.
+ */
+export const postsControllerLikesOptions = (
+  options: Options<PostsControllerLikesData>,
+) =>
+  queryOptions<
+    PostsControllerLikesResponse,
+    PostsControllerLikesError,
+    PostsControllerLikesResponse,
+    ReturnType<typeof postsControllerLikesQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await postsControllerLikes({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: postsControllerLikesQueryKey(options),
+  });
+
+export const postsControllerLikesInfiniteQueryKey = (
+  options: Options<PostsControllerLikesData>,
+): QueryKey<Options<PostsControllerLikesData>> =>
+  createQueryKey("postsControllerLikes", options, true);
+
+/**
+ * Who liked a post, newest first
+ *
+ * Paged: a popular post is not a list you send in one piece.
+ */
+export const postsControllerLikesInfiniteOptions = (
+  options: Options<PostsControllerLikesData>,
+) => {
+  const opts = infiniteQueryOptions<
+    PostsControllerLikesResponse,
+    PostsControllerLikesError,
+    InfiniteData<PostsControllerLikesResponse>,
+    QueryKey<Options<PostsControllerLikesData>>,
+    | string
+    | Pick<
+        QueryKey<Options<PostsControllerLikesData>>[0],
+        "body" | "headers" | "path" | "query"
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<PostsControllerLikesData>>[0],
+          "body" | "headers" | "path" | "query"
+        > =
+          typeof pageParam === "object"
+            ? pageParam
+            : {
+                query: {
+                  cursor: pageParam,
+                },
+              };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await postsControllerLikes({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true,
+        });
+        return data;
+      },
+      queryKey: postsControllerLikesInfiniteQueryKey(options),
+    },
+  );
+  return opts as Omit<typeof opts, "initialData">;
+};
+
+export const postsControllerChatQueryKey = (
+  options: Options<PostsControllerChatData>,
+) => createQueryKey("postsControllerChat", options);
+
+/**
+ * The chat of an event or a content post
+ *
+ * 404 while a content post has no comments yet. A vacancy is not here: it has one chat per response.
+ */
+export const postsControllerChatOptions = (
+  options: Options<PostsControllerChatData>,
+) =>
+  queryOptions<
+    PostsControllerChatResponse,
+    PostsControllerChatError,
+    PostsControllerChatResponse,
+    ReturnType<typeof postsControllerChatQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await postsControllerChat({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: postsControllerChatQueryKey(options),
+  });
+
+/**
+ * Move a task to another column
+ *
+ * What dragging a card across the board sends. Assignees and the author may move their own task whatever the project allows the rest.
+ */
+export const postsControllerSetStatusMutation = (
+  options?: Partial<Options<PostsControllerSetStatusData>>,
+): UseMutationOptions<
+  PostsControllerSetStatusResponse,
+  PostsControllerSetStatusError,
+  Options<PostsControllerSetStatusData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostsControllerSetStatusResponse,
+    PostsControllerSetStatusError,
+    Options<PostsControllerSetStatusData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postsControllerSetStatus({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Put somebody on a task
+ *
+ * Only inside a project, and only for people already on its team. A task with an assignee becomes private.
+ */
+export const postsControllerAssignMutation = (
+  options?: Partial<Options<PostsControllerAssignData>>,
+): UseMutationOptions<
+  PostsControllerAssignResponse,
+  PostsControllerAssignError,
+  Options<PostsControllerAssignData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostsControllerAssignResponse,
+    PostsControllerAssignError,
+    Options<PostsControllerAssignData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postsControllerAssign({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Take somebody off a task, or step off yourself
+ */
+export const postsControllerUnassignMutation = (
+  options?: Partial<Options<PostsControllerUnassignData>>,
+): UseMutationOptions<
+  PostsControllerUnassignResponse,
+  PostsControllerUnassignError,
+  Options<PostsControllerUnassignData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostsControllerUnassignResponse,
+    PostsControllerUnassignError,
+    Options<PostsControllerUnassignData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postsControllerUnassign({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Comment on a content post
+ *
+ * The way into the content chat from the feed, where the client has the post but not the chat. The first comment is what creates the chat.
+ */
+export const postsControllerCommentMutation = (
+  options?: Partial<Options<PostsControllerCommentData>>,
+): UseMutationOptions<
+  PostsControllerCommentResponse,
+  PostsControllerCommentError,
+  Options<PostsControllerCommentData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostsControllerCommentResponse,
+    PostsControllerCommentError,
+    Options<PostsControllerCommentData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postsControllerComment({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const projectsControllerListQueryKey = (
+  options?: Options<ProjectsControllerListData>,
+) => createQueryKey("projectsControllerList", options);
+
+/**
+ * Projects of every team the signed-in user is in
+ */
+export const projectsControllerListOptions = (
+  options?: Options<ProjectsControllerListData>,
+) =>
+  queryOptions<
+    ProjectsControllerListResponse,
+    ProjectsControllerListError,
+    ProjectsControllerListResponse,
+    ReturnType<typeof projectsControllerListQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await projectsControllerList({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: projectsControllerListQueryKey(options),
+  });
+
+/**
+ * Start a project in a team
+ *
+ * The creator becomes its manager, the board gets three columns and the team gets a project chat.
+ */
+export const projectsControllerCreateMutation = (
+  options?: Partial<Options<ProjectsControllerCreateData>>,
+): UseMutationOptions<
+  ProjectsControllerCreateResponse,
+  ProjectsControllerCreateError,
+  Options<ProjectsControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ProjectsControllerCreateResponse,
+    ProjectsControllerCreateError,
+    Options<ProjectsControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await projectsControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Delete a project with its board, tasks and chat
+ */
+export const projectsControllerRemoveMutation = (
+  options?: Partial<Options<ProjectsControllerRemoveData>>,
+): UseMutationOptions<
+  ProjectsControllerRemoveResponse,
+  ProjectsControllerRemoveError,
+  Options<ProjectsControllerRemoveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ProjectsControllerRemoveResponse,
+    ProjectsControllerRemoveError,
+    Options<ProjectsControllerRemoveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await projectsControllerRemove({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const projectsControllerByIdQueryKey = (
+  options: Options<ProjectsControllerByIdData>,
+) => createQueryKey("projectsControllerById", options);
+
+/**
+ * One project with its task summary
+ */
+export const projectsControllerByIdOptions = (
+  options: Options<ProjectsControllerByIdData>,
+) =>
+  queryOptions<
+    ProjectsControllerByIdResponse,
+    ProjectsControllerByIdError,
+    ProjectsControllerByIdResponse,
+    ReturnType<typeof projectsControllerByIdQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await projectsControllerById({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: projectsControllerByIdQueryKey(options),
+  });
+
+/**
+ * Edit a project
+ */
+export const projectsControllerUpdateMutation = (
+  options?: Partial<Options<ProjectsControllerUpdateData>>,
+): UseMutationOptions<
+  ProjectsControllerUpdateResponse,
+  ProjectsControllerUpdateError,
+  Options<ProjectsControllerUpdateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ProjectsControllerUpdateResponse,
+    ProjectsControllerUpdateError,
+    Options<ProjectsControllerUpdateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await projectsControllerUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const projectsControllerColumnsQueryKey = (
+  options: Options<ProjectsControllerColumnsData>,
+) => createQueryKey("projectsControllerColumns", options);
+
+/**
+ * Columns of the board, in order
+ */
+export const projectsControllerColumnsOptions = (
+  options: Options<ProjectsControllerColumnsData>,
+) =>
+  queryOptions<
+    ProjectsControllerColumnsResponse,
+    ProjectsControllerColumnsError,
+    ProjectsControllerColumnsResponse,
+    ReturnType<typeof projectsControllerColumnsQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await projectsControllerColumns({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: projectsControllerColumnsQueryKey(options),
+  });
+
+/**
+ * Add a column to the board
+ */
+export const projectsControllerAddColumnMutation = (
+  options?: Partial<Options<ProjectsControllerAddColumnData>>,
+): UseMutationOptions<
+  ProjectsControllerAddColumnResponse,
+  ProjectsControllerAddColumnError,
+  Options<ProjectsControllerAddColumnData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ProjectsControllerAddColumnResponse,
+    ProjectsControllerAddColumnError,
+    Options<ProjectsControllerAddColumnData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await projectsControllerAddColumn({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Reorder the whole board at once
+ */
+export const projectsControllerReorderColumnsMutation = (
+  options?: Partial<Options<ProjectsControllerReorderColumnsData>>,
+): UseMutationOptions<
+  ProjectsControllerReorderColumnsResponse,
+  ProjectsControllerReorderColumnsError,
+  Options<ProjectsControllerReorderColumnsData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ProjectsControllerReorderColumnsResponse,
+    ProjectsControllerReorderColumnsError,
+    Options<ProjectsControllerReorderColumnsData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await projectsControllerReorderColumns({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Delete a column
+ *
+ * Its tasks move to the first column that is left.
+ */
+export const projectsControllerRemoveColumnMutation = (
+  options?: Partial<Options<ProjectsControllerRemoveColumnData>>,
+): UseMutationOptions<
+  ProjectsControllerRemoveColumnResponse,
+  ProjectsControllerRemoveColumnError,
+  Options<ProjectsControllerRemoveColumnData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ProjectsControllerRemoveColumnResponse,
+    ProjectsControllerRemoveColumnError,
+    Options<ProjectsControllerRemoveColumnData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await projectsControllerRemoveColumn({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Rename a column
+ *
+ * The tasks standing in it move with it, in one transaction.
+ */
+export const projectsControllerUpdateColumnMutation = (
+  options?: Partial<Options<ProjectsControllerUpdateColumnData>>,
+): UseMutationOptions<
+  ProjectsControllerUpdateColumnResponse,
+  ProjectsControllerUpdateColumnError,
+  Options<ProjectsControllerUpdateColumnData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ProjectsControllerUpdateColumnResponse,
+    ProjectsControllerUpdateColumnError,
+    Options<ProjectsControllerUpdateColumnData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await projectsControllerUpdateColumn({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const companiesControllerListQueryKey = (
+  options?: Options<CompaniesControllerListData>,
+) => createQueryKey("companiesControllerList", options);
+
+/**
+ * Directory of companies, newest first
+ */
+export const companiesControllerListOptions = (
+  options?: Options<CompaniesControllerListData>,
+) =>
+  queryOptions<
+    CompaniesControllerListResponse,
+    CompaniesControllerListError,
+    CompaniesControllerListResponse,
+    ReturnType<typeof companiesControllerListQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await companiesControllerList({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: companiesControllerListQueryKey(options),
+  });
+
+export const companiesControllerListInfiniteQueryKey = (
+  options?: Options<CompaniesControllerListData>,
+): QueryKey<Options<CompaniesControllerListData>> =>
+  createQueryKey("companiesControllerList", options, true);
+
+/**
+ * Directory of companies, newest first
+ */
+export const companiesControllerListInfiniteOptions = (
+  options?: Options<CompaniesControllerListData>,
+) => {
+  const opts = infiniteQueryOptions<
+    CompaniesControllerListResponse,
+    CompaniesControllerListError,
+    InfiniteData<CompaniesControllerListResponse>,
+    QueryKey<Options<CompaniesControllerListData>>,
+    | string
+    | Pick<
+        QueryKey<Options<CompaniesControllerListData>>[0],
+        "body" | "headers" | "path" | "query"
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<CompaniesControllerListData>>[0],
+          "body" | "headers" | "path" | "query"
+        > =
+          typeof pageParam === "object"
+            ? pageParam
+            : {
+                query: {
+                  cursor: pageParam,
+                },
+              };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await companiesControllerList({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true,
+        });
+        return data;
+      },
+      queryKey: companiesControllerListInfiniteQueryKey(options),
+    },
+  );
+  return opts as Omit<typeof opts, "initialData">;
+};
+
+/**
+ * Create a company; the creator becomes its owner
+ */
+export const companiesControllerCreateMutation = (
+  options?: Partial<Options<CompaniesControllerCreateData>>,
+): UseMutationOptions<
+  CompaniesControllerCreateResponse,
+  CompaniesControllerCreateError,
+  Options<CompaniesControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    CompaniesControllerCreateResponse,
+    CompaniesControllerCreateError,
+    Options<CompaniesControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await companiesControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const companiesControllerAvailabilityQueryKey = (
+  options: Options<CompaniesControllerAvailabilityData>,
+) => createQueryKey("companiesControllerAvailability", options);
+
+/**
+ * Check whether a company address is still free
+ */
+export const companiesControllerAvailabilityOptions = (
+  options: Options<CompaniesControllerAvailabilityData>,
+) =>
+  queryOptions<
+    CompaniesControllerAvailabilityResponse,
+    CompaniesControllerAvailabilityError,
+    CompaniesControllerAvailabilityResponse,
+    ReturnType<typeof companiesControllerAvailabilityQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await companiesControllerAvailability({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: companiesControllerAvailabilityQueryKey(options),
+  });
+
+export const companiesControllerMineQueryKey = (
+  options?: Options<CompaniesControllerMineData>,
+) => createQueryKey("companiesControllerMine", options);
+
+/**
+ * Companies the signed-in user works for
+ */
+export const companiesControllerMineOptions = (
+  options?: Options<CompaniesControllerMineData>,
+) =>
+  queryOptions<
+    CompaniesControllerMineResponse,
+    CompaniesControllerMineError,
+    CompaniesControllerMineResponse,
+    ReturnType<typeof companiesControllerMineQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await companiesControllerMine({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: companiesControllerMineQueryKey(options),
+  });
+
+export const companiesControllerBySlugQueryKey = (
+  options: Options<CompaniesControllerBySlugData>,
+) => createQueryKey("companiesControllerBySlug", options);
+
+/**
+ * Company page; the private half is filled in for employees
+ */
+export const companiesControllerBySlugOptions = (
+  options: Options<CompaniesControllerBySlugData>,
+) =>
+  queryOptions<
+    CompaniesControllerBySlugResponse,
+    CompaniesControllerBySlugError,
+    CompaniesControllerBySlugResponse,
+    ReturnType<typeof companiesControllerBySlugQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await companiesControllerBySlug({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: companiesControllerBySlugQueryKey(options),
+  });
+
+/**
+ * Edit a company, owner only
+ *
+ * Replaces the record: a field left out of the body is cleared.
+ */
+export const companiesControllerUpdateMutation = (
+  options?: Partial<Options<CompaniesControllerUpdateData>>,
+): UseMutationOptions<
+  CompaniesControllerUpdateResponse,
+  CompaniesControllerUpdateError,
+  Options<CompaniesControllerUpdateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    CompaniesControllerUpdateResponse,
+    CompaniesControllerUpdateError,
+    Options<CompaniesControllerUpdateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await companiesControllerUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const membersControllerListQueryKey = (
+  options: Options<MembersControllerListData>,
+) => createQueryKey("membersControllerList", options);
+
+/**
+ * Staff of the company; employees only
+ */
+export const membersControllerListOptions = (
+  options: Options<MembersControllerListData>,
+) =>
+  queryOptions<
+    MembersControllerListResponse,
+    MembersControllerListError,
+    MembersControllerListResponse,
+    ReturnType<typeof membersControllerListQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await membersControllerList({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: membersControllerListQueryKey(options),
+  });
+
+export const membersControllerListInfiniteQueryKey = (
+  options: Options<MembersControllerListData>,
+): QueryKey<Options<MembersControllerListData>> =>
+  createQueryKey("membersControllerList", options, true);
+
+/**
+ * Staff of the company; employees only
+ */
+export const membersControllerListInfiniteOptions = (
+  options: Options<MembersControllerListData>,
+) => {
+  const opts = infiniteQueryOptions<
+    MembersControllerListResponse,
+    MembersControllerListError,
+    InfiniteData<MembersControllerListResponse>,
+    QueryKey<Options<MembersControllerListData>>,
+    | string
+    | Pick<
+        QueryKey<Options<MembersControllerListData>>[0],
+        "body" | "headers" | "path" | "query"
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<MembersControllerListData>>[0],
+          "body" | "headers" | "path" | "query"
+        > =
+          typeof pageParam === "object"
+            ? pageParam
+            : {
+                query: {
+                  cursor: pageParam,
+                },
+              };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await membersControllerList({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true,
+        });
+        return data;
+      },
+      queryKey: membersControllerListInfiniteQueryKey(options),
+    },
+  );
+  return opts as Omit<typeof opts, "initialData">;
+};
+
+/**
+ * Invite a person to the company; owner or HR
+ */
+export const inviteTargetsControllerToCompanyMutation = (
+  options?: Partial<Options<InviteTargetsControllerToCompanyData>>,
+): UseMutationOptions<
+  InviteTargetsControllerToCompanyResponse,
+  InviteTargetsControllerToCompanyError,
+  Options<InviteTargetsControllerToCompanyData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    InviteTargetsControllerToCompanyResponse,
+    InviteTargetsControllerToCompanyError,
+    Options<InviteTargetsControllerToCompanyData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await inviteTargetsControllerToCompany({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Hand the company over to another employee
+ */
+export const membersControllerTransferMutation = (
+  options?: Partial<Options<MembersControllerTransferData>>,
+): UseMutationOptions<
+  MembersControllerTransferResponse,
+  MembersControllerTransferError,
+  Options<MembersControllerTransferData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    MembersControllerTransferResponse,
+    MembersControllerTransferError,
+    Options<MembersControllerTransferData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await membersControllerTransfer({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Remove a person, or leave the company yourself
+ */
+export const membersControllerRemoveMutation = (
+  options?: Partial<Options<MembersControllerRemoveData>>,
+): UseMutationOptions<
+  MembersControllerRemoveResponse,
+  MembersControllerRemoveError,
+  Options<MembersControllerRemoveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    MembersControllerRemoveResponse,
+    MembersControllerRemoveError,
+    Options<MembersControllerRemoveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await membersControllerRemove({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Assign a role, owner only
+ */
+export const membersControllerSetRoleMutation = (
+  options?: Partial<Options<MembersControllerSetRoleData>>,
+): UseMutationOptions<
+  MembersControllerSetRoleResponse,
+  MembersControllerSetRoleError,
+  Options<MembersControllerSetRoleData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    MembersControllerSetRoleResponse,
+    MembersControllerSetRoleError,
+    Options<MembersControllerSetRoleData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await membersControllerSetRole({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const departmentsControllerListQueryKey = (
+  options: Options<DepartmentsControllerListData>,
+) => createQueryKey("departmentsControllerList", options);
+
+/**
+ * Departments of the company; employees only
+ */
+export const departmentsControllerListOptions = (
+  options: Options<DepartmentsControllerListData>,
+) =>
+  queryOptions<
+    DepartmentsControllerListResponse,
+    DepartmentsControllerListError,
+    DepartmentsControllerListResponse,
+    ReturnType<typeof departmentsControllerListQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await departmentsControllerList({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: departmentsControllerListQueryKey(options),
+  });
+
+/**
+ * Create a department; owner or HR
+ */
+export const departmentsControllerCreateMutation = (
+  options?: Partial<Options<DepartmentsControllerCreateData>>,
+): UseMutationOptions<
+  DepartmentsControllerCreateResponse,
+  DepartmentsControllerCreateError,
+  Options<DepartmentsControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    DepartmentsControllerCreateResponse,
+    DepartmentsControllerCreateError,
+    Options<DepartmentsControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await departmentsControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Delete a department together with its chat
+ */
+export const departmentsControllerRemoveMutation = (
+  options?: Partial<Options<DepartmentsControllerRemoveData>>,
+): UseMutationOptions<
+  DepartmentsControllerRemoveResponse,
+  DepartmentsControllerRemoveError,
+  Options<DepartmentsControllerRemoveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    DepartmentsControllerRemoveResponse,
+    DepartmentsControllerRemoveError,
+    Options<DepartmentsControllerRemoveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await departmentsControllerRemove({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Rename a department or change its head
+ */
+export const departmentsControllerUpdateMutation = (
+  options?: Partial<Options<DepartmentsControllerUpdateData>>,
+): UseMutationOptions<
+  DepartmentsControllerUpdateResponse,
+  DepartmentsControllerUpdateError,
+  Options<DepartmentsControllerUpdateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    DepartmentsControllerUpdateResponse,
+    DepartmentsControllerUpdateError,
+    Options<DepartmentsControllerUpdateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await departmentsControllerUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const departmentsControllerMembersQueryKey = (
+  options: Options<DepartmentsControllerMembersData>,
+) => createQueryKey("departmentsControllerMembers", options);
+
+/**
+ * People in the department, with their roles
+ */
+export const departmentsControllerMembersOptions = (
+  options: Options<DepartmentsControllerMembersData>,
+) =>
+  queryOptions<
+    DepartmentsControllerMembersResponse,
+    DepartmentsControllerMembersError,
+    DepartmentsControllerMembersResponse,
+    ReturnType<typeof departmentsControllerMembersQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await departmentsControllerMembers({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: departmentsControllerMembersQueryKey(options),
+  });
+
+/**
+ * Invite an employee into a department; staff or its head
+ */
+export const inviteTargetsControllerToDepartmentMutation = (
+  options?: Partial<Options<InviteTargetsControllerToDepartmentData>>,
+): UseMutationOptions<
+  InviteTargetsControllerToDepartmentResponse,
+  InviteTargetsControllerToDepartmentError,
+  Options<InviteTargetsControllerToDepartmentData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    InviteTargetsControllerToDepartmentResponse,
+    InviteTargetsControllerToDepartmentError,
+    Options<InviteTargetsControllerToDepartmentData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await inviteTargetsControllerToDepartment({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Remove somebody, or leave the department
+ */
+export const departmentsControllerRemoveMemberMutation = (
+  options?: Partial<Options<DepartmentsControllerRemoveMemberData>>,
+): UseMutationOptions<
+  DepartmentsControllerRemoveMemberResponse,
+  DepartmentsControllerRemoveMemberError,
+  Options<DepartmentsControllerRemoveMemberData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    DepartmentsControllerRemoveMemberResponse,
+    DepartmentsControllerRemoveMemberError,
+    Options<DepartmentsControllerRemoveMemberData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await departmentsControllerRemoveMember({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const teamsControllerListQueryKey = (
+  options?: Options<TeamsControllerListData>,
+) => createQueryKey("teamsControllerList", options);
+
+/**
+ * Teams the signed-in user is in
+ */
+export const teamsControllerListOptions = (
+  options?: Options<TeamsControllerListData>,
+) =>
+  queryOptions<
+    TeamsControllerListResponse,
+    TeamsControllerListError,
+    TeamsControllerListResponse,
+    ReturnType<typeof teamsControllerListQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await teamsControllerList({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: teamsControllerListQueryKey(options),
+  });
+
+/**
+ * Create a team
+ *
+ * Without companyId the team is independent and anybody may create it.
+ */
+export const teamsControllerCreateMutation = (
+  options?: Partial<Options<TeamsControllerCreateData>>,
+): UseMutationOptions<
+  TeamsControllerCreateResponse,
+  TeamsControllerCreateError,
+  Options<TeamsControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    TeamsControllerCreateResponse,
+    TeamsControllerCreateError,
+    Options<TeamsControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await teamsControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Disband a team together with its chat
+ */
+export const teamsControllerRemoveMutation = (
+  options?: Partial<Options<TeamsControllerRemoveData>>,
+): UseMutationOptions<
+  TeamsControllerRemoveResponse,
+  TeamsControllerRemoveError,
+  Options<TeamsControllerRemoveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    TeamsControllerRemoveResponse,
+    TeamsControllerRemoveError,
+    Options<TeamsControllerRemoveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await teamsControllerRemove({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const teamsControllerByIdQueryKey = (
+  options: Options<TeamsControllerByIdData>,
+) => createQueryKey("teamsControllerById", options);
+
+/**
+ * One team; members and the company owner only
+ */
+export const teamsControllerByIdOptions = (
+  options: Options<TeamsControllerByIdData>,
+) =>
+  queryOptions<
+    TeamsControllerByIdResponse,
+    TeamsControllerByIdError,
+    TeamsControllerByIdResponse,
+    ReturnType<typeof teamsControllerByIdQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await teamsControllerById({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: teamsControllerByIdQueryKey(options),
+  });
+
+/**
+ * Rename a team or change its description
+ */
+export const teamsControllerUpdateMutation = (
+  options?: Partial<Options<TeamsControllerUpdateData>>,
+): UseMutationOptions<
+  TeamsControllerUpdateResponse,
+  TeamsControllerUpdateError,
+  Options<TeamsControllerUpdateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    TeamsControllerUpdateResponse,
+    TeamsControllerUpdateError,
+    Options<TeamsControllerUpdateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await teamsControllerUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const teamsControllerMembersQueryKey = (
+  options: Options<TeamsControllerMembersData>,
+) => createQueryKey("teamsControllerMembers", options);
+
+/**
+ * People in the team, with role and departments
+ */
+export const teamsControllerMembersOptions = (
+  options: Options<TeamsControllerMembersData>,
+) =>
+  queryOptions<
+    TeamsControllerMembersResponse,
+    TeamsControllerMembersError,
+    TeamsControllerMembersResponse,
+    ReturnType<typeof teamsControllerMembersQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await teamsControllerMembers({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: teamsControllerMembersQueryKey(options),
+  });
+
+/**
+ * Invite a person into a team; the team lead
+ */
+export const inviteTargetsControllerToTeamMutation = (
+  options?: Partial<Options<InviteTargetsControllerToTeamData>>,
+): UseMutationOptions<
+  InviteTargetsControllerToTeamResponse,
+  InviteTargetsControllerToTeamError,
+  Options<InviteTargetsControllerToTeamData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    InviteTargetsControllerToTeamResponse,
+    InviteTargetsControllerToTeamError,
+    Options<InviteTargetsControllerToTeamData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await inviteTargetsControllerToTeam({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Remove somebody, or leave the team
+ */
+export const teamsControllerRemoveMemberMutation = (
+  options?: Partial<Options<TeamsControllerRemoveMemberData>>,
+): UseMutationOptions<
+  TeamsControllerRemoveMemberResponse,
+  TeamsControllerRemoveMemberError,
+  Options<TeamsControllerRemoveMemberData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    TeamsControllerRemoveMemberResponse,
+    TeamsControllerRemoveMemberError,
+    Options<TeamsControllerRemoveMemberData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await teamsControllerRemoveMember({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const notificationsControllerListQueryKey = (
+  options?: Options<NotificationsControllerListData>,
+) => createQueryKey("notificationsControllerList", options);
+
+/**
+ * Your notifications, newest first
+ *
+ * Never mixed into the feed: a notification is not a post. Paged on the same cursor as everything else.
+ */
+export const notificationsControllerListOptions = (
+  options?: Options<NotificationsControllerListData>,
+) =>
+  queryOptions<
+    NotificationsControllerListResponse,
+    NotificationsControllerListError,
+    NotificationsControllerListResponse,
+    ReturnType<typeof notificationsControllerListQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await notificationsControllerList({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: notificationsControllerListQueryKey(options),
+  });
+
+export const notificationsControllerListInfiniteQueryKey = (
+  options?: Options<NotificationsControllerListData>,
+): QueryKey<Options<NotificationsControllerListData>> =>
+  createQueryKey("notificationsControllerList", options, true);
+
+/**
+ * Your notifications, newest first
+ *
+ * Never mixed into the feed: a notification is not a post. Paged on the same cursor as everything else.
+ */
+export const notificationsControllerListInfiniteOptions = (
+  options?: Options<NotificationsControllerListData>,
+) => {
+  const opts = infiniteQueryOptions<
+    NotificationsControllerListResponse,
+    NotificationsControllerListError,
+    InfiniteData<NotificationsControllerListResponse>,
+    QueryKey<Options<NotificationsControllerListData>>,
+    | string
+    | Pick<
+        QueryKey<Options<NotificationsControllerListData>>[0],
+        "body" | "headers" | "path" | "query"
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<NotificationsControllerListData>>[0],
+          "body" | "headers" | "path" | "query"
+        > =
+          typeof pageParam === "object"
+            ? pageParam
+            : {
+                query: {
+                  cursor: pageParam,
+                },
+              };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await notificationsControllerList({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true,
+        });
+        return data;
+      },
+      queryKey: notificationsControllerListInfiniteQueryKey(options),
+    },
+  );
+  return opts as Omit<typeof opts, "initialData">;
+};
+
+/**
+ * Mark everything read
+ *
+ * What opening the bell does. Reading one at a time is not a thing the interface offers.
+ */
+export const notificationsControllerMarkAllReadMutation = (
+  options?: Partial<Options<NotificationsControllerMarkAllReadData>>,
+): UseMutationOptions<
+  NotificationsControllerMarkAllReadResponse,
+  NotificationsControllerMarkAllReadError,
+  Options<NotificationsControllerMarkAllReadData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    NotificationsControllerMarkAllReadResponse,
+    NotificationsControllerMarkAllReadError,
+    Options<NotificationsControllerMarkAllReadData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await notificationsControllerMarkAllRead({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
 export const portfolioControllerListQueryKey = (
   options: Options<PortfolioControllerListData>,
 ) => createQueryKey("portfolioControllerList", options);
@@ -703,6 +2917,7 @@ export const portfolioControllerListOptions = (
   });
 
 /**
+ * Add a item, owner only
  */
 export const portfolioControllerCreateMutation = (
   options?: Partial<Options<PortfolioControllerCreateData>>,
@@ -729,6 +2944,7 @@ export const portfolioControllerCreateMutation = (
 };
 
 /**
+ * Delete a item, owner only
  */
 export const portfolioControllerRemoveMutation = (
   options?: Partial<Options<PortfolioControllerRemoveData>>,
@@ -759,6 +2975,7 @@ export const portfolioControllerByIdQueryKey = (
 ) => createQueryKey("portfolioControllerById", options);
 
 /**
+ * A single item
  */
 export const portfolioControllerByIdOptions = (
   options: Options<PortfolioControllerByIdData>,
@@ -782,6 +2999,7 @@ export const portfolioControllerByIdOptions = (
   });
 
 /**
+ * Edit a item, owner only
  */
 export const portfolioControllerUpdateMutation = (
   options?: Partial<Options<PortfolioControllerUpdateData>>,
@@ -797,6 +3015,175 @@ export const portfolioControllerUpdateMutation = (
   > = {
     mutationFn: async (fnOptions) => {
       const { data } = await portfolioControllerUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const interactionsControllerListQueryKey = (
+  options: Options<InteractionsControllerListData>,
+) => createQueryKey("interactionsControllerList", options);
+
+/**
+ * Who responded to a post or was invited, author only
+ *
+ * Newest first. Short by nature, so it comes back in one go.
+ */
+export const interactionsControllerListOptions = (
+  options: Options<InteractionsControllerListData>,
+) =>
+  queryOptions<
+    InteractionsControllerListResponse,
+    InteractionsControllerListError,
+    InteractionsControllerListResponse,
+    ReturnType<typeof interactionsControllerListQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await interactionsControllerList({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: interactionsControllerListQueryKey(options),
+  });
+
+/**
+ * Respond, invite, accept or decline
+ *
+ * Responding to a vacancy waits for the author, responding to a public event takes a seat at once. An invitation is answered by the person who got it, a response by the author of the post.
+ */
+export const interactionsControllerInteractMutation = (
+  options?: Partial<Options<InteractionsControllerInteractData>>,
+): UseMutationOptions<
+  InteractionsControllerInteractResponse,
+  InteractionsControllerInteractError,
+  Options<InteractionsControllerInteractData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    InteractionsControllerInteractResponse,
+    InteractionsControllerInteractError,
+    Options<InteractionsControllerInteractData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await interactionsControllerInteract({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const invitesControllerMineQueryKey = (
+  options?: Options<InvitesControllerMineData>,
+) => createQueryKey("invitesControllerMine", options);
+
+/**
+ * Invitations addressed to the signed-in user
+ */
+export const invitesControllerMineOptions = (
+  options?: Options<InvitesControllerMineData>,
+) =>
+  queryOptions<
+    InvitesControllerMineResponse,
+    InvitesControllerMineError,
+    InvitesControllerMineResponse,
+    ReturnType<typeof invitesControllerMineQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await invitesControllerMine({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: invitesControllerMineQueryKey(options),
+  });
+
+export const invitesControllerSentQueryKey = (
+  options?: Options<InvitesControllerSentData>,
+) => createQueryKey("invitesControllerSent", options);
+
+/**
+ * Invitations the user has sent
+ */
+export const invitesControllerSentOptions = (
+  options?: Options<InvitesControllerSentData>,
+) =>
+  queryOptions<
+    InvitesControllerSentResponse,
+    InvitesControllerSentError,
+    InvitesControllerSentResponse,
+    ReturnType<typeof invitesControllerSentQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await invitesControllerSent({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: invitesControllerSentQueryKey(options),
+  });
+
+/**
+ * Withdraw an invitation you sent
+ */
+export const invitesControllerWithdrawMutation = (
+  options?: Partial<Options<InvitesControllerWithdrawData>>,
+): UseMutationOptions<
+  InvitesControllerWithdrawResponse,
+  InvitesControllerWithdrawError,
+  Options<InvitesControllerWithdrawData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    InvitesControllerWithdrawResponse,
+    InvitesControllerWithdrawError,
+    Options<InvitesControllerWithdrawData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await invitesControllerWithdraw({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+/**
+ * Accept or decline an invitation
+ */
+export const invitesControllerDecideMutation = (
+  options?: Partial<Options<InvitesControllerDecideData>>,
+): UseMutationOptions<
+  InvitesControllerDecideResponse,
+  InvitesControllerDecideError,
+  Options<InvitesControllerDecideData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    InvitesControllerDecideResponse,
+    InvitesControllerDecideError,
+    Options<InvitesControllerDecideData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await invitesControllerDecide({
         ...options,
         ...fnOptions,
         throwOnError: true,

@@ -1,5 +1,5 @@
-export { client } from "./client";
-export { ApiError, toApiError } from "./error";
+export { configureApiClient } from "./client";
+export { ApiError, NetworkError, toApiError } from "./error";
 export * from "./generated";
 export * from "./generated/@tanstack/react-query.gen";
-export { healthQueries } from "./health.queries";
+export { closeSocket, getSocket } from "./socket";

@@ -14,18 +14,28 @@ export class ApiError extends Error {
   }
 }
 
+export class NetworkError extends ApiError {
+  constructor() {
+    super({
+      code: "INTERNAL",
+      message:
+        "Could not reach the server. Check your connection and try again.",
+    });
+    this.name = "NetworkError";
+  }
+}
+
 const isFailure = (value: unknown): value is Failure =>
   typeof value === "object" &&
   value !== null &&
   "code" in value &&
-  "message" in value;
+  typeof value.code === "string" &&
+  "message" in value &&
+  typeof value.message === "string";
 
 export const toApiError = (error: unknown) => {
   if (error instanceof ApiError) return error;
   if (isFailure(error)) return new ApiError(error);
 
-  return new ApiError({
-    code: "INTERNAL",
-    message: "Could not reach the server. Check your connection and try again.",
-  });
+  return new NetworkError();
 };
