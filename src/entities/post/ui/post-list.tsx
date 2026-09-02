@@ -1,33 +1,42 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { Loader2Icon } from "lucide-react";
-
-import { DeletePostButton } from "@features/post/delete";
-import { EditPostButton, isOptimistic } from "@features/post/editor";
-import { LikeButton } from "@features/post/like";
-
-import { type FeedFilters, PostCard, postQueries } from "@entities/post";
-import { sessionQueries } from "@entities/session";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import type { ReactNode } from "react";
 
 import { useIntersection } from "@shared/lib/use-intersection";
 import { Button } from "@shared/ui/button";
+import { ErrorState } from "@shared/ui/error-state";
+import { Skeleton } from "@shared/ui/skeleton";
+import { Spinner } from "@shared/ui/spinner";
+
+import { postQueries } from "../api/post.queries";
+import type { FeedFilters, Post } from "../post.types";
+import { PostCard } from "./post-card";
 
 const SKELETON_ROWS = [0, 1, 2];
 
 const PostSkeleton = () => (
   <div className="border-border bg-card flex flex-col gap-3 rounded-lg border p-5">
-    <div className="bg-elevated h-9 w-40 animate-pulse rounded" />
-    <div className="bg-elevated h-5 w-2/3 animate-pulse rounded" />
-    <div className="bg-elevated h-24 w-full animate-pulse rounded" />
+    <Skeleton className="h-9 w-40" />
+    <Skeleton className="h-5 w-2/3" />
+    <Skeleton className="h-24 w-full" />
   </div>
 );
 
 interface PostListProps {
   filters?: FeedFilters;
+  emptyMessage?: string;
+  endMessage?: string;
+  renderActions?: (post: Post) => ReactNode;
+  renderInteraction?: (post: Post) => ReactNode;
 }
 
-export const PostList = ({ filters }: PostListProps) => {
+export const PostList = ({
+  filters,
+  emptyMessage = "Nothing here yet.",
+  endMessage = "That is the whole feed.",
+  renderActions,
+  renderInteraction,
+}: PostListProps) => {
   const feed = useInfiniteQuery(postQueries.feed(filters));
-  const { data: user } = useQuery(sessionQueries.current());
 
   const sentinelRef = useIntersection<HTMLButtonElement>(
     () => void feed.fetchNextPage(),
@@ -46,12 +55,10 @@ export const PostList = ({ filters }: PostListProps) => {
 
   if (feed.isError) {
     return (
-      <div className="border-destructive/40 bg-destructive-muted flex flex-col items-start gap-3 rounded-lg border p-5">
-        <p className="text-sm">The feed could not be loaded.</p>
-        <Button variant="outline" size="sm" onClick={() => void feed.refetch()}>
-          Try again
-        </Button>
-      </div>
+      <ErrorState
+        message="The feed could not be loaded."
+        onRetry={() => void feed.refetch()}
+      />
     );
   }
 
@@ -60,7 +67,7 @@ export const PostList = ({ filters }: PostListProps) => {
   if (posts.length === 0) {
     return (
       <div className="border-border text-muted-foreground rounded-lg border border-dashed p-10 text-center text-sm">
-        Nothing here yet.
+        {emptyMessage}
       </div>
     );
   }
@@ -71,17 +78,8 @@ export const PostList = ({ filters }: PostListProps) => {
         <PostCard
           key={post.id}
           post={post}
-          actions={
-            <>
-              <LikeButton post={post} />
-              {post.author.id === user?.id && !isOptimistic(post) ? (
-                <>
-                  <EditPostButton post={post} />
-                  <DeletePostButton post={post} />
-                </>
-              ) : null}
-            </>
-          }
+          interaction={renderInteraction?.(post)}
+          actions={renderActions?.(post)}
         />
       ))}
 
@@ -95,7 +93,7 @@ export const PostList = ({ filters }: PostListProps) => {
         >
           {feed.isFetchingNextPage ? (
             <>
-              <Loader2Icon className="animate-spin" />
+              <Spinner />
               Loading
             </>
           ) : (
@@ -104,7 +102,7 @@ export const PostList = ({ filters }: PostListProps) => {
         </Button>
       ) : (
         <p className="text-muted-foreground py-4 text-center font-mono text-xs">
-          That is the whole feed.
+          {endMessage}
         </p>
       )}
     </div>

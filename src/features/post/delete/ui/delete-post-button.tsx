@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Trash2Icon } from "lucide-react";
+import { TrashIcon } from "@phosphor-icons/react";
 
 import type { Post } from "@entities/post";
 
@@ -16,7 +16,15 @@ import {
 
 import { useDeletePost } from "../model/use-delete-post";
 
-export const DeletePostButton = ({ post }: { post: Post }) => {
+interface DeletePostButtonProps {
+  post: Post;
+  onDeleted?: () => void;
+}
+
+export const DeletePostButton = ({
+  post,
+  onDeleted,
+}: DeletePostButtonProps) => {
   const [open, setOpen] = useState(false);
   const remove = useDeletePost(post.id);
 
@@ -29,7 +37,7 @@ export const DeletePostButton = ({ post }: { post: Post }) => {
         className="text-muted-foreground hover:text-destructive font-mono text-xs"
         onClick={() => setOpen(true)}
       >
-        <Trash2Icon className="size-3.5" />
+        <TrashIcon className="size-3.5" />
         Delete
       </Button>
 
@@ -51,6 +59,7 @@ export const DeletePostButton = ({ post }: { post: Post }) => {
               variant="destructive"
               onClick={() => {
                 setOpen(false);
+                onDeleted?.();
                 remove.mutate();
               }}
             >

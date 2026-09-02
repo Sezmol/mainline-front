@@ -1,6 +1,7 @@
-import { XIcon } from "lucide-react";
+import { XIcon } from "@phosphor-icons/react";
 
 import {
+  POST_TYPE_LABELS,
   POST_TYPES,
   type PostType,
   SPECIALITIES,
@@ -19,11 +20,6 @@ import {
 import { feedRoute } from "../model/feed-route";
 import type { FeedSearch } from "../model/feed-search";
 
-const TYPE_LABELS: Record<PostType, string> = {
-  content: "Content",
-  vacancy: "Vacancy",
-  event: "Event",
-};
 export const FeedFilters = () => {
   const search = feedRoute.useSearch();
   const navigate = feedRoute.useNavigate();
@@ -73,7 +69,7 @@ export const FeedFilters = () => {
         >
           <SelectValue>
             {(value: string | null) =>
-              value ? TYPE_LABELS[value as PostType] : "All types"
+              value ? POST_TYPE_LABELS[value as PostType] : "All types"
             }
           </SelectValue>
         </SelectTrigger>
@@ -81,7 +77,7 @@ export const FeedFilters = () => {
           <SelectItem value={null}>All types</SelectItem>
           {POST_TYPES.map((type) => (
             <SelectItem key={type} value={type}>
-              {TYPE_LABELS[type]}
+              {POST_TYPE_LABELS[type]}
             </SelectItem>
           ))}
         </SelectContent>
