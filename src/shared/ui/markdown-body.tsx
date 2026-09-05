@@ -12,8 +12,8 @@ let highlighter: Promise<HighlighterCore> | null = null;
 const loadHighlighter = () =>
   (highlighter ??= createHighlighterCore({
     themes: [
-      import("@shikijs/themes/vitesse-dark"),
-      import("@shikijs/themes/vitesse-light"),
+      import("@shikijs/themes/github-dark-high-contrast"),
+      import("@shikijs/themes/github-light-high-contrast"),
     ],
     langs: [
       import("@shikijs/langs/typescript"),
@@ -37,7 +37,10 @@ const MarkdownBody = ({ children }: { children: string }) => (
         rehypeShikiFromHighlighter,
         use(loadHighlighter()),
         {
-          themes: { light: "vitesse-light", dark: "vitesse-dark" },
+          themes: {
+            light: "github-light-high-contrast",
+            dark: "github-dark-high-contrast",
+          },
           defaultColor: false,
         },
       ],

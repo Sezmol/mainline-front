@@ -1,12 +1,23 @@
 import { useState } from "react";
 
-import { PenLineIcon } from "lucide-react";
+import { PencilLineIcon } from "@phosphor-icons/react";
 
 import { Button } from "@shared/ui/button";
 
+import type { PostFormValues } from "../model/post-form.schema";
 import { PostFormDialog } from "./post-form-dialog";
 
-export const CreatePostButton = () => {
+interface CreatePostButtonProps {
+  companyId?: string;
+  label?: string;
+  defaults?: { type?: PostFormValues["type"]; projectId?: string };
+}
+
+export const CreatePostButton = ({
+  companyId,
+  label = "New post",
+  defaults,
+}: CreatePostButtonProps) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -16,11 +27,16 @@ export const CreatePostButton = () => {
         className="font-mono text-xs"
         onClick={() => setOpen(true)}
       >
-        <PenLineIcon className="size-3.5" />
-        New post
+        <PencilLineIcon className="size-3.5" />
+        {label}
       </Button>
 
-      <PostFormDialog open={open} onOpenChange={setOpen} />
+      <PostFormDialog
+        open={open}
+        onOpenChange={setOpen}
+        companyId={companyId}
+        defaults={defaults}
+      />
     </>
   );
 };

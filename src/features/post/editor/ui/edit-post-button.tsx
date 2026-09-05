@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { PencilIcon } from "lucide-react";
+import { PencilIcon } from "@phosphor-icons/react";
 
 import type { Post } from "@entities/post";
 

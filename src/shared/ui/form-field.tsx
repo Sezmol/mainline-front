@@ -13,6 +13,30 @@ interface FormFieldProps {
   className?: string;
 }
 
+const FieldMessage = ({
+  id,
+  error,
+  hint,
+}: Pick<FormFieldProps, "id" | "error" | "hint">) => {
+  if (error) {
+    return (
+      <p id={`${id}-error`} role="alert" className="text-destructive text-xs">
+        {error}
+      </p>
+    );
+  }
+
+  if (hint) {
+    return (
+      <p id={`${id}-hint`} className="text-muted-foreground text-xs">
+        {hint}
+      </p>
+    );
+  }
+
+  return null;
+};
+
 export const FormField = ({
   id,
   label,
@@ -24,14 +48,6 @@ export const FormField = ({
   <div className={cn("flex flex-col gap-2", className)}>
     <Label htmlFor={id}>{label}</Label>
     {children}
-    {error ? (
-      <p id={`${id}-error`} role="alert" className="text-destructive text-xs">
-        {error}
-      </p>
-    ) : hint ? (
-      <p id={`${id}-hint`} className="text-muted-foreground text-xs">
-        {hint}
-      </p>
-    ) : null}
+    <FieldMessage id={id} error={error} hint={hint} />
   </div>
 );

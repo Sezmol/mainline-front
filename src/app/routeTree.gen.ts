@@ -12,11 +12,20 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as GuestRouteImport } from './routes/_guest'
+import { Route as AppBoardRouteImport } from './routes/_app/board'
+import { Route as AppCompaniesRouteImport } from './routes/_app/companies'
 import { Route as AppFeedRouteImport } from './routes/_app/feed'
+import { Route as AppInvitesRouteImport } from './routes/_app/invites'
+import { Route as AppProjectsRouteImport } from './routes/_app/projects'
 import { Route as GuestLoginRouteImport } from './routes/_guest/login'
 import { Route as GuestRegisterRouteImport } from './routes/_guest/register'
+import { Route as AppCSlugRouteImport } from './routes/_app/c/$slug'
+import { Route as AppPPostIdRouteImport } from './routes/_app/p/$postId'
+import { Route as AppPrProjectIdRouteImport } from './routes/_app/pr/$projectId'
+import { Route as AppTTeamIdRouteImport } from './routes/_app/t/$teamId'
 import { Route as AppUNicknameRouteImport } from './routes/_app/u/$nickname'
-import { Route as AppUNicknameProjectsProjectIdRouteImport } from './routes/_app/u/$nickname_/projects/$projectId'
+import { Route as AppCSlugSettingsRouteImport } from './routes/_app/c/$slug_/settings'
+import { Route as AppUNicknamePortfolioItemIdRouteImport } from './routes/_app/u/$nickname_/portfolio/$itemId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -31,9 +40,29 @@ const GuestRoute = GuestRouteImport.update({
   id: '/_guest',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppBoardRoute = AppBoardRouteImport.update({
+  id: '/board',
+  path: '/board',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCompaniesRoute = AppCompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppFeedRoute = AppFeedRouteImport.update({
   id: '/feed',
   path: '/feed',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInvitesRoute = AppInvitesRouteImport.update({
+  id: '/invites',
+  path: '/invites',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProjectsRoute = AppProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
   getParentRoute: () => AppRoute,
 } as any)
 const GuestLoginRoute = GuestLoginRouteImport.update({
@@ -46,72 +75,151 @@ const GuestRegisterRoute = GuestRegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => GuestRoute,
 } as any)
+const AppCSlugRoute = AppCSlugRouteImport.update({
+  id: '/c/$slug',
+  path: '/c/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPPostIdRoute = AppPPostIdRouteImport.update({
+  id: '/p/$postId',
+  path: '/p/$postId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPrProjectIdRoute = AppPrProjectIdRouteImport.update({
+  id: '/pr/$projectId',
+  path: '/pr/$projectId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTTeamIdRoute = AppTTeamIdRouteImport.update({
+  id: '/t/$teamId',
+  path: '/t/$teamId',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppUNicknameRoute = AppUNicknameRouteImport.update({
   id: '/u/$nickname',
   path: '/u/$nickname',
   getParentRoute: () => AppRoute,
 } as any)
-const AppUNicknameProjectsProjectIdRoute =
-  AppUNicknameProjectsProjectIdRouteImport.update({
-    id: '/u/$nickname_/projects/$projectId',
-    path: '/u/$nickname/projects/$projectId',
+const AppCSlugSettingsRoute = AppCSlugSettingsRouteImport.update({
+  id: '/c/$slug_/settings',
+  path: '/c/$slug/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppUNicknamePortfolioItemIdRoute =
+  AppUNicknamePortfolioItemIdRouteImport.update({
+    id: '/u/$nickname_/portfolio/$itemId',
+    path: '/u/$nickname/portfolio/$itemId',
     getParentRoute: () => AppRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/board': typeof AppBoardRoute
+  '/companies': typeof AppCompaniesRoute
   '/feed': typeof AppFeedRoute
+  '/invites': typeof AppInvitesRoute
+  '/projects': typeof AppProjectsRoute
   '/login': typeof GuestLoginRoute
   '/register': typeof GuestRegisterRoute
+  '/c/$slug': typeof AppCSlugRoute
+  '/p/$postId': typeof AppPPostIdRoute
+  '/pr/$projectId': typeof AppPrProjectIdRoute
+  '/t/$teamId': typeof AppTTeamIdRoute
   '/u/$nickname': typeof AppUNicknameRoute
-  '/u/$nickname/projects/$projectId': typeof AppUNicknameProjectsProjectIdRoute
+  '/c/$slug/settings': typeof AppCSlugSettingsRoute
+  '/u/$nickname/portfolio/$itemId': typeof AppUNicknamePortfolioItemIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/board': typeof AppBoardRoute
+  '/companies': typeof AppCompaniesRoute
   '/feed': typeof AppFeedRoute
+  '/invites': typeof AppInvitesRoute
+  '/projects': typeof AppProjectsRoute
   '/login': typeof GuestLoginRoute
   '/register': typeof GuestRegisterRoute
+  '/c/$slug': typeof AppCSlugRoute
+  '/p/$postId': typeof AppPPostIdRoute
+  '/pr/$projectId': typeof AppPrProjectIdRoute
+  '/t/$teamId': typeof AppTTeamIdRoute
   '/u/$nickname': typeof AppUNicknameRoute
-  '/u/$nickname/projects/$projectId': typeof AppUNicknameProjectsProjectIdRoute
+  '/c/$slug/settings': typeof AppCSlugSettingsRoute
+  '/u/$nickname/portfolio/$itemId': typeof AppUNicknamePortfolioItemIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_guest': typeof GuestRouteWithChildren
+  '/_app/board': typeof AppBoardRoute
+  '/_app/companies': typeof AppCompaniesRoute
   '/_app/feed': typeof AppFeedRoute
+  '/_app/invites': typeof AppInvitesRoute
+  '/_app/projects': typeof AppProjectsRoute
   '/_guest/login': typeof GuestLoginRoute
   '/_guest/register': typeof GuestRegisterRoute
+  '/_app/c/$slug': typeof AppCSlugRoute
+  '/_app/p/$postId': typeof AppPPostIdRoute
+  '/_app/pr/$projectId': typeof AppPrProjectIdRoute
+  '/_app/t/$teamId': typeof AppTTeamIdRoute
   '/_app/u/$nickname': typeof AppUNicknameRoute
-  '/_app/u/$nickname_/projects/$projectId': typeof AppUNicknameProjectsProjectIdRoute
+  '/_app/c/$slug_/settings': typeof AppCSlugSettingsRoute
+  '/_app/u/$nickname_/portfolio/$itemId': typeof AppUNicknamePortfolioItemIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/board'
+    | '/companies'
     | '/feed'
+    | '/invites'
+    | '/projects'
     | '/login'
     | '/register'
+    | '/c/$slug'
+    | '/p/$postId'
+    | '/pr/$projectId'
+    | '/t/$teamId'
     | '/u/$nickname'
-    | '/u/$nickname/projects/$projectId'
+    | '/c/$slug/settings'
+    | '/u/$nickname/portfolio/$itemId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/board'
+    | '/companies'
     | '/feed'
+    | '/invites'
+    | '/projects'
     | '/login'
     | '/register'
+    | '/c/$slug'
+    | '/p/$postId'
+    | '/pr/$projectId'
+    | '/t/$teamId'
     | '/u/$nickname'
-    | '/u/$nickname/projects/$projectId'
+    | '/c/$slug/settings'
+    | '/u/$nickname/portfolio/$itemId'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/_guest'
+    | '/_app/board'
+    | '/_app/companies'
     | '/_app/feed'
+    | '/_app/invites'
+    | '/_app/projects'
     | '/_guest/login'
     | '/_guest/register'
+    | '/_app/c/$slug'
+    | '/_app/p/$postId'
+    | '/_app/pr/$projectId'
+    | '/_app/t/$teamId'
     | '/_app/u/$nickname'
-    | '/_app/u/$nickname_/projects/$projectId'
+    | '/_app/c/$slug_/settings'
+    | '/_app/u/$nickname_/portfolio/$itemId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -143,11 +251,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuestRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/board': {
+      id: '/_app/board'
+      path: '/board'
+      fullPath: '/board'
+      preLoaderRoute: typeof AppBoardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/companies': {
+      id: '/_app/companies'
+      path: '/companies'
+      fullPath: '/companies'
+      preLoaderRoute: typeof AppCompaniesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/feed': {
       id: '/_app/feed'
       path: '/feed'
       fullPath: '/feed'
       preLoaderRoute: typeof AppFeedRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/invites': {
+      id: '/_app/invites'
+      path: '/invites'
+      fullPath: '/invites'
+      preLoaderRoute: typeof AppInvitesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/projects': {
+      id: '/_app/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof AppProjectsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_guest/login': {
@@ -164,6 +300,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuestRegisterRouteImport
       parentRoute: typeof GuestRoute
     }
+    '/_app/c/$slug': {
+      id: '/_app/c/$slug'
+      path: '/c/$slug'
+      fullPath: '/c/$slug'
+      preLoaderRoute: typeof AppCSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/p/$postId': {
+      id: '/_app/p/$postId'
+      path: '/p/$postId'
+      fullPath: '/p/$postId'
+      preLoaderRoute: typeof AppPPostIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/pr/$projectId': {
+      id: '/_app/pr/$projectId'
+      path: '/pr/$projectId'
+      fullPath: '/pr/$projectId'
+      preLoaderRoute: typeof AppPrProjectIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/t/$teamId': {
+      id: '/_app/t/$teamId'
+      path: '/t/$teamId'
+      fullPath: '/t/$teamId'
+      preLoaderRoute: typeof AppTTeamIdRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/u/$nickname': {
       id: '/_app/u/$nickname'
       path: '/u/$nickname'
@@ -171,26 +335,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppUNicknameRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/u/$nickname_/projects/$projectId': {
-      id: '/_app/u/$nickname_/projects/$projectId'
-      path: '/u/$nickname/projects/$projectId'
-      fullPath: '/u/$nickname/projects/$projectId'
-      preLoaderRoute: typeof AppUNicknameProjectsProjectIdRouteImport
+    '/_app/c/$slug_/settings': {
+      id: '/_app/c/$slug_/settings'
+      path: '/c/$slug/settings'
+      fullPath: '/c/$slug/settings'
+      preLoaderRoute: typeof AppCSlugSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/u/$nickname_/portfolio/$itemId': {
+      id: '/_app/u/$nickname_/portfolio/$itemId'
+      path: '/u/$nickname/portfolio/$itemId'
+      fullPath: '/u/$nickname/portfolio/$itemId'
+      preLoaderRoute: typeof AppUNicknamePortfolioItemIdRouteImport
       parentRoute: typeof AppRoute
     }
   }
 }
 
 interface AppRouteChildren {
+  AppBoardRoute: typeof AppBoardRoute
+  AppCompaniesRoute: typeof AppCompaniesRoute
   AppFeedRoute: typeof AppFeedRoute
+  AppInvitesRoute: typeof AppInvitesRoute
+  AppProjectsRoute: typeof AppProjectsRoute
+  AppCSlugRoute: typeof AppCSlugRoute
+  AppPPostIdRoute: typeof AppPPostIdRoute
+  AppPrProjectIdRoute: typeof AppPrProjectIdRoute
+  AppTTeamIdRoute: typeof AppTTeamIdRoute
   AppUNicknameRoute: typeof AppUNicknameRoute
-  AppUNicknameProjectsProjectIdRoute: typeof AppUNicknameProjectsProjectIdRoute
+  AppCSlugSettingsRoute: typeof AppCSlugSettingsRoute
+  AppUNicknamePortfolioItemIdRoute: typeof AppUNicknamePortfolioItemIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppBoardRoute: AppBoardRoute,
+  AppCompaniesRoute: AppCompaniesRoute,
   AppFeedRoute: AppFeedRoute,
+  AppInvitesRoute: AppInvitesRoute,
+  AppProjectsRoute: AppProjectsRoute,
+  AppCSlugRoute: AppCSlugRoute,
+  AppPPostIdRoute: AppPPostIdRoute,
+  AppPrProjectIdRoute: AppPrProjectIdRoute,
+  AppTTeamIdRoute: AppTTeamIdRoute,
   AppUNicknameRoute: AppUNicknameRoute,
-  AppUNicknameProjectsProjectIdRoute: AppUNicknameProjectsProjectIdRoute,
+  AppCSlugSettingsRoute: AppCSlugSettingsRoute,
+  AppUNicknamePortfolioItemIdRoute: AppUNicknamePortfolioItemIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

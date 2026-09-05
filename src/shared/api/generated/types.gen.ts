@@ -67,13 +67,162 @@ export type LoginDto = {
   password: string;
 };
 
-export type PostPageDtoOutput = {
-  items: Array<{
+export type CreateChatDto = {
+  type: "private";
+  userId: string;
+};
+
+export type ChatDtoOutput = {
+  id: string;
+  type:
+    | "private"
+    | "vacancy"
+    | "event"
+    | "content"
+    | "task"
+    | "favorites"
+    | "company"
+    | "department"
+    | "team"
+    | "project";
+  post: {
     id: string;
-    type: "content" | "vacancy" | "event";
-    direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    type: "content" | "vacancy" | "event" | "task";
     title: string;
-    body: string;
+  } | null;
+  owner: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  } | null;
+  title: string | null;
+  writeRestricted: boolean;
+  lastMessageAt: string;
+  createdAt: string;
+};
+
+export type ChatPageDtoOutput = {
+  items: Array<{
+    chat: {
+      id: string;
+      type:
+        | "private"
+        | "vacancy"
+        | "event"
+        | "content"
+        | "task"
+        | "favorites"
+        | "company"
+        | "department"
+        | "team"
+        | "project";
+      post: {
+        id: string;
+        type: "content" | "vacancy" | "event" | "task";
+        title: string;
+      } | null;
+      owner: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        nickname: string;
+        speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        role: "member" | "hr" | "manager";
+        description?: string;
+        workplace?: string;
+      } | null;
+      title: string | null;
+      writeRestricted: boolean;
+      lastMessageAt: string;
+      createdAt: string;
+    };
+    companion: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      nickname: string;
+      speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      role: "member" | "hr" | "manager";
+      description?: string;
+      workplace?: string;
+    } | null;
+    lastMessage: {
+      id: string;
+      chatId: string;
+      author: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        nickname: string;
+        speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        role: "member" | "hr" | "manager";
+        description?: string;
+        workplace?: string;
+      };
+      body: string;
+      postId: string | null;
+      createdAt: string;
+      editedAt: string | null;
+    } | null;
+    unreadCount: number;
+    archived: boolean;
+    canWrite: boolean;
+  }>;
+  nextCursor: string | null;
+};
+
+export type ChatViewDtoOutput = {
+  chat: {
+    id: string;
+    type:
+      | "private"
+      | "vacancy"
+      | "event"
+      | "content"
+      | "task"
+      | "favorites"
+      | "company"
+      | "department"
+      | "team"
+      | "project";
+    post: {
+      id: string;
+      type: "content" | "vacancy" | "event" | "task";
+      title: string;
+    } | null;
+    owner: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      nickname: string;
+      speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      role: "member" | "hr" | "manager";
+      description?: string;
+      workplace?: string;
+    } | null;
+    title: string | null;
+    writeRestricted: boolean;
+    lastMessageAt: string;
+    createdAt: string;
+  };
+  companion: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  } | null;
+  lastMessage: {
+    id: string;
+    chatId: string;
     author: {
       id: string;
       firstName: string;
@@ -84,20 +233,61 @@ export type PostPageDtoOutput = {
       description?: string;
       workplace?: string;
     };
-    likeCount: number;
-    likedByMe: boolean;
+    body: string;
+    postId: string | null;
     createdAt: string;
-    updatedAt: string;
+    editedAt: string | null;
+  } | null;
+  unreadCount: number;
+  archived: boolean;
+  canWrite: boolean;
+};
+
+export type ChatParticipantDtoOutput = {
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  canWrite: boolean;
+  joinedAt: string;
+};
+
+export type MessagePageDtoOutput = {
+  items: Array<{
+    id: string;
+    chatId: string;
+    author: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      nickname: string;
+      speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      role: "member" | "hr" | "manager";
+      description?: string;
+      workplace?: string;
+    };
+    body: string;
+    postId: string | null;
+    createdAt: string;
+    editedAt: string | null;
   }>;
   nextCursor: string | null;
 };
 
-export type PostDtoOutput = {
+export type CreateMessageDto = {
+  body?: string;
+  postId?: string;
+};
+
+export type MessageDtoOutput = {
   id: string;
-  type: "content" | "vacancy" | "event";
-  direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
-  title: string;
-  body: string;
+  chatId: string;
   author: {
     id: string;
     firstName: string;
@@ -108,25 +298,820 @@ export type PostDtoOutput = {
     description?: string;
     workplace?: string;
   };
-  likeCount: number;
-  likedByMe: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreatePostDto = {
-  direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
-  title: string;
   body: string;
+  postId: string | null;
+  createdAt: string;
+  editedAt: string | null;
 };
 
-export type UpdatePostDto = {
-  direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
-  title: string;
+export type ReadChatDto = {
+  messageId: string;
+};
+
+export type UnreadDtoOutput = {
+  unreadCount: number;
+};
+
+export type ArchiveChatDto = {
+  archived: boolean;
+};
+
+export type ChatSettingsDto = {
+  writeRestricted: boolean;
+};
+
+export type ParticipantWriteDto = {
+  canWrite: boolean;
+};
+
+export type PostPageDtoOutput = {
+  items: Array<
+    | {
+        id: string;
+        direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        title: string;
+        body: string;
+        author: {
+          id: string;
+          firstName: string;
+          lastName: string;
+          nickname: string;
+          speciality:
+            "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+          role: "member" | "hr" | "manager";
+          description?: string;
+          workplace?: string;
+        };
+        company: {
+          id: string;
+          slug: string;
+          name: string;
+          logoUrl: string | null;
+        } | null;
+        likeCount: number;
+        likedByMe: boolean;
+        savedByMe: boolean;
+        commentCount: number;
+        acceptedCount: number;
+        myInteraction: {
+          kind: "response" | "invite";
+          status: "pending" | "accepted" | "declined";
+        } | null;
+        createdAt: string;
+        updatedAt: string;
+        type: "content";
+      }
+    | {
+        id: string;
+        direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        title: string;
+        body: string;
+        author: {
+          id: string;
+          firstName: string;
+          lastName: string;
+          nickname: string;
+          speciality:
+            "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+          role: "member" | "hr" | "manager";
+          description?: string;
+          workplace?: string;
+        };
+        company: {
+          id: string;
+          slug: string;
+          name: string;
+          logoUrl: string | null;
+        } | null;
+        likeCount: number;
+        likedByMe: boolean;
+        savedByMe: boolean;
+        commentCount: number;
+        acceptedCount: number;
+        myInteraction: {
+          kind: "response" | "invite";
+          status: "pending" | "accepted" | "declined";
+        } | null;
+        createdAt: string;
+        updatedAt: string;
+        type: "vacancy";
+        location: string | null;
+        salaryMin: number | null;
+        salaryMax: number | null;
+        workFormat: "onsite" | "remote" | "hybrid";
+      }
+    | {
+        id: string;
+        direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        title: string;
+        body: string;
+        author: {
+          id: string;
+          firstName: string;
+          lastName: string;
+          nickname: string;
+          speciality:
+            "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+          role: "member" | "hr" | "manager";
+          description?: string;
+          workplace?: string;
+        };
+        company: {
+          id: string;
+          slug: string;
+          name: string;
+          logoUrl: string | null;
+        } | null;
+        likeCount: number;
+        likedByMe: boolean;
+        savedByMe: boolean;
+        commentCount: number;
+        acceptedCount: number;
+        myInteraction: {
+          kind: "response" | "invite";
+          status: "pending" | "accepted" | "declined";
+        } | null;
+        createdAt: string;
+        updatedAt: string;
+        type: "event";
+        location: string | null;
+        isPrivate: boolean;
+        participantLimit: number | null;
+      }
+    | {
+        id: string;
+        direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        title: string;
+        body: string;
+        author: {
+          id: string;
+          firstName: string;
+          lastName: string;
+          nickname: string;
+          speciality:
+            "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+          role: "member" | "hr" | "manager";
+          description?: string;
+          workplace?: string;
+        };
+        company: {
+          id: string;
+          slug: string;
+          name: string;
+          logoUrl: string | null;
+        } | null;
+        likeCount: number;
+        likedByMe: boolean;
+        savedByMe: boolean;
+        commentCount: number;
+        acceptedCount: number;
+        myInteraction: {
+          kind: "response" | "invite";
+          status: "pending" | "accepted" | "declined";
+        } | null;
+        createdAt: string;
+        updatedAt: string;
+        type: "task";
+        projectId: string | null;
+        project: {
+          id: string;
+          name: string;
+        } | null;
+        deadline: string | null;
+        status: string;
+        isPrivate: boolean;
+        attachments: Array<string>;
+        assignees: Array<{
+          id: string;
+          firstName: string;
+          lastName: string;
+          nickname: string;
+          speciality:
+            "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+          role: "member" | "hr" | "manager";
+          description?: string;
+          workplace?: string;
+        }>;
+      }
+  >;
+  nextCursor: string | null;
+};
+
+export type PostDtoOutput =
+  | {
+      id: string;
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      author: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        nickname: string;
+        speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        role: "member" | "hr" | "manager";
+        description?: string;
+        workplace?: string;
+      };
+      company: {
+        id: string;
+        slug: string;
+        name: string;
+        logoUrl: string | null;
+      } | null;
+      likeCount: number;
+      likedByMe: boolean;
+      savedByMe: boolean;
+      commentCount: number;
+      acceptedCount: number;
+      myInteraction: {
+        kind: "response" | "invite";
+        status: "pending" | "accepted" | "declined";
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      type: "content";
+    }
+  | {
+      id: string;
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      author: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        nickname: string;
+        speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        role: "member" | "hr" | "manager";
+        description?: string;
+        workplace?: string;
+      };
+      company: {
+        id: string;
+        slug: string;
+        name: string;
+        logoUrl: string | null;
+      } | null;
+      likeCount: number;
+      likedByMe: boolean;
+      savedByMe: boolean;
+      commentCount: number;
+      acceptedCount: number;
+      myInteraction: {
+        kind: "response" | "invite";
+        status: "pending" | "accepted" | "declined";
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      type: "vacancy";
+      location: string | null;
+      salaryMin: number | null;
+      salaryMax: number | null;
+      workFormat: "onsite" | "remote" | "hybrid";
+    }
+  | {
+      id: string;
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      author: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        nickname: string;
+        speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        role: "member" | "hr" | "manager";
+        description?: string;
+        workplace?: string;
+      };
+      company: {
+        id: string;
+        slug: string;
+        name: string;
+        logoUrl: string | null;
+      } | null;
+      likeCount: number;
+      likedByMe: boolean;
+      savedByMe: boolean;
+      commentCount: number;
+      acceptedCount: number;
+      myInteraction: {
+        kind: "response" | "invite";
+        status: "pending" | "accepted" | "declined";
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      type: "event";
+      location: string | null;
+      isPrivate: boolean;
+      participantLimit: number | null;
+    }
+  | {
+      id: string;
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      author: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        nickname: string;
+        speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        role: "member" | "hr" | "manager";
+        description?: string;
+        workplace?: string;
+      };
+      company: {
+        id: string;
+        slug: string;
+        name: string;
+        logoUrl: string | null;
+      } | null;
+      likeCount: number;
+      likedByMe: boolean;
+      savedByMe: boolean;
+      commentCount: number;
+      acceptedCount: number;
+      myInteraction: {
+        kind: "response" | "invite";
+        status: "pending" | "accepted" | "declined";
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      type: "task";
+      projectId: string | null;
+      project: {
+        id: string;
+        name: string;
+      } | null;
+      deadline: string | null;
+      status: string;
+      isPrivate: boolean;
+      attachments: Array<string>;
+      assignees: Array<{
+        id: string;
+        firstName: string;
+        lastName: string;
+        nickname: string;
+        speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+        role: "member" | "hr" | "manager";
+        description?: string;
+        workplace?: string;
+      }>;
+    };
+
+export type CreatePostDto =
+  | {
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      companyId?: string | null;
+      type: "content";
+    }
+  | {
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      companyId?: string | null;
+      type: "vacancy";
+      location?: string | null;
+      salaryMin?: number | null;
+      salaryMax?: number | null;
+      workFormat: "onsite" | "remote" | "hybrid";
+    }
+  | {
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      companyId?: string | null;
+      type: "event";
+      location?: string | null;
+      isPrivate: boolean;
+      participantLimit?: number | null;
+    }
+  | {
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      companyId?: string | null;
+      type: "task";
+      projectId?: string | null;
+      deadline?: string | null;
+      status: string;
+      isPrivate?: boolean;
+      attachments?: Array<string>;
+    };
+
+export type UpdatePostDto =
+  | {
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      companyId?: string | null;
+      type: "content";
+    }
+  | {
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      companyId?: string | null;
+      type: "vacancy";
+      location?: string | null;
+      salaryMin?: number | null;
+      salaryMax?: number | null;
+      workFormat: "onsite" | "remote" | "hybrid";
+    }
+  | {
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      companyId?: string | null;
+      type: "event";
+      location?: string | null;
+      isPrivate: boolean;
+      participantLimit?: number | null;
+    }
+  | {
+      direction: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      title: string;
+      body: string;
+      companyId?: string | null;
+      type: "task";
+      projectId?: string | null;
+      deadline?: string | null;
+      status: string;
+      isPrivate?: boolean;
+      attachments?: Array<string>;
+    };
+
+export type LikePageDtoOutput = {
+  items: Array<{
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  }>;
+  nextCursor: string | null;
+};
+
+export type SetStatusDto = {
+  status: string;
+};
+
+export type AssignDto = {
+  userId: string;
+};
+
+export type CreateCommentDto = {
   body: string;
 };
 
 export type ProjectDtoOutput = {
+  id: string;
+  name: string;
+  description: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  membersCanEditTasks: boolean;
+  attachments: Array<string>;
+  team: {
+    id: string;
+    name: string;
+    companyId: string | null;
+    companySlug: string | null;
+    companyName: string | null;
+  };
+  manager: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  counts: {
+    total: number;
+    todo: number;
+    doing: number;
+    done: number;
+  };
+  chatId: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateProjectDto = {
+  name: string;
+  description?: string | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  attachments?: Array<string>;
+  teamId: string;
+};
+
+export type UpdateProjectDto = {
+  name: string;
+  description?: string | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  attachments?: Array<string>;
+  membersCanEditTasks: boolean;
+};
+
+export type BoardColumnDtoOutput = {
+  id: string;
+  name: string;
+  kind: "todo" | "doing" | "done";
+  position: number;
+};
+
+export type CreateColumnDto = {
+  name: string;
+  kind?: "todo" | "doing" | "done";
+};
+
+export type ReorderColumnsDto = {
+  columnIds: Array<string>;
+};
+
+export type UpdateColumnDto = {
+  name: string;
+  kind?: "todo" | "doing" | "done";
+};
+
+export type CompanyListDtoOutput = {
+  items: Array<{
+    id: string;
+    slug: string;
+    name: string;
+    logoUrl: string | null;
+    description: string | null;
+    website: string | null;
+    location: string | null;
+    socialLinks: Array<string>;
+    createdAt: string;
+    updatedAt: string;
+    employeeCount: number;
+  }>;
+  nextCursor: string | null;
+};
+
+export type SlugAvailabilityDtoOutput = {
+  available: boolean;
+};
+
+export type CompanyCardDtoOutput = {
+  id: string;
+  slug: string;
+  name: string;
+  logoUrl: string | null;
+  description: string | null;
+  website: string | null;
+  location: string | null;
+  socialLinks: Array<string>;
+  createdAt: string;
+  updatedAt: string;
+  employeeCount: number;
+};
+
+export type CreateCompanyDto = {
+  slug: string;
+  name: string;
+  logoUrl?: string | null;
+  description?: string | null;
+  website?: string | null;
+  location?: string | null;
+  socialLinks?: Array<string>;
+};
+
+export type CompanyDtoOutput = {
+  id: string;
+  slug: string;
+  name: string;
+  logoUrl: string | null;
+  description: string | null;
+  website: string | null;
+  location: string | null;
+  socialLinks: Array<string>;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CompanyPageDtoOutput = {
+  id: string;
+  slug: string;
+  name: string;
+  logoUrl: string | null;
+  description: string | null;
+  website: string | null;
+  location: string | null;
+  socialLinks: Array<string>;
+  createdAt: string;
+  updatedAt: string;
+  employeeCount: number;
+  vacancyCount: number;
+  viewer: {
+    role: "owner" | "hr" | "manager" | "employee";
+    departments: Array<{
+      id: string;
+      name: string;
+      chatId: string | null;
+    }>;
+    teams: Array<{
+      id: string;
+      name: string;
+      chatId: string | null;
+    }>;
+    companyChatId: string | null;
+  } | null;
+};
+
+export type UpdateCompanyDto = {
+  slug: string;
+  name: string;
+  logoUrl?: string | null;
+  description?: string | null;
+  website?: string | null;
+  location?: string | null;
+  socialLinks?: Array<string>;
+};
+
+export type MemberListDtoOutput = {
+  items: Array<{
+    user: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      nickname: string;
+      speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      role: "member" | "hr" | "manager";
+      description?: string;
+      workplace?: string;
+    };
+    role: "owner" | "hr" | "manager" | "employee";
+    joinedAt: string;
+  }>;
+  nextCursor: string | null;
+};
+
+export type TransferDto = {
+  userId: string;
+};
+
+export type SetRoleDto = {
+  role: "hr" | "manager" | "employee";
+};
+
+export type MemberDtoOutput = {
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  role: "owner" | "hr" | "manager" | "employee";
+  joinedAt: string;
+};
+
+export type DepartmentDtoOutput = {
+  id: string;
+  companyId: string;
+  name: string;
+  manager: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  } | null;
+  memberCount: number;
+  createdAt: string;
+};
+
+export type CreateDepartmentDto = {
+  name: string;
+  managerId?: string | null;
+};
+
+export type UpdateDepartmentDto = {
+  name: string;
+  managerId?: string | null;
+};
+
+export type TeamDtoOutput = {
+  id: string;
+  companyId: string | null;
+  companySlug: string | null;
+  companyName: string | null;
+  name: string;
+  description: string | null;
+  manager: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  memberCount: number;
+  chatId: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateTeamDto = {
+  name: string;
+  description?: string | null;
+  companyId?: string;
+};
+
+export type UpdateTeamDto = {
+  name: string;
+  description?: string | null;
+};
+
+export type TeamMemberDtoOutput = {
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  companyRole: "owner" | "hr" | "manager" | "employee" | null;
+  departments: Array<string>;
+  joinedAt: string;
+};
+
+export type NotificationPageDtoOutput = {
+  items: Array<{
+    id: string;
+    type:
+      | "response_received"
+      | "response_accepted"
+      | "response_declined"
+      | "invite_received"
+      | "invite_accepted"
+      | "invite_declined"
+      | "company_invite_received"
+      | "company_invite_accepted"
+      | "company_invite_declined"
+      | "membership_removed"
+      | "task_assigned";
+    actor: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      nickname: string;
+      speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+      role: "member" | "hr" | "manager";
+      description?: string;
+      workplace?: string;
+    } | null;
+    post: {
+      id: string;
+      type: "content" | "vacancy" | "event" | "task";
+      title: string;
+    } | null;
+    invite: {
+      id: string;
+      scope: "company" | "department" | "team";
+      status: "pending" | "accepted" | "declined";
+      teamId: string | null;
+    } | null;
+    company: {
+      id: string;
+      slug: string;
+      name: string;
+    } | null;
+    subject: string | null;
+    readAt: string | null;
+    createdAt: string;
+  }>;
+  nextCursor: string | null;
+  unreadCount: number;
+};
+
+export type PortfolioItemDtoOutput = {
   id: string;
   title: string;
   description?: string;
@@ -146,23 +1131,103 @@ export type ProjectDtoOutput = {
   updatedAt: string;
 };
 
-export type CreateProjectDto = {
+export type CreatePortfolioItemDto = {
   title: string;
   description?: string;
   links?: Array<string>;
   previewUrl?: string;
 };
 
-export type UpdateProjectDto = {
+export type UpdatePortfolioItemDto = {
   title: string;
   description?: string;
   links?: Array<string>;
   previewUrl?: string;
+};
+
+export type InteractionDtoOutput = {
+  id: string;
+  postId: string;
+  kind: "response" | "invite";
+  status: "pending" | "accepted" | "declined";
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type InteractDto =
+  | {
+      action: "respond";
+    }
+  | {
+      action: "invite";
+      userId: string;
+    }
+  | {
+      action: "accept";
+      userId?: string;
+    }
+  | {
+      action: "decline";
+      userId?: string;
+    };
+
+export type InviteDtoOutput = {
+  id: string;
+  scope: "company" | "department" | "team";
+  status: "pending" | "accepted" | "declined";
+  role: "owner" | "hr" | "manager" | "employee" | null;
+  inviter: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  invitee: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    speciality: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    role: "member" | "hr" | "manager";
+    description?: string;
+    workplace?: string;
+  };
+  target: {
+    id: string;
+    name: string;
+    companySlug: string | null;
+  };
+  createdAt: string;
+  decidedAt: string | null;
+};
+
+export type DecideInviteDto = {
+  decision: "accepted" | "declined";
+};
+
+export type CreateInviteDto = {
+  nickname: string;
+  role?: "hr" | "manager" | "employee";
 };
 
 export type ErrorResponse = {
   statusCode: number;
   code:
+    | "BAD_REQUEST"
     | "VALIDATION_FAILED"
     | "UNAUTHORIZED"
     | "FORBIDDEN"
@@ -407,14 +1472,346 @@ export type AuthControllerSessionResponses = {
 export type AuthControllerSessionResponse =
   AuthControllerSessionResponses[keyof AuthControllerSessionResponses];
 
+export type ChatsControllerListData = {
+  body?: never;
+  path?: never;
+  query?: {
+    archived?: string;
+    type?:
+      | "private"
+      | "vacancy"
+      | "event"
+      | "content"
+      | "task"
+      | "favorites"
+      | "company"
+      | "department"
+      | "team"
+      | "project";
+    cursor?: string;
+    limit?: number;
+  };
+  url: "/api/chats";
+};
+
+export type ChatsControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerListError =
+  ChatsControllerListErrors[keyof ChatsControllerListErrors];
+
+export type ChatsControllerListResponses = {
+  200: ChatPageDtoOutput;
+};
+
+export type ChatsControllerListResponse =
+  ChatsControllerListResponses[keyof ChatsControllerListResponses];
+
+export type ChatsControllerCreateData = {
+  body: CreateChatDto;
+  path?: never;
+  query?: never;
+  url: "/api/chats";
+};
+
+export type ChatsControllerCreateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerCreateError =
+  ChatsControllerCreateErrors[keyof ChatsControllerCreateErrors];
+
+export type ChatsControllerCreateResponses = {
+  201: ChatDtoOutput;
+};
+
+export type ChatsControllerCreateResponse =
+  ChatsControllerCreateResponses[keyof ChatsControllerCreateResponses];
+
+export type ChatsControllerFindOneData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/chats/{id}";
+};
+
+export type ChatsControllerFindOneErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerFindOneError =
+  ChatsControllerFindOneErrors[keyof ChatsControllerFindOneErrors];
+
+export type ChatsControllerFindOneResponses = {
+  200: ChatViewDtoOutput;
+};
+
+export type ChatsControllerFindOneResponse =
+  ChatsControllerFindOneResponses[keyof ChatsControllerFindOneResponses];
+
+export type ChatsControllerParticipantsData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/chats/{id}/participants";
+};
+
+export type ChatsControllerParticipantsErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerParticipantsError =
+  ChatsControllerParticipantsErrors[keyof ChatsControllerParticipantsErrors];
+
+export type ChatsControllerParticipantsResponses = {
+  200: Array<ChatParticipantDtoOutput>;
+};
+
+export type ChatsControllerParticipantsResponse =
+  ChatsControllerParticipantsResponses[keyof ChatsControllerParticipantsResponses];
+
+export type ChatsControllerMessagesData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: {
+    cursor?: string;
+    limit?: number;
+  };
+  url: "/api/chats/{id}/messages";
+};
+
+export type ChatsControllerMessagesErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerMessagesError =
+  ChatsControllerMessagesErrors[keyof ChatsControllerMessagesErrors];
+
+export type ChatsControllerMessagesResponses = {
+  200: MessagePageDtoOutput;
+};
+
+export type ChatsControllerMessagesResponse =
+  ChatsControllerMessagesResponses[keyof ChatsControllerMessagesResponses];
+
+export type ChatsControllerSendData = {
+  body: CreateMessageDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/chats/{id}/messages";
+};
+
+export type ChatsControllerSendErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerSendError =
+  ChatsControllerSendErrors[keyof ChatsControllerSendErrors];
+
+export type ChatsControllerSendResponses = {
+  201: MessageDtoOutput;
+};
+
+export type ChatsControllerSendResponse =
+  ChatsControllerSendResponses[keyof ChatsControllerSendResponses];
+
+export type ChatsControllerRemoveMessageData = {
+  body?: never;
+  path: {
+    id: string;
+    messageId: string;
+  };
+  query?: never;
+  url: "/api/chats/{id}/messages/{messageId}";
+};
+
+export type ChatsControllerRemoveMessageErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerRemoveMessageError =
+  ChatsControllerRemoveMessageErrors[keyof ChatsControllerRemoveMessageErrors];
+
+export type ChatsControllerRemoveMessageResponses = {
+  204: void;
+};
+
+export type ChatsControllerRemoveMessageResponse =
+  ChatsControllerRemoveMessageResponses[keyof ChatsControllerRemoveMessageResponses];
+
+export type ChatsControllerReadData = {
+  body: ReadChatDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/chats/{id}/read";
+};
+
+export type ChatsControllerReadErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerReadError =
+  ChatsControllerReadErrors[keyof ChatsControllerReadErrors];
+
+export type ChatsControllerReadResponses = {
+  200: UnreadDtoOutput;
+};
+
+export type ChatsControllerReadResponse =
+  ChatsControllerReadResponses[keyof ChatsControllerReadResponses];
+
+export type ChatsControllerArchiveData = {
+  body: ArchiveChatDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/chats/{id}/archive";
+};
+
+export type ChatsControllerArchiveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerArchiveError =
+  ChatsControllerArchiveErrors[keyof ChatsControllerArchiveErrors];
+
+export type ChatsControllerArchiveResponses = {
+  200: ChatViewDtoOutput;
+};
+
+export type ChatsControllerArchiveResponse =
+  ChatsControllerArchiveResponses[keyof ChatsControllerArchiveResponses];
+
+export type ChatsControllerSettingsData = {
+  body: ChatSettingsDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/chats/{id}/settings";
+};
+
+export type ChatsControllerSettingsErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerSettingsError =
+  ChatsControllerSettingsErrors[keyof ChatsControllerSettingsErrors];
+
+export type ChatsControllerSettingsResponses = {
+  200: ChatDtoOutput;
+};
+
+export type ChatsControllerSettingsResponse =
+  ChatsControllerSettingsResponses[keyof ChatsControllerSettingsResponses];
+
+export type ChatsControllerRemoveData = {
+  body?: never;
+  path: {
+    id: string;
+    userId: string;
+  };
+  query?: never;
+  url: "/api/chats/{id}/participants/{userId}";
+};
+
+export type ChatsControllerRemoveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerRemoveError =
+  ChatsControllerRemoveErrors[keyof ChatsControllerRemoveErrors];
+
+export type ChatsControllerRemoveResponses = {
+  204: void;
+};
+
+export type ChatsControllerRemoveResponse =
+  ChatsControllerRemoveResponses[keyof ChatsControllerRemoveResponses];
+
+export type ChatsControllerSetParticipantWriteData = {
+  body: ParticipantWriteDto;
+  path: {
+    id: string;
+    userId: string;
+  };
+  query?: never;
+  url: "/api/chats/{id}/participants/{userId}";
+};
+
+export type ChatsControllerSetParticipantWriteErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ChatsControllerSetParticipantWriteError =
+  ChatsControllerSetParticipantWriteErrors[keyof ChatsControllerSetParticipantWriteErrors];
+
+export type ChatsControllerSetParticipantWriteResponses = {
+  200: ChatParticipantDtoOutput;
+};
+
+export type ChatsControllerSetParticipantWriteResponse =
+  ChatsControllerSetParticipantWriteResponses[keyof ChatsControllerSetParticipantWriteResponses];
+
 export type PostsControllerListData = {
   body?: never;
   path?: never;
   query?: {
-    type?: "content" | "vacancy" | "event";
-    direction?: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
     cursor?: string;
     limit?: number;
+    type?: "content" | "vacancy" | "event" | "task";
+    direction?: "frontend" | "backend" | "qa" | "design" | "manager" | "hr";
+    companyId?: string;
+    projectId?: string;
+    scope?: "none" | "mine";
   };
   url: "/api/posts";
 };
@@ -590,6 +1987,1213 @@ export type PostsControllerLikeResponses = {
 export type PostsControllerLikeResponse =
   PostsControllerLikeResponses[keyof PostsControllerLikeResponses];
 
+export type PostsControllerUnsaveData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/save";
+};
+
+export type PostsControllerUnsaveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerUnsaveError =
+  PostsControllerUnsaveErrors[keyof PostsControllerUnsaveErrors];
+
+export type PostsControllerUnsaveResponses = {
+  204: void;
+};
+
+export type PostsControllerUnsaveResponse =
+  PostsControllerUnsaveResponses[keyof PostsControllerUnsaveResponses];
+
+export type PostsControllerSaveData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/save";
+};
+
+export type PostsControllerSaveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerSaveError =
+  PostsControllerSaveErrors[keyof PostsControllerSaveErrors];
+
+export type PostsControllerSaveResponses = {
+  201: MessageDtoOutput;
+};
+
+export type PostsControllerSaveResponse =
+  PostsControllerSaveResponses[keyof PostsControllerSaveResponses];
+
+export type PostsControllerLikesData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: {
+    cursor?: string;
+    limit?: number;
+  };
+  url: "/api/posts/{id}/likes";
+};
+
+export type PostsControllerLikesErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerLikesError =
+  PostsControllerLikesErrors[keyof PostsControllerLikesErrors];
+
+export type PostsControllerLikesResponses = {
+  200: LikePageDtoOutput;
+};
+
+export type PostsControllerLikesResponse =
+  PostsControllerLikesResponses[keyof PostsControllerLikesResponses];
+
+export type PostsControllerChatData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/chat";
+};
+
+export type PostsControllerChatErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerChatError =
+  PostsControllerChatErrors[keyof PostsControllerChatErrors];
+
+export type PostsControllerChatResponses = {
+  200: ChatDtoOutput;
+};
+
+export type PostsControllerChatResponse =
+  PostsControllerChatResponses[keyof PostsControllerChatResponses];
+
+export type PostsControllerSetStatusData = {
+  body: SetStatusDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/status";
+};
+
+export type PostsControllerSetStatusErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerSetStatusError =
+  PostsControllerSetStatusErrors[keyof PostsControllerSetStatusErrors];
+
+export type PostsControllerSetStatusResponses = {
+  200: PostDtoOutput;
+};
+
+export type PostsControllerSetStatusResponse =
+  PostsControllerSetStatusResponses[keyof PostsControllerSetStatusResponses];
+
+export type PostsControllerAssignData = {
+  body: AssignDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/assignees";
+};
+
+export type PostsControllerAssignErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerAssignError =
+  PostsControllerAssignErrors[keyof PostsControllerAssignErrors];
+
+export type PostsControllerAssignResponses = {
+  201: PostDtoOutput;
+};
+
+export type PostsControllerAssignResponse =
+  PostsControllerAssignResponses[keyof PostsControllerAssignResponses];
+
+export type PostsControllerUnassignData = {
+  body?: never;
+  path: {
+    id: string;
+    userId: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/assignees/{userId}";
+};
+
+export type PostsControllerUnassignErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerUnassignError =
+  PostsControllerUnassignErrors[keyof PostsControllerUnassignErrors];
+
+export type PostsControllerUnassignResponses = {
+  200: PostDtoOutput;
+};
+
+export type PostsControllerUnassignResponse =
+  PostsControllerUnassignResponses[keyof PostsControllerUnassignResponses];
+
+export type PostsControllerCommentData = {
+  body: CreateCommentDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/comments";
+};
+
+export type PostsControllerCommentErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type PostsControllerCommentError =
+  PostsControllerCommentErrors[keyof PostsControllerCommentErrors];
+
+export type PostsControllerCommentResponses = {
+  201: MessageDtoOutput;
+};
+
+export type PostsControllerCommentResponse =
+  PostsControllerCommentResponses[keyof PostsControllerCommentResponses];
+
+export type ProjectsControllerListData = {
+  body?: never;
+  path?: never;
+  query?: {
+    teamId?: string;
+  };
+  url: "/api/projects";
+};
+
+export type ProjectsControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerListError =
+  ProjectsControllerListErrors[keyof ProjectsControllerListErrors];
+
+export type ProjectsControllerListResponses = {
+  200: Array<ProjectDtoOutput>;
+};
+
+export type ProjectsControllerListResponse =
+  ProjectsControllerListResponses[keyof ProjectsControllerListResponses];
+
+export type ProjectsControllerCreateData = {
+  body: CreateProjectDto;
+  path?: never;
+  query?: never;
+  url: "/api/projects";
+};
+
+export type ProjectsControllerCreateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerCreateError =
+  ProjectsControllerCreateErrors[keyof ProjectsControllerCreateErrors];
+
+export type ProjectsControllerCreateResponses = {
+  201: ProjectDtoOutput;
+};
+
+export type ProjectsControllerCreateResponse =
+  ProjectsControllerCreateResponses[keyof ProjectsControllerCreateResponses];
+
+export type ProjectsControllerRemoveData = {
+  body?: never;
+  path: {
+    projectId: string;
+  };
+  query?: never;
+  url: "/api/projects/{projectId}";
+};
+
+export type ProjectsControllerRemoveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerRemoveError =
+  ProjectsControllerRemoveErrors[keyof ProjectsControllerRemoveErrors];
+
+export type ProjectsControllerRemoveResponses = {
+  204: void;
+};
+
+export type ProjectsControllerRemoveResponse =
+  ProjectsControllerRemoveResponses[keyof ProjectsControllerRemoveResponses];
+
+export type ProjectsControllerByIdData = {
+  body?: never;
+  path: {
+    projectId: string;
+  };
+  query?: never;
+  url: "/api/projects/{projectId}";
+};
+
+export type ProjectsControllerByIdErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerByIdError =
+  ProjectsControllerByIdErrors[keyof ProjectsControllerByIdErrors];
+
+export type ProjectsControllerByIdResponses = {
+  200: ProjectDtoOutput;
+};
+
+export type ProjectsControllerByIdResponse =
+  ProjectsControllerByIdResponses[keyof ProjectsControllerByIdResponses];
+
+export type ProjectsControllerUpdateData = {
+  body: UpdateProjectDto;
+  path: {
+    projectId: string;
+  };
+  query?: never;
+  url: "/api/projects/{projectId}";
+};
+
+export type ProjectsControllerUpdateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerUpdateError =
+  ProjectsControllerUpdateErrors[keyof ProjectsControllerUpdateErrors];
+
+export type ProjectsControllerUpdateResponses = {
+  200: ProjectDtoOutput;
+};
+
+export type ProjectsControllerUpdateResponse =
+  ProjectsControllerUpdateResponses[keyof ProjectsControllerUpdateResponses];
+
+export type ProjectsControllerColumnsData = {
+  body?: never;
+  path: {
+    projectId: string;
+  };
+  query?: never;
+  url: "/api/projects/{projectId}/columns";
+};
+
+export type ProjectsControllerColumnsErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerColumnsError =
+  ProjectsControllerColumnsErrors[keyof ProjectsControllerColumnsErrors];
+
+export type ProjectsControllerColumnsResponses = {
+  200: Array<BoardColumnDtoOutput>;
+};
+
+export type ProjectsControllerColumnsResponse =
+  ProjectsControllerColumnsResponses[keyof ProjectsControllerColumnsResponses];
+
+export type ProjectsControllerAddColumnData = {
+  body: CreateColumnDto;
+  path: {
+    projectId: string;
+  };
+  query?: never;
+  url: "/api/projects/{projectId}/columns";
+};
+
+export type ProjectsControllerAddColumnErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerAddColumnError =
+  ProjectsControllerAddColumnErrors[keyof ProjectsControllerAddColumnErrors];
+
+export type ProjectsControllerAddColumnResponses = {
+  201: BoardColumnDtoOutput;
+};
+
+export type ProjectsControllerAddColumnResponse =
+  ProjectsControllerAddColumnResponses[keyof ProjectsControllerAddColumnResponses];
+
+export type ProjectsControllerReorderColumnsData = {
+  body: ReorderColumnsDto;
+  path: {
+    projectId: string;
+  };
+  query?: never;
+  url: "/api/projects/{projectId}/columns/order";
+};
+
+export type ProjectsControllerReorderColumnsErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerReorderColumnsError =
+  ProjectsControllerReorderColumnsErrors[keyof ProjectsControllerReorderColumnsErrors];
+
+export type ProjectsControllerReorderColumnsResponses = {
+  200: Array<BoardColumnDtoOutput>;
+};
+
+export type ProjectsControllerReorderColumnsResponse =
+  ProjectsControllerReorderColumnsResponses[keyof ProjectsControllerReorderColumnsResponses];
+
+export type ProjectsControllerRemoveColumnData = {
+  body?: never;
+  path: {
+    projectId: string;
+    columnId: string;
+  };
+  query?: never;
+  url: "/api/projects/{projectId}/columns/{columnId}";
+};
+
+export type ProjectsControllerRemoveColumnErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerRemoveColumnError =
+  ProjectsControllerRemoveColumnErrors[keyof ProjectsControllerRemoveColumnErrors];
+
+export type ProjectsControllerRemoveColumnResponses = {
+  204: void;
+};
+
+export type ProjectsControllerRemoveColumnResponse =
+  ProjectsControllerRemoveColumnResponses[keyof ProjectsControllerRemoveColumnResponses];
+
+export type ProjectsControllerUpdateColumnData = {
+  body: UpdateColumnDto;
+  path: {
+    projectId: string;
+    columnId: string;
+  };
+  query?: never;
+  url: "/api/projects/{projectId}/columns/{columnId}";
+};
+
+export type ProjectsControllerUpdateColumnErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type ProjectsControllerUpdateColumnError =
+  ProjectsControllerUpdateColumnErrors[keyof ProjectsControllerUpdateColumnErrors];
+
+export type ProjectsControllerUpdateColumnResponses = {
+  200: BoardColumnDtoOutput;
+};
+
+export type ProjectsControllerUpdateColumnResponse =
+  ProjectsControllerUpdateColumnResponses[keyof ProjectsControllerUpdateColumnResponses];
+
+export type CompaniesControllerListData = {
+  body?: never;
+  path?: never;
+  query?: {
+    cursor?: string;
+    limit?: number;
+    q?: string;
+  };
+  url: "/api/companies";
+};
+
+export type CompaniesControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type CompaniesControllerListError =
+  CompaniesControllerListErrors[keyof CompaniesControllerListErrors];
+
+export type CompaniesControllerListResponses = {
+  200: CompanyListDtoOutput;
+};
+
+export type CompaniesControllerListResponse =
+  CompaniesControllerListResponses[keyof CompaniesControllerListResponses];
+
+export type CompaniesControllerCreateData = {
+  body: CreateCompanyDto;
+  path?: never;
+  query?: never;
+  url: "/api/companies";
+};
+
+export type CompaniesControllerCreateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type CompaniesControllerCreateError =
+  CompaniesControllerCreateErrors[keyof CompaniesControllerCreateErrors];
+
+export type CompaniesControllerCreateResponses = {
+  201: CompanyDtoOutput;
+};
+
+export type CompaniesControllerCreateResponse =
+  CompaniesControllerCreateResponses[keyof CompaniesControllerCreateResponses];
+
+export type CompaniesControllerAvailabilityData = {
+  body?: never;
+  path?: never;
+  query: {
+    slug: string;
+  };
+  url: "/api/companies/availability";
+};
+
+export type CompaniesControllerAvailabilityErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type CompaniesControllerAvailabilityError =
+  CompaniesControllerAvailabilityErrors[keyof CompaniesControllerAvailabilityErrors];
+
+export type CompaniesControllerAvailabilityResponses = {
+  200: SlugAvailabilityDtoOutput;
+};
+
+export type CompaniesControllerAvailabilityResponse =
+  CompaniesControllerAvailabilityResponses[keyof CompaniesControllerAvailabilityResponses];
+
+export type CompaniesControllerMineData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/api/companies/mine";
+};
+
+export type CompaniesControllerMineErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type CompaniesControllerMineError =
+  CompaniesControllerMineErrors[keyof CompaniesControllerMineErrors];
+
+export type CompaniesControllerMineResponses = {
+  200: Array<CompanyCardDtoOutput>;
+};
+
+export type CompaniesControllerMineResponse =
+  CompaniesControllerMineResponses[keyof CompaniesControllerMineResponses];
+
+export type CompaniesControllerBySlugData = {
+  body?: never;
+  path: {
+    slug: string;
+  };
+  query?: never;
+  url: "/api/companies/{slug}";
+};
+
+export type CompaniesControllerBySlugErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type CompaniesControllerBySlugError =
+  CompaniesControllerBySlugErrors[keyof CompaniesControllerBySlugErrors];
+
+export type CompaniesControllerBySlugResponses = {
+  200: CompanyPageDtoOutput;
+};
+
+export type CompaniesControllerBySlugResponse =
+  CompaniesControllerBySlugResponses[keyof CompaniesControllerBySlugResponses];
+
+export type CompaniesControllerUpdateData = {
+  body: UpdateCompanyDto;
+  path: {
+    companyId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}";
+};
+
+export type CompaniesControllerUpdateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type CompaniesControllerUpdateError =
+  CompaniesControllerUpdateErrors[keyof CompaniesControllerUpdateErrors];
+
+export type CompaniesControllerUpdateResponses = {
+  200: CompanyDtoOutput;
+};
+
+export type CompaniesControllerUpdateResponse =
+  CompaniesControllerUpdateResponses[keyof CompaniesControllerUpdateResponses];
+
+export type MembersControllerListData = {
+  body?: never;
+  path: {
+    companyId: string;
+  };
+  query?: {
+    cursor?: string;
+    limit?: number;
+  };
+  url: "/api/companies/{companyId}/members";
+};
+
+export type MembersControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type MembersControllerListError =
+  MembersControllerListErrors[keyof MembersControllerListErrors];
+
+export type MembersControllerListResponses = {
+  200: MemberListDtoOutput;
+};
+
+export type MembersControllerListResponse =
+  MembersControllerListResponses[keyof MembersControllerListResponses];
+
+export type InviteTargetsControllerToCompanyData = {
+  body: CreateInviteDto;
+  path: {
+    companyId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/members";
+};
+
+export type InviteTargetsControllerToCompanyErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type InviteTargetsControllerToCompanyError =
+  InviteTargetsControllerToCompanyErrors[keyof InviteTargetsControllerToCompanyErrors];
+
+export type InviteTargetsControllerToCompanyResponses = {
+  201: InviteDtoOutput;
+};
+
+export type InviteTargetsControllerToCompanyResponse =
+  InviteTargetsControllerToCompanyResponses[keyof InviteTargetsControllerToCompanyResponses];
+
+export type MembersControllerTransferData = {
+  body: TransferDto;
+  path: {
+    companyId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/members/transfer";
+};
+
+export type MembersControllerTransferErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type MembersControllerTransferError =
+  MembersControllerTransferErrors[keyof MembersControllerTransferErrors];
+
+export type MembersControllerTransferResponses = {
+  204: void;
+};
+
+export type MembersControllerTransferResponse =
+  MembersControllerTransferResponses[keyof MembersControllerTransferResponses];
+
+export type MembersControllerRemoveData = {
+  body?: never;
+  path: {
+    companyId: string;
+    userId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/members/{userId}";
+};
+
+export type MembersControllerRemoveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type MembersControllerRemoveError =
+  MembersControllerRemoveErrors[keyof MembersControllerRemoveErrors];
+
+export type MembersControllerRemoveResponses = {
+  204: void;
+};
+
+export type MembersControllerRemoveResponse =
+  MembersControllerRemoveResponses[keyof MembersControllerRemoveResponses];
+
+export type MembersControllerSetRoleData = {
+  body: SetRoleDto;
+  path: {
+    companyId: string;
+    userId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/members/{userId}";
+};
+
+export type MembersControllerSetRoleErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type MembersControllerSetRoleError =
+  MembersControllerSetRoleErrors[keyof MembersControllerSetRoleErrors];
+
+export type MembersControllerSetRoleResponses = {
+  200: MemberDtoOutput;
+};
+
+export type MembersControllerSetRoleResponse =
+  MembersControllerSetRoleResponses[keyof MembersControllerSetRoleResponses];
+
+export type DepartmentsControllerListData = {
+  body?: never;
+  path: {
+    companyId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/departments";
+};
+
+export type DepartmentsControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type DepartmentsControllerListError =
+  DepartmentsControllerListErrors[keyof DepartmentsControllerListErrors];
+
+export type DepartmentsControllerListResponses = {
+  200: Array<DepartmentDtoOutput>;
+};
+
+export type DepartmentsControllerListResponse =
+  DepartmentsControllerListResponses[keyof DepartmentsControllerListResponses];
+
+export type DepartmentsControllerCreateData = {
+  body: CreateDepartmentDto;
+  path: {
+    companyId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/departments";
+};
+
+export type DepartmentsControllerCreateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type DepartmentsControllerCreateError =
+  DepartmentsControllerCreateErrors[keyof DepartmentsControllerCreateErrors];
+
+export type DepartmentsControllerCreateResponses = {
+  201: DepartmentDtoOutput;
+};
+
+export type DepartmentsControllerCreateResponse =
+  DepartmentsControllerCreateResponses[keyof DepartmentsControllerCreateResponses];
+
+export type DepartmentsControllerRemoveData = {
+  body?: never;
+  path: {
+    companyId: string;
+    departmentId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/departments/{departmentId}";
+};
+
+export type DepartmentsControllerRemoveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type DepartmentsControllerRemoveError =
+  DepartmentsControllerRemoveErrors[keyof DepartmentsControllerRemoveErrors];
+
+export type DepartmentsControllerRemoveResponses = {
+  204: void;
+};
+
+export type DepartmentsControllerRemoveResponse =
+  DepartmentsControllerRemoveResponses[keyof DepartmentsControllerRemoveResponses];
+
+export type DepartmentsControllerUpdateData = {
+  body: UpdateDepartmentDto;
+  path: {
+    companyId: string;
+    departmentId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/departments/{departmentId}";
+};
+
+export type DepartmentsControllerUpdateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type DepartmentsControllerUpdateError =
+  DepartmentsControllerUpdateErrors[keyof DepartmentsControllerUpdateErrors];
+
+export type DepartmentsControllerUpdateResponses = {
+  200: DepartmentDtoOutput;
+};
+
+export type DepartmentsControllerUpdateResponse =
+  DepartmentsControllerUpdateResponses[keyof DepartmentsControllerUpdateResponses];
+
+export type DepartmentsControllerMembersData = {
+  body?: never;
+  path: {
+    companyId: string;
+    departmentId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/departments/{departmentId}/members";
+};
+
+export type DepartmentsControllerMembersErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type DepartmentsControllerMembersError =
+  DepartmentsControllerMembersErrors[keyof DepartmentsControllerMembersErrors];
+
+export type DepartmentsControllerMembersResponses = {
+  200: Array<MemberDtoOutput>;
+};
+
+export type DepartmentsControllerMembersResponse =
+  DepartmentsControllerMembersResponses[keyof DepartmentsControllerMembersResponses];
+
+export type InviteTargetsControllerToDepartmentData = {
+  body: CreateInviteDto;
+  path: {
+    companyId: string;
+    departmentId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/departments/{departmentId}/members";
+};
+
+export type InviteTargetsControllerToDepartmentErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type InviteTargetsControllerToDepartmentError =
+  InviteTargetsControllerToDepartmentErrors[keyof InviteTargetsControllerToDepartmentErrors];
+
+export type InviteTargetsControllerToDepartmentResponses = {
+  201: InviteDtoOutput;
+};
+
+export type InviteTargetsControllerToDepartmentResponse =
+  InviteTargetsControllerToDepartmentResponses[keyof InviteTargetsControllerToDepartmentResponses];
+
+export type DepartmentsControllerRemoveMemberData = {
+  body?: never;
+  path: {
+    companyId: string;
+    departmentId: string;
+    userId: string;
+  };
+  query?: never;
+  url: "/api/companies/{companyId}/departments/{departmentId}/members/{userId}";
+};
+
+export type DepartmentsControllerRemoveMemberErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type DepartmentsControllerRemoveMemberError =
+  DepartmentsControllerRemoveMemberErrors[keyof DepartmentsControllerRemoveMemberErrors];
+
+export type DepartmentsControllerRemoveMemberResponses = {
+  204: void;
+};
+
+export type DepartmentsControllerRemoveMemberResponse =
+  DepartmentsControllerRemoveMemberResponses[keyof DepartmentsControllerRemoveMemberResponses];
+
+export type TeamsControllerListData = {
+  body?: never;
+  path?: never;
+  query?: {
+    companyId?: string;
+  };
+  url: "/api/teams";
+};
+
+export type TeamsControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type TeamsControllerListError =
+  TeamsControllerListErrors[keyof TeamsControllerListErrors];
+
+export type TeamsControllerListResponses = {
+  200: Array<TeamDtoOutput>;
+};
+
+export type TeamsControllerListResponse =
+  TeamsControllerListResponses[keyof TeamsControllerListResponses];
+
+export type TeamsControllerCreateData = {
+  body: CreateTeamDto;
+  path?: never;
+  query?: never;
+  url: "/api/teams";
+};
+
+export type TeamsControllerCreateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type TeamsControllerCreateError =
+  TeamsControllerCreateErrors[keyof TeamsControllerCreateErrors];
+
+export type TeamsControllerCreateResponses = {
+  201: TeamDtoOutput;
+};
+
+export type TeamsControllerCreateResponse =
+  TeamsControllerCreateResponses[keyof TeamsControllerCreateResponses];
+
+export type TeamsControllerRemoveData = {
+  body?: never;
+  path: {
+    teamId: string;
+  };
+  query?: never;
+  url: "/api/teams/{teamId}";
+};
+
+export type TeamsControllerRemoveErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type TeamsControllerRemoveError =
+  TeamsControllerRemoveErrors[keyof TeamsControllerRemoveErrors];
+
+export type TeamsControllerRemoveResponses = {
+  204: void;
+};
+
+export type TeamsControllerRemoveResponse =
+  TeamsControllerRemoveResponses[keyof TeamsControllerRemoveResponses];
+
+export type TeamsControllerByIdData = {
+  body?: never;
+  path: {
+    teamId: string;
+  };
+  query?: never;
+  url: "/api/teams/{teamId}";
+};
+
+export type TeamsControllerByIdErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type TeamsControllerByIdError =
+  TeamsControllerByIdErrors[keyof TeamsControllerByIdErrors];
+
+export type TeamsControllerByIdResponses = {
+  200: TeamDtoOutput;
+};
+
+export type TeamsControllerByIdResponse =
+  TeamsControllerByIdResponses[keyof TeamsControllerByIdResponses];
+
+export type TeamsControllerUpdateData = {
+  body: UpdateTeamDto;
+  path: {
+    teamId: string;
+  };
+  query?: never;
+  url: "/api/teams/{teamId}";
+};
+
+export type TeamsControllerUpdateErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type TeamsControllerUpdateError =
+  TeamsControllerUpdateErrors[keyof TeamsControllerUpdateErrors];
+
+export type TeamsControllerUpdateResponses = {
+  200: TeamDtoOutput;
+};
+
+export type TeamsControllerUpdateResponse =
+  TeamsControllerUpdateResponses[keyof TeamsControllerUpdateResponses];
+
+export type TeamsControllerMembersData = {
+  body?: never;
+  path: {
+    teamId: string;
+  };
+  query?: never;
+  url: "/api/teams/{teamId}/members";
+};
+
+export type TeamsControllerMembersErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type TeamsControllerMembersError =
+  TeamsControllerMembersErrors[keyof TeamsControllerMembersErrors];
+
+export type TeamsControllerMembersResponses = {
+  200: Array<TeamMemberDtoOutput>;
+};
+
+export type TeamsControllerMembersResponse =
+  TeamsControllerMembersResponses[keyof TeamsControllerMembersResponses];
+
+export type InviteTargetsControllerToTeamData = {
+  body: CreateInviteDto;
+  path: {
+    teamId: string;
+  };
+  query?: never;
+  url: "/api/teams/{teamId}/members";
+};
+
+export type InviteTargetsControllerToTeamErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type InviteTargetsControllerToTeamError =
+  InviteTargetsControllerToTeamErrors[keyof InviteTargetsControllerToTeamErrors];
+
+export type InviteTargetsControllerToTeamResponses = {
+  201: InviteDtoOutput;
+};
+
+export type InviteTargetsControllerToTeamResponse =
+  InviteTargetsControllerToTeamResponses[keyof InviteTargetsControllerToTeamResponses];
+
+export type TeamsControllerRemoveMemberData = {
+  body?: never;
+  path: {
+    teamId: string;
+    userId: string;
+  };
+  query?: never;
+  url: "/api/teams/{teamId}/members/{userId}";
+};
+
+export type TeamsControllerRemoveMemberErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type TeamsControllerRemoveMemberError =
+  TeamsControllerRemoveMemberErrors[keyof TeamsControllerRemoveMemberErrors];
+
+export type TeamsControllerRemoveMemberResponses = {
+  204: void;
+};
+
+export type TeamsControllerRemoveMemberResponse =
+  TeamsControllerRemoveMemberResponses[keyof TeamsControllerRemoveMemberResponses];
+
+export type NotificationsControllerListData = {
+  body?: never;
+  path?: never;
+  query?: {
+    cursor?: string;
+    limit?: number;
+  };
+  url: "/api/notifications";
+};
+
+export type NotificationsControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type NotificationsControllerListError =
+  NotificationsControllerListErrors[keyof NotificationsControllerListErrors];
+
+export type NotificationsControllerListResponses = {
+  200: NotificationPageDtoOutput;
+};
+
+export type NotificationsControllerListResponse =
+  NotificationsControllerListResponses[keyof NotificationsControllerListResponses];
+
+export type NotificationsControllerMarkAllReadData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/api/notifications/read";
+};
+
+export type NotificationsControllerMarkAllReadErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type NotificationsControllerMarkAllReadError =
+  NotificationsControllerMarkAllReadErrors[keyof NotificationsControllerMarkAllReadErrors];
+
+export type NotificationsControllerMarkAllReadResponses = {
+  204: void;
+};
+
+export type NotificationsControllerMarkAllReadResponse =
+  NotificationsControllerMarkAllReadResponses[keyof NotificationsControllerMarkAllReadResponses];
+
 export type PortfolioControllerListData = {
   body?: never;
   path: {
@@ -610,14 +3214,14 @@ export type PortfolioControllerListError =
   PortfolioControllerListErrors[keyof PortfolioControllerListErrors];
 
 export type PortfolioControllerListResponses = {
-  200: Array<ProjectDtoOutput>;
+  200: Array<PortfolioItemDtoOutput>;
 };
 
 export type PortfolioControllerListResponse =
   PortfolioControllerListResponses[keyof PortfolioControllerListResponses];
 
 export type PortfolioControllerCreateData = {
-  body: CreateProjectDto;
+  body: CreatePortfolioItemDto;
   path: {
     userId: string;
   };
@@ -636,7 +3240,7 @@ export type PortfolioControllerCreateError =
   PortfolioControllerCreateErrors[keyof PortfolioControllerCreateErrors];
 
 export type PortfolioControllerCreateResponses = {
-  201: ProjectDtoOutput;
+  201: PortfolioItemDtoOutput;
 };
 
 export type PortfolioControllerCreateResponse =
@@ -646,10 +3250,10 @@ export type PortfolioControllerRemoveData = {
   body?: never;
   path: {
     userId: string;
-    projectId: string;
+    itemId: string;
   };
   query?: never;
-  url: "/api/users/{userId}/portfolio/{projectId}";
+  url: "/api/users/{userId}/portfolio/{itemId}";
 };
 
 export type PortfolioControllerRemoveErrors = {
@@ -673,10 +3277,10 @@ export type PortfolioControllerByIdData = {
   body?: never;
   path: {
     userId: string;
-    projectId: string;
+    itemId: string;
   };
   query?: never;
-  url: "/api/users/{userId}/portfolio/{projectId}";
+  url: "/api/users/{userId}/portfolio/{itemId}";
 };
 
 export type PortfolioControllerByIdErrors = {
@@ -690,20 +3294,20 @@ export type PortfolioControllerByIdError =
   PortfolioControllerByIdErrors[keyof PortfolioControllerByIdErrors];
 
 export type PortfolioControllerByIdResponses = {
-  200: ProjectDtoOutput;
+  200: PortfolioItemDtoOutput;
 };
 
 export type PortfolioControllerByIdResponse =
   PortfolioControllerByIdResponses[keyof PortfolioControllerByIdResponses];
 
 export type PortfolioControllerUpdateData = {
-  body: UpdateProjectDto;
+  body: UpdatePortfolioItemDto;
   path: {
     userId: string;
-    projectId: string;
+    itemId: string;
   };
   query?: never;
-  url: "/api/users/{userId}/portfolio/{projectId}";
+  url: "/api/users/{userId}/portfolio/{itemId}";
 };
 
 export type PortfolioControllerUpdateErrors = {
@@ -717,8 +3321,164 @@ export type PortfolioControllerUpdateError =
   PortfolioControllerUpdateErrors[keyof PortfolioControllerUpdateErrors];
 
 export type PortfolioControllerUpdateResponses = {
-  200: ProjectDtoOutput;
+  200: PortfolioItemDtoOutput;
 };
 
 export type PortfolioControllerUpdateResponse =
   PortfolioControllerUpdateResponses[keyof PortfolioControllerUpdateResponses];
+
+export type InteractionsControllerListData = {
+  body?: never;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/interactions";
+};
+
+export type InteractionsControllerListErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type InteractionsControllerListError =
+  InteractionsControllerListErrors[keyof InteractionsControllerListErrors];
+
+export type InteractionsControllerListResponses = {
+  200: Array<InteractionDtoOutput>;
+};
+
+export type InteractionsControllerListResponse =
+  InteractionsControllerListResponses[keyof InteractionsControllerListResponses];
+
+export type InteractionsControllerInteractData = {
+  body: InteractDto;
+  path: {
+    id: string;
+  };
+  query?: never;
+  url: "/api/posts/{id}/interact";
+};
+
+export type InteractionsControllerInteractErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type InteractionsControllerInteractError =
+  InteractionsControllerInteractErrors[keyof InteractionsControllerInteractErrors];
+
+export type InteractionsControllerInteractResponses = {
+  200: InteractionDtoOutput;
+};
+
+export type InteractionsControllerInteractResponse =
+  InteractionsControllerInteractResponses[keyof InteractionsControllerInteractResponses];
+
+export type InvitesControllerMineData = {
+  body?: never;
+  path?: never;
+  query?: {
+    status?: "pending" | "accepted" | "declined";
+  };
+  url: "/api/invites";
+};
+
+export type InvitesControllerMineErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type InvitesControllerMineError =
+  InvitesControllerMineErrors[keyof InvitesControllerMineErrors];
+
+export type InvitesControllerMineResponses = {
+  200: Array<InviteDtoOutput>;
+};
+
+export type InvitesControllerMineResponse =
+  InvitesControllerMineResponses[keyof InvitesControllerMineResponses];
+
+export type InvitesControllerSentData = {
+  body?: never;
+  path?: never;
+  query?: {
+    status?: "pending" | "accepted" | "declined";
+  };
+  url: "/api/invites/sent";
+};
+
+export type InvitesControllerSentErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type InvitesControllerSentError =
+  InvitesControllerSentErrors[keyof InvitesControllerSentErrors];
+
+export type InvitesControllerSentResponses = {
+  200: Array<InviteDtoOutput>;
+};
+
+export type InvitesControllerSentResponse =
+  InvitesControllerSentResponses[keyof InvitesControllerSentResponses];
+
+export type InvitesControllerWithdrawData = {
+  body?: never;
+  path: {
+    inviteId: string;
+  };
+  query?: never;
+  url: "/api/invites/{inviteId}";
+};
+
+export type InvitesControllerWithdrawErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type InvitesControllerWithdrawError =
+  InvitesControllerWithdrawErrors[keyof InvitesControllerWithdrawErrors];
+
+export type InvitesControllerWithdrawResponses = {
+  204: void;
+};
+
+export type InvitesControllerWithdrawResponse =
+  InvitesControllerWithdrawResponses[keyof InvitesControllerWithdrawResponses];
+
+export type InvitesControllerDecideData = {
+  body: DecideInviteDto;
+  path: {
+    inviteId: string;
+  };
+  query?: never;
+  url: "/api/invites/{inviteId}";
+};
+
+export type InvitesControllerDecideErrors = {
+  /**
+   * Something went wrong. The payload is always this shape.
+   */
+  default: ErrorResponse;
+};
+
+export type InvitesControllerDecideError =
+  InvitesControllerDecideErrors[keyof InvitesControllerDecideErrors];
+
+export type InvitesControllerDecideResponses = {
+  200: InviteDtoOutput;
+};
+
+export type InvitesControllerDecideResponse =
+  InvitesControllerDecideResponses[keyof InvitesControllerDecideResponses];

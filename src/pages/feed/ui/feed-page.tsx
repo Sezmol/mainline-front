@@ -1,11 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
+
 import { CreatePostButton } from "@features/post/editor";
+
+import { PostList } from "@entities/post";
+import { sessionQueries } from "@entities/session";
 
 import { feedRoute } from "../model/feed-route";
 import { FeedFilters } from "./feed-filters";
-import { PostList } from "./post-list";
+import { postActions, postInteraction } from "./post-actions";
 
 export const FeedPage = () => {
   const search = feedRoute.useSearch();
+  const { data: user } = useQuery(sessionQueries.current());
 
   return (
     <div className="flex flex-col gap-6">
@@ -26,7 +32,11 @@ export const FeedPage = () => {
         <FeedFilters />
       </header>
 
-      <PostList filters={search} />
+      <PostList
+        filters={search}
+        renderActions={(post) => postActions(post, user?.id)}
+        renderInteraction={postInteraction}
+      />
     </div>
   );
 };
