@@ -1,4 +1,4 @@
-import { HeartIcon } from "lucide-react";
+import { HeartIcon } from "@phosphor-icons/react";
 
 import type { Post } from "@entities/post";
 
@@ -13,19 +13,16 @@ export const LikeButton = ({ post }: { post: Post }) => {
   return (
     <Button
       variant="ghost"
-      size="sm"
+      size="icon-xs"
       aria-pressed={post.likedByMe}
       aria-label={post.likedByMe ? "Remove like" : "Like"}
-      className="text-muted-foreground -ml-2 gap-1.5 font-mono text-xs tabular-nums"
+      className="text-muted-foreground"
       onClick={toggleLike}
     >
       <HeartIcon
-        className={cn(
-          "size-4",
-          post.likedByMe && "fill-primary text-primary-ink",
-        )}
+        weight={post.likedByMe ? "fill" : "regular"}
+        className={cn("size-4", post.likedByMe && "text-primary")}
       />
-      {post.likeCount}
     </Button>
   );
 };

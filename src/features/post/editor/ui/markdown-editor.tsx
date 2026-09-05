@@ -1,17 +1,18 @@
 import { useRef, useState } from "react";
 
 import {
-  BoldIcon,
   CodeIcon,
-  Heading2Icon,
-  ItalicIcon,
   LinkIcon,
-  ListIcon,
-} from "lucide-react";
+  ListBulletsIcon,
+  TextBIcon,
+  TextHTwoIcon,
+  TextItalicIcon,
+} from "@phosphor-icons/react";
 
 import { cn } from "@shared/lib/cn";
 import { Button } from "@shared/ui/button";
 import { Markdown } from "@shared/ui/markdown";
+import { Textarea } from "@shared/ui/textarea";
 
 interface MarkdownEditorProps {
   id: string;
@@ -22,15 +23,15 @@ interface MarkdownEditorProps {
 }
 
 const WRAPS = [
-  { icon: BoldIcon, label: "Bold", before: "**", after: "**" },
-  { icon: ItalicIcon, label: "Italic", before: "*", after: "*" },
+  { icon: TextBIcon, label: "Bold", before: "**", after: "**" },
+  { icon: TextItalicIcon, label: "Italic", before: "*", after: "*" },
   { icon: CodeIcon, label: "Code", before: "`", after: "`" },
   { icon: LinkIcon, label: "Link", before: "[", after: "](https://)" },
 ];
 
 const PREFIXES = [
-  { icon: Heading2Icon, label: "Heading", prefix: "## " },
-  { icon: ListIcon, label: "List", prefix: "- " },
+  { icon: TextHTwoIcon, label: "Heading", prefix: "## " },
+  { icon: ListBulletsIcon, label: "List", prefix: "- " },
 ];
 
 export const MarkdownEditor = ({
@@ -137,7 +138,7 @@ export const MarkdownEditor = ({
       </div>
 
       {preview ? (
-        <div className="border-input bg-card min-h-56 rounded-md border px-3 py-2">
+        <div className="border-input bg-field min-h-56 rounded-lg border px-2.5 py-1.5">
           {value.trim() ? (
             <Markdown>{value}</Markdown>
           ) : (
@@ -145,24 +146,20 @@ export const MarkdownEditor = ({
           )}
         </div>
       ) : (
-        <textarea
+        <Textarea
           id={id}
           ref={ref}
           value={value}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={invalid ?? over}
           placeholder="Markdown is welcome: **bold**, `code`, ```blocks```"
-          className={cn(
-            "border-input bg-card min-h-56 w-full resize-y rounded-md border px-3 py-2",
-            "font-mono text-sm leading-relaxed",
-            "aria-[invalid=true]:border-destructive",
-          )}
+          className="min-h-56 font-mono text-sm"
         />
       )}
 
       <p
         className={cn(
-          "text-muted-foreground text-right font-mono text-xs tabular-nums",
+          "text-muted-foreground font-mono text-xs tabular-nums",
           over && "text-destructive",
         )}
       >

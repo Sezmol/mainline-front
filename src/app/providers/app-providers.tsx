@@ -4,7 +4,6 @@ import { ThemeProvider } from "next-themes";
 
 import { Toaster } from "@shared/ui/sonner";
 
-import "@shared/api";
 import { router } from "../router";
 import { queryClient } from "./query-client";
 
@@ -18,7 +17,10 @@ export const AppProviders = () => (
   >
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-      <Toaster position="bottom-right" />
+      <Toaster
+        position="bottom-center"
+        mobileOffset={{ bottom: "72px", left: "16px", right: "16px" }}
+      />
     </QueryClientProvider>
   </ThemeProvider>
 );
