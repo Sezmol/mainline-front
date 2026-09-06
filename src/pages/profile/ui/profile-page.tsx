@@ -5,16 +5,17 @@ import { EditProfileButton } from "@features/profile/edit";
 import { sessionQueries } from "@entities/session";
 import { ProfileHeader, userQueries } from "@entities/user";
 
-import { Button } from "@shared/ui/button";
+import { ErrorState } from "@shared/ui/error-state";
+import { Skeleton } from "@shared/ui/skeleton";
 
 import { profileRoute } from "../model/profile-route";
 import { PortfolioSection } from "./portfolio-section";
 
 const ProfileSkeleton = () => (
   <div className="border-border bg-card flex flex-col gap-3 rounded-lg border p-5">
-    <div className="bg-elevated h-14 w-14 animate-pulse rounded-full" />
-    <div className="bg-elevated h-5 w-48 animate-pulse rounded" />
-    <div className="bg-elevated h-4 w-32 animate-pulse rounded" />
+    <Skeleton className="h-14 w-14 rounded-full" />
+    <Skeleton className="h-5 w-48" />
+    <Skeleton className="h-4 w-32" />
   </div>
 );
 
@@ -27,16 +28,10 @@ export const ProfilePage = () => {
 
   if (profile.isError) {
     return (
-      <div className="border-destructive/40 bg-destructive-muted flex flex-col items-start gap-3 rounded-lg border p-5">
-        <p className="text-sm">This profile could not be loaded.</p>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => void profile.refetch()}
-        >
-          Try again
-        </Button>
-      </div>
+      <ErrorState
+        message="This profile could not be loaded."
+        onRetry={() => void profile.refetch()}
+      />
     );
   }
 

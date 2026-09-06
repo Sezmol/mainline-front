@@ -1,13 +1,16 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-import { ProfileNotFound, ProfilePage } from "@pages/profile";
+import {
+  PortfolioItemNotFound,
+  PortfolioItemPage,
+} from "@pages/portfolio-item";
 
 import { portfolioItemQueries } from "@entities/portfolio-item";
 import { userQueries } from "@entities/user";
 
 import { ApiError } from "@shared/api";
 
-export const Route = createFileRoute("/_app/u/$nickname")({
+export const Route = createFileRoute("/_app/u/$nickname_/portfolio/$itemId")({
   loader: async ({ context, params }) => {
     try {
       const profile = await context.queryClient.query({
@@ -16,9 +19,11 @@ export const Route = createFileRoute("/_app/u/$nickname")({
       });
 
       await context.queryClient.query({
-        ...portfolioItemQueries.list(profile.id),
+        ...portfolioItemQueries.byId(profile.id, params.itemId),
         staleTime: "static",
       });
+
+      return { userId: profile.id };
     } catch (error) {
       if (error instanceof ApiError && error.code === "NOT_FOUND") {
         throw notFound();
@@ -26,6 +31,6 @@ export const Route = createFileRoute("/_app/u/$nickname")({
       throw error;
     }
   },
-  component: ProfilePage,
-  notFoundComponent: ProfileNotFound,
+  component: PortfolioItemPage,
+  notFoundComponent: PortfolioItemNotFound,
 });
