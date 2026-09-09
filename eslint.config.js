@@ -31,6 +31,7 @@ export default tseslint.config(
         { prefer: "type-imports", fixStyle: "inline-type-imports" },
       ],
       "@typescript-eslint/no-floating-promises": "error",
+      "no-nested-ternary": "error",
       "simple-import-sort/exports": "warn",
       "simple-import-sort/imports": [
         "warn",

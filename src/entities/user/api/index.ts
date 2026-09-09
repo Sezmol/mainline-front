@@ -1,1 +1,1 @@
-export { type AvailabilityParams, userKeys, userQueries } from "./user.queries";
+export { userKeys, userQueries } from "./user.queries";
