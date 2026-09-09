@@ -1,22 +1,28 @@
 import {
-  portfolioControllerByIdOptions,
-  portfolioControllerByIdQueryKey,
-  portfolioControllerListOptions,
-  portfolioControllerListQueryKey,
+  projectsControllerByIdOptions,
+  projectsControllerByIdQueryKey,
+  projectsControllerColumnsOptions,
+  projectsControllerColumnsQueryKey,
+  projectsControllerListOptions,
+  projectsControllerListQueryKey,
 } from "@shared/api";
 
 export const projectKeys = {
-  list: (userId: string) =>
-    portfolioControllerListQueryKey({ path: { userId } }),
-  lists: () => [{ _id: "portfolioControllerList" }] as const,
-  byId: (userId: string, projectId: string) =>
-    portfolioControllerByIdQueryKey({ path: { userId, projectId } }),
-  details: () => [{ _id: "portfolioControllerById" }] as const,
+  mine: (teamId?: string) =>
+    projectsControllerListQueryKey({ query: teamId ? { teamId } : {} }),
+  lists: () => [{ _id: "projectsControllerList" }] as const,
+  byId: (projectId: string) =>
+    projectsControllerByIdQueryKey({ path: { projectId } }),
+  details: () => [{ _id: "projectsControllerById" }] as const,
+  columns: (projectId: string) =>
+    projectsControllerColumnsQueryKey({ path: { projectId } }),
 };
 
 export const projectQueries = {
-  list: (userId: string) =>
-    portfolioControllerListOptions({ path: { userId } }),
-  byId: (userId: string, projectId: string) =>
-    portfolioControllerByIdOptions({ path: { userId, projectId } }),
+  mine: (teamId?: string) =>
+    projectsControllerListOptions({ query: teamId ? { teamId } : {} }),
+  byId: (projectId: string) =>
+    projectsControllerByIdOptions({ path: { projectId } }),
+  columns: (projectId: string) =>
+    projectsControllerColumnsOptions({ path: { projectId } }),
 };

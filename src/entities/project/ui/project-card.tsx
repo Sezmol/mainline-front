@@ -1,56 +1,66 @@
 import { Link } from "@tanstack/react-router";
-import { LinkIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { cn } from "@shared/lib/cn";
+
 import type { Project } from "../project.types";
+import { ProjectProgress } from "./project-progress";
 
 interface ProjectCardProps {
   project: Project;
+  mine?: boolean;
   actions?: ReactNode;
 }
 
-export const ProjectCard = ({ project, actions }: ProjectCardProps) => (
-  <article className="border-border bg-card flex flex-col overflow-hidden rounded-lg border">
-    {project.previewUrl ? (
-      <img
-        src={project.previewUrl}
-        alt=""
-        loading="lazy"
-        className="border-border bg-elevated aspect-[16/9] w-full border-b object-cover"
-      />
-    ) : null}
-    <div className="flex flex-1 flex-col gap-2 px-4 py-3.5">
-      <h3 className="text-sm leading-snug font-semibold tracking-tight">
-        <Link
-          to="/u/$nickname/projects/$projectId"
-          params={{
-            nickname: project.author.nickname,
-            projectId: project.id,
-          }}
-          className="hover:text-primary-ink transition-colors"
-        >
-          {project.title}
-        </Link>
-      </h3>
+export const ProjectCard = ({ project, mine, actions }: ProjectCardProps) => (
+  <li
+    className={cn(
+      "border-border bg-card flex min-w-0 flex-col gap-3 rounded-lg border p-4",
+      mine && "border-primary/40 bg-primary/5",
+    )}
+  >
+    <div className="flex flex-wrap items-start gap-3">
+      <div className="flex min-w-0 flex-col gap-0.5">
+        <h3 className="truncate text-sm font-semibold tracking-tight">
+          <Link
+            to="/pr/$projectId"
+            params={{ projectId: project.id }}
+            search={{ tab: "board" as const }}
+            className="hover:text-primary transition-colors"
+          >
+            {project.name}
+          </Link>
+        </h3>
 
-      {project.description ? (
-        <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
-          {project.description}
+        <p className="text-muted-foreground flex flex-wrap items-center gap-x-2 font-mono text-[11px] tabular-nums">
+          <span>lead @{project.manager.nickname}</span>
+          <span>·</span>
+          <Link
+            to="/t/$teamId"
+            params={{ teamId: project.team.id }}
+            className="hover:text-primary truncate transition-colors"
+          >
+            {project.team.name}
+          </Link>
+          {project.team.companySlug && project.team.companyName ? (
+            <>
+              <span>·</span>
+              <Link
+                to="/c/$slug"
+                params={{ slug: project.team.companySlug }}
+                search={{ tab: "overview" as const }}
+                className="hover:text-primary truncate transition-colors"
+              >
+                {project.team.companyName}
+              </Link>
+            </>
+          ) : null}
         </p>
-      ) : null}
+      </div>
 
-      {project.links.length > 0 ? (
-        <p className="text-muted-foreground mt-auto inline-flex items-center gap-1.5 pt-1 font-mono text-[11px] tabular-nums">
-          <LinkIcon className="size-3" />
-          {project.links.length}
-        </p>
-      ) : null}
+      <div className="ml-auto flex flex-wrap items-center gap-2">{actions}</div>
     </div>
 
-    {actions ? (
-      <footer className="border-border flex items-center gap-1 border-t px-3 py-2">
-        {actions}
-      </footer>
-    ) : null}
-  </article>
+    <ProjectProgress counts={project.counts} />
+  </li>
 );

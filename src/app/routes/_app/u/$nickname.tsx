@@ -2,7 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 
 import { ProfileNotFound, ProfilePage } from "@pages/profile";
 
-import { projectQueries } from "@entities/project";
+import { portfolioItemQueries } from "@entities/portfolio-item";
 import { userQueries } from "@entities/user";
 
 import { ApiError } from "@shared/api";
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_app/u/$nickname")({
       });
 
       await context.queryClient.query({
-        ...projectQueries.list(profile.id),
+        ...portfolioItemQueries.list(profile.id),
         staleTime: "static",
       });
     } catch (error) {
