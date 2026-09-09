@@ -1,151 +1,181 @@
+import { ChatIcon, PaperclipIcon } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeftIcon, ExternalLinkIcon } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 import { DeleteProjectButton } from "@features/project/delete";
 import { EditProjectButton } from "@features/project/editor";
 
-import { projectQueries } from "@entities/project";
+import { useDockStore } from "@entities/chat";
+import {
+  ProjectProgress,
+  projectQueries,
+  projectRange,
+} from "@entities/project";
 import { sessionQueries } from "@entities/session";
 
-import { SPECIALITY_LABELS } from "@shared/config";
-import { formatRelativeTime } from "@shared/lib/format-relative-time";
-import { Avatar, AvatarFallback } from "@shared/ui/avatar";
+import { cn } from "@shared/lib/cn";
 import { Button } from "@shared/ui/button";
+import { ErrorState } from "@shared/ui/error-state";
+import { Markdown } from "@shared/ui/markdown";
 
 import { projectRoute } from "../model/project-route";
+import { PROJECT_TABS } from "../model/project-search";
+import { ProjectBoard } from "./project-board";
+import { ProjectPageSkeleton } from "./project-page-skeleton";
+
+const TAB_LABELS = { board: "Board", about: "About" } as const;
 
 export const ProjectPage = () => {
-  const { nickname, projectId } = projectRoute.useParams();
-  const { userId } = projectRoute.useLoaderData();
-  const navigate = useNavigate();
+  const { projectId } = projectRoute.useParams();
+  const { tab } = projectRoute.useSearch();
 
-  const project = useQuery(projectQueries.byId(userId, projectId));
-  const { data: viewer } = useQuery(sessionQueries.current());
+  const project = useQuery(projectQueries.byId(projectId));
+  const columns = useQuery(projectQueries.columns(projectId));
+  const { data: session } = useQuery(sessionQueries.current());
 
   if (project.isPending) {
-    return (
-      <div className="border-border bg-card flex flex-col gap-3 rounded-lg border p-5">
-        <div className="bg-elevated h-6 w-2/3 animate-pulse rounded" />
-        <div className="bg-elevated h-32 w-full animate-pulse rounded" />
-      </div>
-    );
+    return <ProjectPageSkeleton />;
   }
 
   if (project.isError) {
     return (
-      <div className="border-destructive/40 bg-destructive-muted flex flex-col items-start gap-3 rounded-lg border p-5">
-        <p className="text-sm">This project could not be loaded.</p>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => void project.refetch()}
-        >
-          Try again
-        </Button>
-      </div>
+      <ErrorState
+        message="This project could not be loaded."
+        onRetry={() => void project.refetch()}
+      />
     );
   }
 
-  const { author } = project.data;
-  const owned = viewer?.id === author.id;
+  const isManager = project.data.manager.id === session?.id;
+  const canWrite = isManager || project.data.membersCanEditTasks;
+  const range = projectRange(project.data.startDate, project.data.endDate);
+  const { chatId } = project.data;
 
   return (
     <div className="flex flex-col gap-6">
-      <Link
-        to="/u/$nickname"
-        params={{ nickname }}
-        className="text-muted-foreground hover:text-foreground inline-flex w-fit items-center gap-1.5 font-mono text-xs transition-colors"
-      >
-        <ArrowLeftIcon className="size-3.5" />@{nickname}
-      </Link>
-
-      <article className="border-border bg-card overflow-hidden rounded-lg border">
-        {project.data.previewUrl ? (
-          <img
-            src={project.data.previewUrl}
-            alt=""
-            className="border-border bg-elevated aspect-[16/9] w-full border-b object-cover"
-          />
-        ) : null}
-
-        <div className="flex flex-col gap-4 px-4 py-5 sm:px-5">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <h1 className="text-xl leading-tight font-semibold tracking-tight">
-              {project.data.title}
+      <header className="border-border bg-card flex flex-col gap-4 rounded-lg border p-5">
+        <div className="flex flex-wrap items-start gap-3">
+          <div className="flex min-w-0 flex-col gap-1">
+            <h1 className="text-lg font-semibold tracking-tight wrap-anywhere">
+              {project.data.name}
             </h1>
 
-            {owned ? (
-              <div className="flex shrink-0 items-center gap-1">
-                <EditProjectButton project={project.data} />
-                <DeleteProjectButton
-                  project={project.data}
-                  onDeleted={() =>
-                    void navigate({
-                      to: "/u/$nickname",
-                      params: { nickname },
-                      replace: true,
-                    })
-                  }
-                />
-              </div>
-            ) : null}
+            <p className="text-muted-foreground flex flex-wrap items-center gap-x-2 font-mono text-[11px] tabular-nums">
+              <span>lead @{project.data.manager.nickname}</span>
+              <span>·</span>
+              <Link
+                to="/t/$teamId"
+                params={{ teamId: project.data.team.id }}
+                className="hover:text-primary transition-colors"
+              >
+                {project.data.team.name}
+              </Link>
+              {project.data.team.companySlug &&
+              project.data.team.companyName ? (
+                <>
+                  <span>·</span>
+                  <Link
+                    to="/c/$slug"
+                    params={{ slug: project.data.team.companySlug }}
+                    search={{ tab: "overview" as const }}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {project.data.team.companyName}
+                  </Link>
+                </>
+              ) : null}
+              {range ? (
+                <>
+                  <span>·</span>
+                  <span>{range}</span>
+                </>
+              ) : null}
+            </p>
           </div>
 
-          {project.data.description ? (
-            <p className="text-body text-sm leading-relaxed whitespace-pre-wrap">
-              {project.data.description}
-            </p>
-          ) : null}
-          {project.data.links.length > 0 ? (
-            <ul className="flex flex-col gap-1.5">
-              {project.data.links.map((link) => (
-                <li key={link}>
-                  <a
-                    href={link}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="text-primary-ink inline-flex max-w-full items-center gap-1.5 font-mono text-xs underline underline-offset-4"
-                  >
-                    <ExternalLinkIcon className="size-3 shrink-0" />
-                    <span className="truncate">{link}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+          <div className="ml-auto flex flex-wrap items-center gap-2">
+            {chatId ? (
+              <Button
+                variant="outline"
+                size="sm"
+                className="font-mono text-xs"
+                onClick={() => useDockStore.getState().openChat(chatId)}
+              >
+                <ChatIcon className="size-3.5" />
+                Chat
+              </Button>
+            ) : null}
+
+            {isManager ? (
+              <>
+                <EditProjectButton project={project.data} />
+                <DeleteProjectButton project={project.data} />
+              </>
+            ) : null}
+          </div>
         </div>
 
-        <footer className="border-border flex flex-wrap items-center gap-3 border-t px-4 py-3 sm:px-5">
-          <Link
-            to="/u/$nickname"
-            params={{ nickname: author.nickname }}
-            className="flex min-w-0 items-center gap-3"
-          >
-            <Avatar className="size-8 shrink-0">
-              <AvatarFallback className="font-mono text-[10px]">
-                {author.firstName[0]}
-                {author.lastName[0]}
-              </AvatarFallback>
-            </Avatar>
-            <span className="min-w-0">
-              <span className="block truncate text-sm font-medium">
-                {author.firstName} {author.lastName}
-              </span>
-              <span className="text-muted-foreground block truncate font-mono text-xs">
-                {SPECIALITY_LABELS[author.speciality]}
-              </span>
-            </span>
-          </Link>
+        <ProjectProgress counts={project.data.counts} />
+      </header>
 
-          <time
-            dateTime={project.data.createdAt}
-            className="text-muted-foreground ml-auto shrink-0 font-mono text-xs tabular-nums"
+      <nav className="border-border flex flex-wrap gap-1 border-b pb-2">
+        {PROJECT_TABS.map((id) => (
+          <Link
+            key={id}
+            to="/pr/$projectId"
+            params={{ projectId }}
+            search={{ tab: id }}
+            className={cn(
+              "rounded-md px-2.5 py-1.5 font-mono text-xs tracking-wide transition-colors",
+              tab === id
+                ? "text-foreground bg-elevated"
+                : "text-muted-foreground hover:text-foreground",
+            )}
           >
-            {formatRelativeTime(project.data.createdAt)}
-          </time>
-        </footer>
-      </article>
+            {TAB_LABELS[id]}
+          </Link>
+        ))}
+      </nav>
+
+      {tab === "board" ? (
+        <ProjectBoard
+          project={project.data}
+          columns={columns.data ?? []}
+          canManage={isManager}
+          canWrite={canWrite}
+        />
+      ) : (
+        <section className="flex max-w-3xl flex-col gap-4">
+          {project.data.description ? (
+            <Markdown>{project.data.description}</Markdown>
+          ) : (
+            <p className="text-muted-foreground text-sm">No description yet.</p>
+          )}
+
+          {project.data.attachments.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              <h2 className="text-muted-foreground font-mono text-[11px] tracking-widest uppercase">
+                Attachments
+              </h2>
+              <ul className="flex flex-col gap-1.5">
+                {project.data.attachments.map((url) => (
+                  <li key={url}>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="text-primary-ink hover:text-primary flex items-center gap-2 font-mono text-xs break-all transition-colors"
+                    >
+                      <PaperclipIcon className="size-3.5 shrink-0" />
+                      {url}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </section>
+      )}
     </div>
   );
 };

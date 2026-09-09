@@ -1,16 +1,13 @@
-import { BriefcaseIcon } from "lucide-react";
+import { BriefcaseIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 
 import { SPECIALITY_LABELS } from "@shared/config";
+import { dayjs } from "@shared/lib/dayjs";
 import { Avatar, AvatarFallback } from "@shared/ui/avatar";
 import { Badge } from "@shared/ui/badge";
 
 import type { Profile } from "../user.types";
 
-const joined = new Intl.DateTimeFormat("en", {
-  month: "long",
-  year: "numeric",
-});
 interface ProfileHeaderProps {
   profile: Profile;
   actions?: ReactNode;
@@ -64,7 +61,7 @@ export const ProfileHeader = ({ profile, actions }: ProfileHeaderProps) => (
     ) : null}
 
     <footer className="border-border text-muted-foreground border-t px-4 py-2.5 font-mono text-xs sm:px-5">
-      Joined {joined.format(new Date(profile.createdAt))}
+      Joined {dayjs(profile.createdAt).format("MMMM YYYY")}
     </footer>
   </section>
 );

@@ -1,40 +1,33 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-import { type Project, projectKeys } from "@entities/project";
+import { chatKeys } from "@entities/chat";
+import { postKeys } from "@entities/post";
+import { projectKeys } from "@entities/project";
 
-import { portfolioControllerRemove } from "@shared/api";
+import { projectsControllerRemove } from "@shared/api";
 
-export const useDeleteProject = (userId: string, projectId: string) => {
+export const useDeleteProject = () => {
   const queryClient = useQueryClient();
-  const listKey = projectKeys.list(userId);
+  const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: () =>
-      portfolioControllerRemove({
-        path: { userId, projectId },
+    mutationFn: async (projectId: string) => {
+      await projectsControllerRemove({
+        path: { projectId },
         throwOnError: true,
-      }),
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: listKey });
-      const snapshot = queryClient.getQueryData<Project[]>(listKey);
-      queryClient.setQueryData<Project[]>(listKey, (projects) =>
-        projects?.filter((project) => project.id !== projectId),
-      );
-      return { snapshot };
-    },
-    onError: (_error, _variables, context) => {
-      if (context?.snapshot) {
-        queryClient.setQueryData(listKey, context.snapshot);
-      }
-      toast.error("The project could not be deleted");
-    },
-
-    onSuccess: () => {
-      queryClient.removeQueries({
-        queryKey: projectKeys.byId(userId, projectId),
       });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: projectKeys.lists() });
+      void queryClient.invalidateQueries({ queryKey: postKeys.all() });
+      void queryClient.invalidateQueries({ queryKey: chatKeys.all() });
+      void navigate({ to: "/projects" });
       toast.success("Project deleted");
+    },
+    onError: () => {
+      toast.error("The project could not be deleted");
     },
   });
 };

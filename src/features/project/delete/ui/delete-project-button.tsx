@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Trash2Icon } from "lucide-react";
+import { TrashIcon } from "@phosphor-icons/react";
 
 import type { Project } from "@entities/project";
 
@@ -16,37 +16,29 @@ import {
 
 import { useDeleteProject } from "../model/use-delete-project";
 
-interface DeleteProjectButtonProps {
-  project: Project;
-  onDeleted?: () => void;
-}
-export const DeleteProjectButton = ({
-  project,
-  onDeleted,
-}: DeleteProjectButtonProps) => {
+export const DeleteProjectButton = ({ project }: { project: Project }) => {
   const [open, setOpen] = useState(false);
-  const remove = useDeleteProject(project.author.id, project.id);
+  const remove = useDeleteProject();
 
   return (
     <>
       <Button
         variant="ghost"
         size="sm"
-        aria-label="Delete project"
         className="text-muted-foreground hover:text-destructive font-mono text-xs"
         onClick={() => setOpen(true)}
       >
-        <Trash2Icon className="size-3.5" />
+        <TrashIcon className="size-3.5" />
         Delete
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete this project?</DialogTitle>
+            <DialogTitle>Delete “{project.name}”?</DialogTitle>
             <DialogDescription>
-              “{project.title}” disappears from your portfolio. This cannot be
-              undone.
+              The board, every task on it and the project chat go with it. The
+              team stays.
             </DialogDescription>
           </DialogHeader>
 
@@ -58,8 +50,7 @@ export const DeleteProjectButton = ({
               variant="destructive"
               onClick={() => {
                 setOpen(false);
-                onDeleted?.();
-                remove.mutate();
+                remove.mutate(project.id);
               }}
             >
               Delete

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { PencilIcon } from "lucide-react";
+import { PencilIcon } from "@phosphor-icons/react";
 
 import type { Project } from "@entities/project";
 
@@ -14,24 +14,16 @@ export const EditProjectButton = ({ project }: { project: Project }) => {
   return (
     <>
       <Button
-        variant="ghost"
+        variant="outline"
         size="sm"
-        aria-label="Edit project"
-        className="text-muted-foreground font-mono text-xs"
+        className="font-mono text-xs"
         onClick={() => setOpen(true)}
       >
         <PencilIcon className="size-3.5" />
         Edit
       </Button>
 
-      {open ? (
-        <ProjectFormDialog
-          open={open}
-          onOpenChange={setOpen}
-          userId={project.author.id}
-          project={project}
-        />
-      ) : null}
+      <ProjectFormDialog open={open} onOpenChange={setOpen} project={project} />
     </>
   );
 };
