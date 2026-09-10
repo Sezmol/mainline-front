@@ -1,5 +1,9 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
+import { PagePending } from "@app/layouts/route-pending";
+
+import { authSearchSchema } from "@pages/auth";
+
 import { ThemeSwitch } from "@features/theme/switch";
 
 import { loadSession } from "@entities/session";
@@ -14,18 +18,22 @@ const GuestLayout = () => (
         <Outlet />
       </div>
 
-      <ThemeSwitch className="mt-6 justify-center" />
+      <ThemeSwitch className="mx-auto mt-6 w-fit" />
     </div>
   </div>
 );
 
 export const Route = createFileRoute("/_guest")({
-  beforeLoad: async ({ context }) => {
+  validateSearch: authSearchSchema,
+  beforeLoad: async ({ context, search }) => {
     const session = await loadSession(context.queryClient);
 
-    if (session) {
-      throw redirect({ to: "/feed" });
-    }
+    if (!session) return;
+
+    if (search.redirect) throw redirect({ href: search.redirect });
+
+    throw redirect({ to: "/feed" });
   },
   component: GuestLayout,
+  pendingComponent: PagePending,
 });

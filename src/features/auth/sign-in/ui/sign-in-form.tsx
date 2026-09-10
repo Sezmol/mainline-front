@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Loader2Icon } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import { useSignIn } from "@entities/session";
@@ -12,12 +11,13 @@ import { applyFieldErrors } from "@shared/lib/apply-field-errors";
 import { Button } from "@shared/ui/button";
 import { FormField } from "@shared/ui/form-field";
 import { Input } from "@shared/ui/input";
+import { Spinner } from "@shared/ui/spinner";
 
 import { signInSchema, type SignInValues } from "../model/sign-in.schema";
 
 const FIELDS = ["nickname", "password"] as const;
 
-export const SignInForm = () => {
+export const SignInForm = ({ redirectTo }: { redirectTo?: string }) => {
   const navigate = useNavigate();
   const signIn = useSignIn();
   const [formError, setFormError] = useState<string | null>(null);
@@ -32,6 +32,11 @@ export const SignInForm = () => {
 
     try {
       await signIn.mutateAsync(values);
+      if (redirectTo) {
+        await navigate({ href: redirectTo });
+        return;
+      }
+
       await navigate({ to: "/feed" });
     } catch (error) {
       setFormError(applyFieldErrors(toApiError(error), form.setError, FIELDS));
@@ -93,7 +98,7 @@ export const SignInForm = () => {
       <Button type="submit" disabled={signIn.isPending} className="mt-1 w-full">
         {signIn.isPending ? (
           <>
-            <Loader2Icon className="animate-spin" />
+            <Spinner />
             Signing in
           </>
         ) : (
