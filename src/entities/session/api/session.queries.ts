@@ -11,12 +11,9 @@ export const sessionQueries = {
   current: () =>
     queryOptions({
       queryKey: sessionKeys.current(),
-      queryFn: async ({ signal }) => {
+      queryFn: async () => {
         try {
-          const { data } = await authControllerSession({
-            signal,
-            throwOnError: true,
-          });
+          const { data } = await authControllerSession({ throwOnError: true });
           return data;
         } catch (error) {
           if (error instanceof ApiError && error.code === "UNAUTHORIZED") {
@@ -25,7 +22,7 @@ export const sessionQueries = {
           throw error;
         }
       },
-      retry: false,
+      retry: 1,
       staleTime: 5 * 60_000,
     }),
 };
