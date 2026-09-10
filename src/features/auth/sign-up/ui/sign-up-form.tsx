@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CheckIcon } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { CheckIcon, Loader2Icon } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
 
 import { useSignUp } from "@entities/session";
@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@shared/ui/select";
+import { Spinner } from "@shared/ui/spinner";
 
 import { signUpSchema, type SignUpValues } from "../model/sign-up.schema";
 
@@ -52,7 +53,7 @@ const AvailabilityHint = ({
   if (checking) {
     return (
       <span className="inline-flex items-center gap-1.5">
-        <Loader2Icon className="size-3 animate-spin" />
+        <Spinner className="size-3" />
         Checking…
       </span>
     );
@@ -70,7 +71,7 @@ const AvailabilityHint = ({
   return <span>{idleLabel}</span>;
 };
 
-export const SignUpForm = () => {
+export const SignUpForm = ({ redirectTo }: { redirectTo?: string }) => {
   const navigate = useNavigate();
   const signUp = useSignUp();
   const [formError, setFormError] = useState<string | null>(null);
@@ -114,6 +115,11 @@ export const SignUpForm = () => {
 
     try {
       await signUp.mutateAsync(values);
+      if (redirectTo) {
+        await navigate({ href: redirectTo });
+        return;
+      }
+
       await navigate({ to: "/feed" });
     } catch (error) {
       setFormError(applyFieldErrors(toApiError(error), form.setError, FIELDS));
@@ -223,7 +229,11 @@ export const SignUpForm = () => {
             });
           }}
         >
-          <SelectTrigger id="speciality" className="w-full">
+          <SelectTrigger
+            id="speciality"
+            className="w-full"
+            aria-invalid={Boolean(form.formState.errors.speciality)}
+          >
             <SelectValue>
               {(value: string | null) =>
                 value
@@ -285,7 +295,7 @@ export const SignUpForm = () => {
       <Button type="submit" disabled={signUp.isPending} className="mt-1 w-full">
         {signUp.isPending ? (
           <>
-            <Loader2Icon className="animate-spin" />
+            <Spinner />
             Creating account
           </>
         ) : (

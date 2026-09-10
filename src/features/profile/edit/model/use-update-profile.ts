@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { portfolioItemKeys } from "@entities/portfolio-item";
 import { postKeys } from "@entities/post";
-import { projectKeys } from "@entities/project";
 import { sessionKeys } from "@entities/session";
 import { type Profile, userKeys } from "@entities/user";
 
@@ -44,8 +44,12 @@ export const useUpdateProfile = (profile: Profile) => {
       }
 
       void queryClient.invalidateQueries({ queryKey: postKeys.all() });
-      void queryClient.invalidateQueries({ queryKey: projectKeys.lists() });
-      void queryClient.invalidateQueries({ queryKey: projectKeys.details() });
+      void queryClient.invalidateQueries({
+        queryKey: portfolioItemKeys.lists(),
+      });
+      void queryClient.invalidateQueries({
+        queryKey: portfolioItemKeys.details(),
+      });
     },
   });
 };

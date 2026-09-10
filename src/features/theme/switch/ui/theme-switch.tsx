@@ -1,4 +1,4 @@
-import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
+import { MonitorIcon, MoonIcon, SunIcon } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 
 import { cn } from "@shared/lib/cn";
@@ -16,7 +16,10 @@ export const ThemeSwitch = ({ className }: { className?: string }) => {
   return (
     <div
       aria-label="Theme"
-      className={cn("flex items-center gap-0.5", className)}
+      className={cn(
+        "border-border flex items-center rounded-lg border p-0.5",
+        className,
+      )}
     >
       {OPTIONS.map(({ value, label, Icon }) => {
         const active = theme === value;
@@ -25,12 +28,12 @@ export const ThemeSwitch = ({ className }: { className?: string }) => {
           <Button
             key={value}
             variant="ghost"
-            size="icon-xs"
+            size="icon-sm"
             aria-label={label}
             aria-pressed={active}
             title={label}
             className={cn(
-              "text-muted-foreground hover:text-foreground",
+              "text-muted-foreground hover:text-foreground rounded-md",
               active && "bg-elevated text-foreground",
             )}
             onClick={() => {

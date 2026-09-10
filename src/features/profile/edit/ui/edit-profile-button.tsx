@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { PencilIcon } from "lucide-react";
+import { PencilIcon } from "@phosphor-icons/react";
 
 import type { Profile } from "@entities/user";
 
@@ -23,15 +23,7 @@ export const EditProfileButton = ({ profile }: { profile: Profile }) => {
         Edit profile
       </Button>
 
-      {/* Mounted only while open, so the form starts from the current profile
-          instead of whatever it held when the page first rendered. */}
-      {open ? (
-        <ProfileFormDialog
-          open={open}
-          onOpenChange={setOpen}
-          profile={profile}
-        />
-      ) : null}
+      <ProfileFormDialog open={open} onOpenChange={setOpen} profile={profile} />
     </>
   );
 };
