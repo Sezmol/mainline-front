@@ -2,7 +2,6 @@ import {
   type ComponentPropsWithRef,
   type ReactNode,
   useCallback,
-  useEffect,
   useState,
 } from "react";
 
@@ -59,7 +58,7 @@ interface TaskBoardProps<T extends BoardTask> {
   tasks: T[];
   renderCard: RenderCard<T>;
   renderColumnActions?: (column: BoardColumn) => ReactNode;
-  onMove?: (taskId: string, status: string) => void;
+  onMove?: (taskId: string, status: string) => Promise<unknown>;
   onReorder?: (columnIds: string[]) => void;
   empty?: ReactNode;
 }
@@ -169,21 +168,17 @@ export const TaskBoard = <T extends BoardTask>({
   empty,
 }: TaskBoardProps<T>) => {
   const [dragged, setDragged] = useState<T | null>(null);
-  const [moved, setMoved] = useState<{ id: string; status: string } | null>(
-    null,
-  );
+  const [moved, setMoved] = useState<Record<string, { status: string }>>({});
 
   const [reordered, setReordered] = useState<{
     of: BoardColumn[];
     ids: string[];
   } | null>(null);
 
-  useEffect(() => {
-    if (!moved) return;
-
-    const frame = requestAnimationFrame(() => setMoved(null));
-    return () => cancelAnimationFrame(frame);
-  }, [moved]);
+  const shownTasks = tasks.map((task) => {
+    const move = moved[task.id];
+    return move ? { ...task, status: move.status } : task;
+  });
 
   const shown =
     reordered?.of === columns
@@ -205,9 +200,9 @@ export const TaskBoard = <T extends BoardTask>({
   const handleDragStart = useCallback(
     ({ active }: DragStartEvent) => {
       if (dragData(active.data)?.kind !== "task") return;
-      setDragged(tasks.find((task) => task.id === active.id) ?? null);
+      setDragged(shownTasks.find((task) => task.id === active.id) ?? null);
     },
-    [tasks],
+    [shownTasks],
   );
 
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
@@ -218,9 +213,20 @@ export const TaskBoard = <T extends BoardTask>({
     const target = dragData(over.data);
 
     if (source?.kind === "task" && target?.kind === "column") {
-      if (target.name !== source.status) {
-        setMoved({ id: String(active.id), status: target.name });
-        onMove?.(String(active.id), target.name);
+      if (target.name !== source.status && onMove) {
+        const taskId = String(active.id);
+        const move = { status: target.name };
+        setMoved((previous) => ({ ...previous, [taskId]: move }));
+
+        const finish = () =>
+          setMoved((previous) => {
+            if (previous[taskId] !== move) return previous;
+            const next = { ...previous };
+            delete next[taskId];
+            return next;
+          });
+
+        void onMove(taskId, target.name).then(finish, finish);
       }
       return;
     }
@@ -254,10 +260,8 @@ export const TaskBoard = <T extends BoardTask>({
             strategy={horizontalListSortingStrategy}
           >
             {shown.map((column) => {
-              const inColumn = tasks.filter(
-                (task) =>
-                  (moved?.id === task.id ? moved.status : task.status) ===
-                  column.name,
+              const inColumn = shownTasks.filter(
+                (task) => task.status === column.name,
               );
 
               return (
