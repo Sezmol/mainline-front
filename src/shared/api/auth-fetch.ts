@@ -9,37 +9,24 @@ const TIMEOUT_MS = 10_000;
 
 const withTimeout = (signal: AbortSignal | null | undefined) => {
   const timeout = AbortSignal.timeout(TIMEOUT_MS);
-
-  if (!signal) return timeout;
-  if (signal.aborted) return signal;
-
-  const merged = new AbortController();
-  const abortWith = (source: AbortSignal) => () => merged.abort(source.reason);
-
-  signal.addEventListener("abort", abortWith(signal), { once: true });
-  timeout.addEventListener("abort", abortWith(timeout), { once: true });
-
-  return merged.signal;
+  return signal ? AbortSignal.any([signal, timeout]) : timeout;
 };
 
 let refreshing: Promise<boolean> | null = null;
 
-const refreshSession = () => {
-  const pending =
-    refreshing ??
-    fetch("/api/auth/refresh", {
-      method: "POST",
-      credentials: "include",
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    })
-      .then((response) => response.ok)
-      .catch(() => false)
-      .finally(() => {
-        refreshing = null;
-      });
+export const refreshSession = () => {
+  refreshing ??= fetch("/api/auth/refresh", {
+    method: "POST",
+    credentials: "include",
+    signal: withTimeout(null),
+  })
+    .then((response) => response.ok)
+    .catch(() => false)
+    .finally(() => {
+      refreshing = null;
+    });
 
-  refreshing = pending;
-  return pending;
+  return refreshing;
 };
 
 export const authFetch: typeof fetch = async (input, init) => {
@@ -57,9 +44,9 @@ export const authFetch: typeof fetch = async (input, init) => {
   if (SKIP_REFRESH.includes(new URL(url, location.origin).pathname)) {
     return response;
   }
+  if (caller?.aborted) return response;
   if (!(await refreshSession())) return response;
+  if (caller?.aborted) return response;
 
-  return replay
-    ? fetch(replay, { signal: withTimeout(caller) })
-    : fetch(input, { ...init, signal: withTimeout(caller) });
+  return fetch(replay ?? input, { ...init, signal: withTimeout(caller) });
 };
