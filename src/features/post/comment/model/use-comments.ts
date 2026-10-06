@@ -6,13 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import {
-  addMessage,
-  chatKeys,
-  type Message,
-  pendingId,
-  replaceMessage,
-} from "@entities/chat";
+import { addMessage, chatKeys, removeMessage } from "@entities/chat";
 import { patchPost } from "@entities/post";
 import { sessionQueries } from "@entities/session";
 
@@ -21,6 +15,11 @@ import {
   postsControllerChat,
   postsControllerComment,
 } from "@shared/api";
+
+interface CommentInput {
+  id: string;
+  body: string;
+}
 
 export const commentKeys = {
   chat: (postId: string) => ["post", postId, "comment-chat"] as const,
@@ -61,38 +60,36 @@ export const useComment = (postId: string, chatId: string | null) => {
   const { data: user } = useQuery(sessionQueries.current());
 
   return useMutation({
-    mutationFn: async (body: string) => {
+    mutationFn: async (input: CommentInput) => {
       const { data } = await postsControllerComment({
         path: { id: postId },
-        body: { body },
+        body: input,
         throwOnError: true,
       });
 
       return data;
     },
 
-    onMutate: (body) => {
+    onMutate: (input) => {
       if (!chatId || !user) return;
 
-      const optimistic: Message = {
-        id: pendingId(),
+      addMessage(queryClient, chatId, {
+        id: input.id,
         chatId,
         author: user,
-        body,
+        body: input.body,
         postId: null,
         createdAt: new Date().toISOString(),
         editedAt: null,
-      };
-
-      addMessage(queryClient, chatId, optimistic);
-      return { messageId: optimistic.id };
+        pending: true,
+      });
     },
 
-    onSuccess: (message, _body, context) => {
+    onSuccess: (message) => {
       countComment(queryClient, postId, 1);
 
-      if (context && chatId) {
-        replaceMessage(queryClient, chatId, context.messageId, message);
+      if (chatId) {
+        addMessage(queryClient, chatId, message);
       } else {
         void queryClient.invalidateQueries({
           queryKey: commentKeys.chat(postId),
@@ -102,10 +99,8 @@ export const useComment = (postId: string, chatId: string | null) => {
       void queryClient.invalidateQueries({ queryKey: chatKeys.all() });
     },
 
-    onError: (error, _body, context) => {
-      if (context && chatId) {
-        replaceMessage(queryClient, chatId, context.messageId, null);
-      }
+    onError: (error, input) => {
+      if (chatId) removeMessage(queryClient, chatId, input.id);
 
       toast.error(
         error instanceof ApiError

@@ -10,6 +10,7 @@ import { sessionQueries } from "@entities/session";
 import { cn } from "@shared/lib/cn";
 
 import { useRealtime } from "../model/use-realtime";
+import { useReloadOnAccountChange } from "../model/use-reload-on-account-change";
 import { useWideRoute } from "../model/use-wide-route";
 import { ChatDock } from "./chat-dock/chat-dock";
 import { AccountMenu } from "./account-menu";
@@ -26,6 +27,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
   const wide = useWideRoute();
 
   useRealtime(user?.id);
+  useReloadOnAccountChange(user?.id);
 
   return (
     <div className="flex min-h-dvh flex-col">

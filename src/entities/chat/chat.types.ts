@@ -13,7 +13,7 @@ export type ChatView = ChatViewDtoOutput;
 
 export type ChatPage = ChatPageDtoOutput;
 
-export type Message = MessageDtoOutput;
+export type Message = MessageDtoOutput & { pending?: boolean };
 
 export type MessagePage = MessagePageDtoOutput;
 

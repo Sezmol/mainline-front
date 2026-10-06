@@ -94,7 +94,7 @@ export const BoardPage = () => {
         columns={boardColumns}
         tasks={board.tasks}
         onMove={(taskId, status) =>
-          move.mutate({
+          move.mutateAsync({
             taskId,
             status,
             projectId: oneProject ? project : null,

@@ -1,3 +1,4 @@
+export { refreshSession } from "./auth-fetch";
 export { configureApiClient } from "./client";
 export { ApiError, NetworkError, toApiError } from "./error";
 export * from "./generated";

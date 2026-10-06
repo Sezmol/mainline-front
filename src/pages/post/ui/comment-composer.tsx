@@ -22,7 +22,7 @@ export const CommentComposer = ({ postId, chatId }: CommentComposerProps) => {
     if (!text || comment.isPending) return;
 
     setBody("");
-    comment.mutate(text);
+    comment.mutate({ id: crypto.randomUUID(), body: text });
     field.current?.focus();
   };
 

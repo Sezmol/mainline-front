@@ -16,6 +16,7 @@ export const projectKeys = {
   details: () => [{ _id: "projectsControllerById" }] as const,
   columns: (projectId: string) =>
     projectsControllerColumnsQueryKey({ path: { projectId } }),
+  columnsAll: () => [{ _id: "projectsControllerColumns" }] as const,
 };
 
 export const projectQueries = {

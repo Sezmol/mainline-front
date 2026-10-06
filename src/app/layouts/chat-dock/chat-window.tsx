@@ -55,10 +55,13 @@ const ScrollMemory = ({
   const { visibleMessageIds } = useMessageScrollerVisibility();
 
   const topmost = visibleMessageIds[0] ?? null;
+  const restored = useRef(false);
 
   useEffect(() => {
-    if (restoreTo) scrollToMessage(restoreTo, { align: "start" });
-  }, []);
+    if (restored.current || !restoreTo) return;
+    restored.current = true;
+    scrollToMessage(restoreTo, { align: "start" });
+  }, [restoreTo, scrollToMessage]);
 
   useEffect(() => {
     useDockStore.getState().rememberAnchor(chatId, end ? topmost : null);
