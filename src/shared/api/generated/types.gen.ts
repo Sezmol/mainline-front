@@ -281,6 +281,7 @@ export type MessagePageDtoOutput = {
 };
 
 export type CreateMessageDto = {
+  id?: string;
   body?: string;
   postId?: string;
 };
@@ -768,6 +769,7 @@ export type AssignDto = {
 };
 
 export type CreateCommentDto = {
+  id?: string;
   body: string;
 };
 
