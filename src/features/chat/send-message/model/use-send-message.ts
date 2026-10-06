@@ -1,14 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import {
-  addMessage,
-  chatKeys,
-  type Message,
-  patchChat,
-  pendingId,
-  replaceMessage,
-} from "@entities/chat";
+import { addMessage, chatKeys, patchChat, removeMessage } from "@entities/chat";
 import { sessionQueries } from "@entities/session";
 
 import { chatsControllerSend, NetworkError } from "@shared/api";
@@ -16,6 +9,7 @@ import { chatsControllerSend, NetworkError } from "@shared/api";
 import { useOutboxStore } from "./outbox.store";
 
 interface SendInput {
+  id: string;
   body: string;
   postId?: string;
 }
@@ -39,23 +33,20 @@ export const useSendMessage = (chatId: string) => {
     onMutate: (input) => {
       if (!user) return;
 
-      const optimistic: Message = {
-        id: pendingId(),
+      addMessage(queryClient, chatId, {
+        id: input.id,
         chatId,
         author: user,
         body: input.body,
         postId: input.postId ?? null,
         createdAt: new Date().toISOString(),
         editedAt: null,
-      };
-
-      addMessage(queryClient, chatId, optimistic);
-      return { messageId: optimistic.id, input };
+        pending: true,
+      });
     },
 
-    onSuccess: (message, _input, context) => {
-      if (context)
-        replaceMessage(queryClient, chatId, context.messageId, message);
+    onSuccess: (message) => {
+      addMessage(queryClient, chatId, message);
 
       patchChat(
         queryClient,
@@ -69,15 +60,13 @@ export const useSendMessage = (chatId: string) => {
       );
     },
 
-    onError: (error, _input, context) => {
-      if (!context) return;
-
+    onError: (error, input) => {
       if (error instanceof NetworkError) {
         enqueue({
           chatId,
-          messageId: context.messageId,
-          body: context.input.body,
-          postId: context.input.postId,
+          messageId: input.id,
+          body: input.body,
+          postId: input.postId,
         });
         toast.warning(
           "No connection. The message will go out when it is back.",
@@ -85,7 +74,7 @@ export const useSendMessage = (chatId: string) => {
         return;
       }
 
-      replaceMessage(queryClient, chatId, context.messageId, null);
+      removeMessage(queryClient, chatId, input.id);
       toast.error(error.message);
     },
 

@@ -23,6 +23,7 @@ export const postKeys = {
     }),
   all: () => [{ _id: "postsControllerList" }] as const,
   byId: (id: string) => postsControllerByIdQueryKey({ path: { id } }),
+  details: () => [{ _id: "postsControllerById" }] as const,
   interactions: (id: string) =>
     interactionsControllerListQueryKey({ path: { id } }),
   likes: (id: string) =>

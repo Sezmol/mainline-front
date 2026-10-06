@@ -2,6 +2,11 @@ import type { InfiniteData, QueryClient } from "@tanstack/react-query";
 
 import { chatKeys } from "../api";
 import type { ChatPage, ChatView, Message, MessagePage } from "../chat.types";
+import {
+  forgetPendingChat,
+  forgetPendingMessage,
+  rememberPendingMessage,
+} from "../model/pending-messages";
 
 interface PatchOptions {
   toTop?: boolean;
@@ -57,6 +62,8 @@ export const findChat = (queryClient: QueryClient, chatId: string) =>
   queryClient.getQueryData<ChatView>(chatKeys.byId(chatId));
 
 export const dropChat = (queryClient: QueryClient, chatId: string) => {
+  forgetPendingChat(chatId);
+  reconciliationWrites?.delete(chatId);
   queryClient.setQueriesData<InfiniteData<ChatPage>>(
     { queryKey: chatKeys.all() },
     (data) =>
@@ -73,47 +80,22 @@ export const dropChat = (queryClient: QueryClient, chatId: string) => {
   queryClient.removeQueries({ queryKey: chatKeys.messages(chatId) });
 };
 
-const PENDING_PREFIX = "pending:";
+let reconciliationWrites: Map<string, Map<string, Message | null>> | null =
+  null;
 
-export const pendingId = () => `${PENDING_PREFIX}${crypto.randomUUID()}`;
-
-export const isPending = (message: Message) =>
-  message.id.startsWith(PENDING_PREFIX);
-
-export const addMessage = (
-  queryClient: QueryClient,
-  chatId: string,
-  message: Message,
-) => {
-  queryClient.setQueryData<InfiniteData<MessagePage>>(
-    chatKeys.messages(chatId),
-    (data) => {
-      if (!data) return data;
-
-      const known = data.pages.some((page) =>
-        page.items.some((item) => item.id === message.id),
-      );
-
-      if (known) return data;
-
-      const isTwin = (item: Message) =>
-        isPending(item) &&
-        item.author.id === message.author.id &&
-        item.body === message.body;
-
-      return {
-        ...data,
-        pages: data.pages.map((page, index) => ({
-          ...page,
-          items:
-            index === 0
-              ? [message, ...page.items.filter((item) => !isTwin(item))]
-              : page.items.filter((item) => !isTwin(item)),
-        })),
-      };
-    },
-  );
+const recordWrite = (chatId: string, id: string, message: Message | null) => {
+  if (!reconciliationWrites) return;
+  const writes =
+    reconciliationWrites.get(chatId) ?? new Map<string, Message | null>();
+  writes.set(id, message);
+  reconciliationWrites.set(chatId, writes);
 };
+
+export const beginMessageReconciliation = () => {
+  reconciliationWrites = new Map();
+};
+
+export const isPending = (message: Message) => message.pending === true;
 
 export const findMessage = (
   queryClient: QueryClient,
@@ -125,12 +107,53 @@ export const findMessage = (
     ?.pages.flatMap((page) => page.items)
     .find((item) => item.id === id) ?? null;
 
-export const replaceMessage = (
+const restartLoadingHistory = (queryClient: QueryClient, chatId: string) => {
+  const queryKey = chatKeys.messages(chatId);
+
+  if (queryClient.isFetching({ queryKey }) > 0) {
+    void queryClient.invalidateQueries({ queryKey });
+  }
+};
+
+export const addMessage = (
+  queryClient: QueryClient,
+  chatId: string,
+  message: Message,
+) => {
+  if (isPending(message)) rememberPendingMessage(chatId, message);
+  else forgetPendingMessage(chatId, message.id);
+
+  recordWrite(chatId, message.id, message);
+
+  const known = findMessage(queryClient, chatId, message.id);
+  if (known && (isPending(message) || !isPending(known))) return;
+
+  queryClient.setQueryData<InfiniteData<MessagePage>>(
+    chatKeys.messages(chatId),
+    (data) =>
+      data && {
+        ...data,
+        pages: data.pages.map((page, index) => ({
+          ...page,
+          items: known
+            ? page.items.map((item) =>
+                item.id === message.id ? message : item,
+              )
+            : [...(index === 0 ? [message] : []), ...page.items],
+        })),
+      },
+  );
+
+  if (!isPending(message)) restartLoadingHistory(queryClient, chatId);
+};
+
+export const removeMessage = (
   queryClient: QueryClient,
   chatId: string,
   id: string,
-  message: Message | null,
 ) => {
+  forgetPendingMessage(chatId, id);
+  recordWrite(chatId, id, null);
   queryClient.setQueryData<InfiniteData<MessagePage>>(
     chatKeys.messages(chatId),
     (data) =>
@@ -138,10 +161,25 @@ export const replaceMessage = (
         ...data,
         pages: data.pages.map((page) => ({
           ...page,
-          items: message
-            ? page.items.map((item) => (item.id === id ? message : item))
-            : page.items.filter((item) => item.id !== id),
+          items: page.items.filter((item) => item.id !== id),
         })),
       },
   );
+
+  restartLoadingHistory(queryClient, chatId);
+};
+
+export const finishMessageReconciliation = (queryClient: QueryClient) => {
+  const writes = reconciliationWrites;
+  reconciliationWrites = null;
+  if (!writes) return;
+
+  for (const [chatId, messages] of writes) {
+    if (!queryClient.getQueryData(chatKeys.messages(chatId))) continue;
+
+    for (const [id, message] of messages) {
+      if (message) addMessage(queryClient, chatId, message);
+      else removeMessage(queryClient, chatId, id);
+    }
+  }
 };

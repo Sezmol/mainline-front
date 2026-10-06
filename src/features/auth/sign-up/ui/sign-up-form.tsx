@@ -3,7 +3,6 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckIcon } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
 import { useForm, useWatch } from "react-hook-form";
 
 import { useSignUp } from "@entities/session";
@@ -12,6 +11,7 @@ import { userQueries } from "@entities/user";
 import { toApiError } from "@shared/api";
 import { SPECIALITIES, SPECIALITY_LABELS } from "@shared/config";
 import { applyFieldErrors } from "@shared/lib/apply-field-errors";
+import { switchSession } from "@shared/lib/session-switch";
 import { useDebouncedValue } from "@shared/lib/use-debounced-value";
 import { Button } from "@shared/ui/button";
 import { FormField } from "@shared/ui/form-field";
@@ -72,7 +72,6 @@ const AvailabilityHint = ({
 };
 
 export const SignUpForm = ({ redirectTo }: { redirectTo?: string }) => {
-  const navigate = useNavigate();
   const signUp = useSignUp();
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -115,12 +114,7 @@ export const SignUpForm = ({ redirectTo }: { redirectTo?: string }) => {
 
     try {
       await signUp.mutateAsync(values);
-      if (redirectTo) {
-        await navigate({ href: redirectTo });
-        return;
-      }
-
-      await navigate({ to: "/feed" });
+      switchSession(redirectTo ?? "/feed");
     } catch (error) {
       setFormError(applyFieldErrors(toApiError(error), form.setError, FIELDS));
     }

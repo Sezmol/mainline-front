@@ -1,13 +1,14 @@
 import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 
 import { useSignIn } from "@entities/session";
 
 import { toApiError } from "@shared/api";
 import { applyFieldErrors } from "@shared/lib/apply-field-errors";
+import { switchSession } from "@shared/lib/session-switch";
 import { Button } from "@shared/ui/button";
 import { FormField } from "@shared/ui/form-field";
 import { Input } from "@shared/ui/input";
@@ -18,7 +19,6 @@ import { signInSchema, type SignInValues } from "../model/sign-in.schema";
 const FIELDS = ["nickname", "password"] as const;
 
 export const SignInForm = ({ redirectTo }: { redirectTo?: string }) => {
-  const navigate = useNavigate();
   const signIn = useSignIn();
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -32,12 +32,7 @@ export const SignInForm = ({ redirectTo }: { redirectTo?: string }) => {
 
     try {
       await signIn.mutateAsync(values);
-      if (redirectTo) {
-        await navigate({ href: redirectTo });
-        return;
-      }
-
-      await navigate({ to: "/feed" });
+      switchSession(redirectTo ?? "/feed");
     } catch (error) {
       setFormError(applyFieldErrors(toApiError(error), form.setError, FIELDS));
     }

@@ -54,7 +54,7 @@ export const ProjectBoard = ({
         columns={columns}
         tasks={board.tasks}
         onMove={(taskId, status) =>
-          move.mutate({ taskId, status, projectId: project.id })
+          move.mutateAsync({ taskId, status, projectId: project.id })
         }
         onReorder={canManage ? (ids) => reorder.mutate(ids) : undefined}
         renderColumnActions={

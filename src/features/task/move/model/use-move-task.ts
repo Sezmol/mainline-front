@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { patchPost } from "@entities/post";
+import { findPost, patchPost, postKeys } from "@entities/post";
 import { projectKeys } from "@entities/project";
 
 import { postsControllerSetStatus } from "@shared/api";
@@ -12,42 +12,42 @@ interface MoveInput {
   projectId: string | null;
 }
 
+const mutationKey = ["task-move"];
+
 export const useMoveTask = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationKey,
     scope: { id: "task-move" },
 
     mutationFn: async ({ taskId, status }: MoveInput) => {
-      const { data } = await postsControllerSetStatus({
-        path: { id: taskId },
-        body: { status },
-        throwOnError: true,
-      });
-      return data;
-    },
+      await queryClient.cancelQueries({ queryKey: postKeys.all() });
+      await queryClient.cancelQueries({ queryKey: postKeys.byId(taskId) });
 
-    onMutate: ({ taskId, status }) => {
-      let previous: string | null = null;
+      const previous = findPost(queryClient, taskId);
+      patchPost(queryClient, taskId, (post) =>
+        post.type === "task" ? { ...post, status } : post,
+      );
 
-      patchPost(queryClient, taskId, (post) => {
-        if (post.type !== "task") return post;
-        previous = post.status;
-        return { ...post, status };
-      });
-
-      return { previous };
-    },
-
-    onError: (_error, { taskId }, context) => {
-      const previous = context?.previous;
-
-      if (previous) {
-        patchPost(queryClient, taskId, (post) =>
-          post.type === "task" ? { ...post, status: previous } : post,
-        );
+      try {
+        const { data } = await postsControllerSetStatus({
+          path: { id: taskId },
+          body: { status },
+          throwOnError: true,
+        });
+        return data;
+      } catch (error) {
+        if (previous?.type === "task") {
+          patchPost(queryClient, taskId, (post) =>
+            post.type === "task" ? { ...post, status: previous.status } : post,
+          );
+        }
+        throw error;
       }
+    },
 
+    onError: () => {
       toast.error("The task could not be moved");
     },
 
@@ -59,6 +59,12 @@ export const useMoveTask = () => {
           queryKey: projectKeys.byId(projectId),
         });
       }
+    },
+
+    onSettled: (_data, _error, { taskId }) => {
+      if (queryClient.isMutating({ mutationKey }) !== 1) return;
+      void queryClient.invalidateQueries({ queryKey: postKeys.byId(taskId) });
+      return queryClient.invalidateQueries({ queryKey: postKeys.all() });
     },
   });
 };

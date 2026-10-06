@@ -37,7 +37,7 @@ export const MessageInput = ({
     if (!text) return;
 
     setBody("");
-    send.mutate({ body: text });
+    send.mutate({ id: crypto.randomUUID(), body: text });
     field.current?.focus();
   };
 

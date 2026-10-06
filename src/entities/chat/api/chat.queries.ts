@@ -1,4 +1,8 @@
-import { infiniteQueryOptions } from "@tanstack/react-query";
+import {
+  type InfiniteData,
+  infiniteQueryOptions,
+  replaceEqualDeep,
+} from "@tanstack/react-query";
 
 import {
   chatsControllerFindOneOptions,
@@ -11,7 +15,8 @@ import {
   chatsControllerParticipantsQueryKey,
 } from "@shared/api";
 
-import type { Chat } from "../chat.types";
+import type { Chat, MessagePage } from "../chat.types";
+import { withPendingMessages } from "../model/pending-messages";
 
 const PAGE_SIZE = 20;
 const HISTORY_PAGE_SIZE = 30;
@@ -32,6 +37,9 @@ export const chatKeys = {
       },
     }),
   byId: (id: string) => chatsControllerFindOneQueryKey({ path: { id } }),
+  details: () => [{ _id: "chatsControllerFindOne" }] as const,
+  histories: () => [{ _id: "chatsControllerMessages" }] as const,
+  participantsAll: () => [{ _id: "chatsControllerParticipants" }] as const,
   messages: (id: string) =>
     chatsControllerMessagesInfiniteQueryKey({
       path: { id },
@@ -65,6 +73,11 @@ export const chatQueries = {
         query: { limit: HISTORY_PAGE_SIZE },
       }),
       initialPageParam: { path: { id }, query: {} },
+      structuralSharing: (previous, data) =>
+        replaceEqualDeep(
+          previous,
+          withPendingMessages(id, data as InfiniteData<MessagePage>),
+        ),
       getNextPageParam: (last) =>
         last.nextCursor
           ? { path: { id }, query: { cursor: last.nextCursor } }
