@@ -1,11 +1,6 @@
 import type { QueryClient } from "@tanstack/react-query";
 
-import {
-  chatKeys,
-  findChat,
-  findMessage,
-  replaceMessage,
-} from "@entities/chat";
+import { chatKeys, findChat, findMessage, removeMessage } from "@entities/chat";
 import { patchPost, postKeys } from "@entities/post";
 
 export const dropMessage = (
@@ -16,7 +11,7 @@ export const dropMessage = (
   const message = findMessage(queryClient, chatId, messageId);
   if (!message) return;
 
-  replaceMessage(queryClient, chatId, messageId, null);
+  removeMessage(queryClient, chatId, messageId);
 
   if (message.postId) {
     patchPost(queryClient, message.postId, (post) => ({
