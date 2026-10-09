@@ -120,6 +120,9 @@ export const postFormSchema = z
 
 export type PostFormValues = z.infer<typeof postFormSchema>;
 
+export const toOptionalNumber = (value: string) =>
+  value === "" ? undefined : Number(value);
+
 export const emptyPostForm = (type: PostFormValues["type"]) => ({
   type,
   direction: undefined,
