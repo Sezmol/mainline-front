@@ -22,7 +22,7 @@ export type ChatSocket = Socket<ChatServerEvents, Record<string, never>>;
 
 let socket: ChatSocket | null = null;
 
-export const getSocket = (): ChatSocket =>
+export const getSocket = () =>
   (socket ??= io({ path: "/api/socket.io", autoConnect: false }));
 
 export const closeSocket = () => {

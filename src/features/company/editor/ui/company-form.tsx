@@ -41,7 +41,7 @@ const KNOWN_FIELDS = [
   "location",
 ] as const;
 
-const toValues = (company: Company): CompanyFormValues => ({
+const toValues = (company: Company) => ({
   name: company.name,
   slug: company.slug,
   description: company.description ?? "",
