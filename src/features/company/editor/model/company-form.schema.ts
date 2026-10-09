@@ -1,8 +1,6 @@
 import slug from "slugify";
 import { z } from "zod";
 
-import type { CreateCompanyDto } from "@shared/api";
-
 export const NAME_LIMIT = 100;
 export const DESCRIPTION_LIMIT = 5000;
 export const SOCIAL_LIMIT = 5;
@@ -58,7 +56,7 @@ export const EMPTY_COMPANY: CompanyFormValues = {
   socialLinks: [],
 };
 
-export const toCompanyBody = (values: CompanyFormValues): CreateCompanyDto => ({
+export const toCompanyBody = (values: CompanyFormValues) => ({
   slug: values.slug,
   name: values.name,
   ...(values.description ? { description: values.description } : {}),
@@ -70,7 +68,7 @@ export const toCompanyBody = (values: CompanyFormValues): CreateCompanyDto => ({
     .filter(Boolean),
 });
 
-export const slugify = (name: string): string =>
+export const slugify = (name: string) =>
   slug(name.replace(/[^\p{L}\p{N}]+/gu, " "), {
     lower: true,
     strict: true,

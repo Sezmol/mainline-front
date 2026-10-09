@@ -18,7 +18,7 @@ import { inviteKeys } from "@entities/invite";
 import { notificationKeys } from "@entities/notification";
 import { postKeys } from "@entities/post";
 import { projectKeys } from "@entities/project";
-import { sessionKeys } from "@entities/session";
+import { sessionKeys, sessionQueries } from "@entities/session";
 
 import { closeSocket, getSocket, refreshSession } from "@shared/api";
 
@@ -67,6 +67,25 @@ export const useRealtime = (userId: string | undefined) => {
         reconcilePending = false;
         await reconcile();
       }
+    };
+
+    const sessionSurvived = async () => {
+      await queryClient.invalidateQueries({ queryKey: sessionKeys.current() });
+
+      const state = queryClient.getQueryState(
+        sessionQueries.current().queryKey,
+      );
+      return state?.status === "success" && state.data?.id === userId;
+    };
+
+    const renewAndReconnect = () => {
+      authRetry = true;
+
+      void refreshSession()
+        .then((refreshed) => refreshed || sessionSurvived())
+        .then((alive) => {
+          if (active && alive) socket.connect();
+        });
     };
 
     socket.on("new_message", ({ chatId, message }) => {
@@ -149,20 +168,12 @@ export const useRealtime = (userId: string | undefined) => {
       });
     });
 
+    socket.on("session_expired", renewAndReconnect);
+
     socket.on("connect_error", (error) => {
       if (authRetry || error.message.toLowerCase() !== "unauthorized") return;
 
-      authRetry = true;
-      void refreshSession().then((refreshed) => {
-        if (!active) return;
-
-        if (refreshed) {
-          socket.connect();
-          return;
-        }
-
-        void queryClient.invalidateQueries({ queryKey: sessionKeys.current() });
-      });
+      renewAndReconnect();
     });
 
     socket.connect();

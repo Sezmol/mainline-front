@@ -30,7 +30,7 @@ import {
   slugify,
   SOCIAL_LIMIT,
 } from "../model/company-form.schema";
-import { useCreateCompany, useUpdateCompany } from "../model/use-save-company";
+import { useSaveCompany } from "../model/use-save-company";
 
 const KNOWN_FIELDS = [
   "name",
@@ -41,7 +41,7 @@ const KNOWN_FIELDS = [
   "location",
 ] as const;
 
-const toValues = (company: Company): CompanyFormValues => ({
+const toValues = (company: Company) => ({
   name: company.name,
   slug: company.slug,
   description: company.description ?? "",
@@ -68,9 +68,7 @@ export const CompanyForm = ({
 }: CompanyFormProps) => {
   const [failure, setFailure] = useState<string | null>(null);
 
-  const create = useCreateCompany();
-  const update = useUpdateCompany(company ?? ({ id: "", slug: "" } as Company));
-  const save = company ? update : create;
+  const save = useSaveCompany(company);
 
   const form = useForm<CompanyFormValues>({
     resolver: zodResolver(companyFormSchema),

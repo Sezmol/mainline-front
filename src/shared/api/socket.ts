@@ -15,13 +15,14 @@ export interface ChatServerEvents {
   unread_changed: (payload: { chatId: string; unreadCount: number }) => void;
   notification_created: () => void;
   board_changed: (payload: { projectId: string }) => void;
+  session_expired: () => void;
 }
 
 export type ChatSocket = Socket<ChatServerEvents, Record<string, never>>;
 
 let socket: ChatSocket | null = null;
 
-export const getSocket = (): ChatSocket =>
+export const getSocket = () =>
   (socket ??= io({ path: "/api/socket.io", autoConnect: false }));
 
 export const closeSocket = () => {

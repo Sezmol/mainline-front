@@ -10,7 +10,7 @@ type Task = Extract<Post, { type: "task" }>;
 const isTask = (post: Post): post is Task => post.type === "task";
 
 export const useBoardTasks = (filters: FeedFilters, enabled = true) => {
-  const query = useInfiniteQuery({ ...postQueries.feed(filters), enabled });
+  const query = useInfiniteQuery({ ...postQueries.board(filters), enabled });
 
   const { hasNextPage, isFetchingNextPage, fetchNextPage } = query;
 
