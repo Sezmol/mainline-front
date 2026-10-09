@@ -14,6 +14,7 @@ import {
 import type { FeedFilters } from "../post.types";
 
 const PAGE_SIZE = 20;
+const BOARD_PAGE_SIZE = 50;
 const LIKES_PAGE_SIZE = 20;
 
 export const postKeys = {
@@ -33,16 +34,18 @@ export const postKeys = {
     }),
 };
 
+const listQuery = (filters: FeedFilters, limit: number) =>
+  infiniteQueryOptions({
+    ...postsControllerListInfiniteOptions({ query: { ...filters, limit } }),
+    initialPageParam: { query: {} },
+    getNextPageParam: (last) =>
+      last.nextCursor ? { query: { cursor: last.nextCursor } } : undefined,
+  });
+
 export const postQueries = {
-  feed: (filters: FeedFilters = {}) =>
-    infiniteQueryOptions({
-      ...postsControllerListInfiniteOptions({
-        query: { ...filters, limit: PAGE_SIZE },
-      }),
-      initialPageParam: { query: {} },
-      getNextPageParam: (last) =>
-        last.nextCursor ? { query: { cursor: last.nextCursor } } : undefined,
-    }),
+  feed: (filters: FeedFilters = {}) => listQuery(filters, PAGE_SIZE),
+
+  board: (filters: FeedFilters) => listQuery(filters, BOARD_PAGE_SIZE),
 
   byId: (id: string) => postsControllerByIdOptions({ path: { id } }),
 
