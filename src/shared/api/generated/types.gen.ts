@@ -1478,6 +1478,8 @@ export type ChatsControllerListData = {
   body?: never;
   path?: never;
   query?: {
+    cursor?: string;
+    limit?: number;
     archived?: string;
     type?:
       | "private"
@@ -1490,8 +1492,6 @@ export type ChatsControllerListData = {
       | "department"
       | "team"
       | "project";
-    cursor?: string;
-    limit?: number;
   };
   url: "/api/chats";
 };

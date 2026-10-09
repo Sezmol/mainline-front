@@ -11,63 +11,52 @@ import {
 
 import { type CompanyFormValues, toCompanyBody } from "./company-form.schema";
 
-export const useCreateCompany = () => {
+export const useSaveCompany = (company?: Pick<Company, "id" | "slug">) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: async (values: CompanyFormValues) => {
-      const { data } = await companiesControllerCreate({
-        body: toCompanyBody(values),
-        throwOnError: true,
-      });
+      const body = toCompanyBody(values);
+
+      const { data } = company
+        ? await companiesControllerUpdate({
+            path: { companyId: company.id },
+            body,
+            throwOnError: true,
+          })
+        : await companiesControllerCreate({ body, throwOnError: true });
+
       return data;
     },
 
-    onSuccess: (company) => {
+    onSuccess: (saved) => {
       void queryClient.invalidateQueries({
         queryKey: companyKeys.directories(),
       });
-      void queryClient.invalidateQueries({ queryKey: companyKeys.mine() });
-      void queryClient.invalidateQueries({ queryKey: chatKeys.all() });
 
-      void navigate({
-        to: "/c/$slug",
-        params: { slug: company.slug },
-        search: { tab: "overview" as const },
-      });
-    },
-  });
-};
+      if (!company) {
+        void queryClient.invalidateQueries({ queryKey: companyKeys.mine() });
+        void queryClient.invalidateQueries({ queryKey: chatKeys.all() });
 
-export const useUpdateCompany = (company: Company) => {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+        void navigate({
+          to: "/c/$slug",
+          params: { slug: saved.slug },
+          search: { tab: "overview" as const },
+        });
+        return;
+      }
 
-  return useMutation({
-    mutationFn: async (values: CompanyFormValues) => {
-      const { data } = await companiesControllerUpdate({
-        path: { companyId: company.id },
-        body: toCompanyBody(values),
-        throwOnError: true,
-      });
-      return data;
-    },
-
-    onSuccess: (updated) => {
-      queryClient.setQueryData(companyKeys.page(updated.slug), (page) =>
-        page ? { ...page, ...updated } : page,
+      queryClient.setQueryData(companyKeys.page(saved.slug), (page) =>
+        page ? { ...page, ...saved } : page,
       );
-      void queryClient.invalidateQueries({
-        queryKey: companyKeys.directories(),
-      });
 
-      if (updated.slug === company.slug) return;
+      if (saved.slug === company.slug) return;
 
       queryClient.removeQueries({ queryKey: companyKeys.page(company.slug) });
       void navigate({
         to: "/c/$slug/settings",
-        params: { slug: updated.slug },
+        params: { slug: saved.slug },
         search: { tab: "profile" as const },
         replace: true,
       });

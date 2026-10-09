@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-import type { UpdateUserDto } from "@shared/api";
 import { SPECIALITIES } from "@shared/config";
 
 export const DESCRIPTION_LIMIT = 500;
@@ -45,7 +44,7 @@ export const profileFormSchema = z.object({
 
 export type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-export const toUpdateBody = (values: ProfileFormValues): UpdateUserDto => ({
+export const toUpdateBody = (values: ProfileFormValues) => ({
   firstName: values.firstName,
   lastName: values.lastName,
   nickname: values.nickname,
