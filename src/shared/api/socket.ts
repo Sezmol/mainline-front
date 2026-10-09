@@ -15,6 +15,7 @@ export interface ChatServerEvents {
   unread_changed: (payload: { chatId: string; unreadCount: number }) => void;
   notification_created: () => void;
   board_changed: (payload: { projectId: string }) => void;
+  session_expired: () => void;
 }
 
 export type ChatSocket = Socket<ChatServerEvents, Record<string, never>>;
