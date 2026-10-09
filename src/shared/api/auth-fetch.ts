@@ -14,17 +14,24 @@ const withTimeout = (signal: AbortSignal | null | undefined) => {
 
 let refreshing: Promise<boolean> | null = null;
 
-export const refreshSession = () => {
-  refreshing ??= fetch("/api/auth/refresh", {
+const requestRefresh = () =>
+  fetch("/api/auth/refresh", {
     method: "POST",
     credentials: "include",
     signal: withTimeout(null),
   })
     .then((response) => response.ok)
-    .catch(() => false)
-    .finally(() => {
-      refreshing = null;
-    });
+    .catch(() => false);
+
+const refreshAcrossTabs = () =>
+  "locks" in navigator
+    ? navigator.locks.request("auth-refresh", requestRefresh)
+    : requestRefresh();
+
+export const refreshSession = () => {
+  refreshing ??= refreshAcrossTabs().finally(() => {
+    refreshing = null;
+  });
 
   return refreshing;
 };
